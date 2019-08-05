@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IMIXML>
+    <SecDef Desc="国债" CentraQuoteBondIndic="Y">
+        <Instrmt ID="CFT" Sym="现券买卖"/>
+    </SecDef>
+    <SecDef Desc="债券" CentraQuoteBondIndic="X">
+        <Instrmt ID="CCC" Sym="是否"/>
+    </SecDef>
+</IMIXML>
