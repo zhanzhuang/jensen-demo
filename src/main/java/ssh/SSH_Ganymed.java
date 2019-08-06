@@ -1,74 +1,64 @@
 package ssh;
 
-import com.jcraft.jsch.*;
-
+import ch.ethz.ssh2.Connection;
+import ch.ethz.ssh2.Session;
+import ch.ethz.ssh2.StreamGobbler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Properties;
 
 public class SSH_Ganymed {
-    private static JSch jSch;
-    private static Session session;
+    public static void main(String[] args) {
+        // 服务器ip
+        String ipv4Address = "1.1.1.1";
+        // freeSshd设置的连接端口
+        int port = 22;
+        String freeSshdUserName = "username";
+        String freeSshdUserPassword = "password";
+        // 在cmd中执行的命令
+        String command = "java -version";
 
-    private String freesshdIpFour;
-    private int freesshdPort;
-    private String freesshdUsername;
-    private String freesshdPassword;
-    private String command;
+        connectServer(ipv4Address, port, freeSshdUserName, freeSshdUserPassword, command);
 
-    public SSH_Ganymed(String freesshdIpFour, int freesshdPort, String freesshdUsername, String freesshdPassword, String command) {
-        this.freesshdIpFour = freesshdIpFour;
-        this.freesshdPort = freesshdPort;
-        this.freesshdUsername = freesshdUsername;
-        this.freesshdPassword = freesshdPassword;
-        this.command = command;
     }
 
-    public String connectFreesshd() {
-        // 创建JSch对象
-        jSch = new JSch();
-        BufferedReader reader = null;
-        Channel channel = null;
+    public static void connectServer(String ipv4Address, int port, String freeSshdUserName, String freeSshdUserpassword, String command) {
+        Connection conn = new Connection(ipv4Address, port);
+        Session session = null;
         try {
-            session = jSch.getSession(freesshdUsername, freesshdIpFour, freesshdPort);
-            session.setPassword(freesshdPassword);
-            Properties config = new Properties();
-            session.setTimeout(1500);
-            session.connect();
-            if (command != null) {
-                channel = session.openChannel("exec");
-                ((ChannelExec) channel).setCommand(command);
-                channel.connect();
-                InputStream in = channel.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(in, "GBK"));
-                String buf;
-                StringBuffer sb = new StringBuffer();
-                while ((buf = reader.readLine()) != null) {
-                    sb = sb.append(buf);
-                }
-                return sb.toString();
+            conn.connect();
+            // login
+            boolean isLogin = conn.authenticateWithPassword(freeSshdUserName, freeSshdUserpassword);
+            if (isLogin) {
+                System.out.println("login success");
+            } else {
+                System.out.println("login failed");
             }
-        } catch (JSchException e) {
-            e.printStackTrace();
+            Session openSession = conn.openSession();
+            openSession.execCommand(command);
+            InputStream is = new StreamGobbler(openSession.getStdout());
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "GBK"));
+            while (true) {
+                String line = br.readLine();
+                if (line == null) {
+                    break;
+                }
+                System.out.println(line);
+            }
+
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return e.getMessage();
+            if (session != null) {
+                session.close();
+
             }
-            session.disconnect();
-            if (channel != null) {
-                channel.disconnect();
+            if (conn != null) {
+                conn.close();
             }
         }
-        return null;
     }
 }

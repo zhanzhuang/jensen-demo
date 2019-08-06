@@ -2,91 +2,74 @@ package ssh;
 
 import com.jcraft.jsch.*;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+
 public class SSH_JSch {
-    private static JSch jsch;
+    private static JSch jSch;
     private static Session session;
 
-    /**
-     * 连接到指定的机器
-     *
-     * @param user
-     * @param passwd
-     * @param host
-     * @param port
-     */
-    public static void connect(String user, String passwd, String host, int port) {
-        jsch = new JSch();// 创建JSch对象
-        try {
-            session = jsch.getSession(user, host, port);// 根据用户名、主机ip、端口号获取一个Session对象
-            session.setPassword(passwd);// 设置密码
+    private String freesshdIpFour;
+    private int freesshdPort;
+    private String freesshdUsername;
+    private String freesshdPassword;
+    private String command;
 
-            Properties config = new Properties();
-            config.put("StrictHostKeyChecking", "no");
-            session.setConfig(config);// 为Session对象设置properties
-            session.setTimeout(1500);// 设置超时
-            session.connect();// 通过Session建立连接
-        } catch (JSchException e) {
-            e.printStackTrace();
-        }
-
+    public SSH_JSch(String freesshdIpFour, int freesshdPort, String freesshdUsername, String freesshdPassword, String command) {
+        this.freesshdIpFour = freesshdIpFour;
+        this.freesshdPort = freesshdPort;
+        this.freesshdUsername = freesshdUsername;
+        this.freesshdPassword = freesshdPassword;
+        this.command = command;
     }
 
-    /**
-     * 执行命令
-     *
-     * @param command
-     * @throws JSchException
-     */
-    public static void execCmd(String command) {
+    public String connectServer() {
+        // 创建JSch对象
+        jSch = new JSch();
         BufferedReader reader = null;
         Channel channel = null;
         try {
+            session = jSch.getSession(freesshdUsername, freesshdIpFour, freesshdPort);
+            session.setPassword(freesshdPassword);
+            Properties config = new Properties();
+            session.setTimeout(1500);
+            session.connect();
             if (command != null) {
                 channel = session.openChannel("exec");
                 ((ChannelExec) channel).setCommand(command);
-                // ((ChannelExec) channel).setErrStream(System.err);
                 channel.connect();
-
                 InputStream in = channel.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(in));
-                String buf = null;
+                reader = new BufferedReader(new InputStreamReader(in, "GBK"));
+                String buf;
+                StringBuffer sb = new StringBuffer();
                 while ((buf = reader.readLine()) != null) {
-                    System.out.println(buf);
+                    sb = sb.append(buf);
                 }
+                return sb.toString();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSchException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                reader.close();
+                if (reader != null) {
+                    reader.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
+                return e.getMessage();
             }
-            channel.disconnect();
+            session.disconnect();
+            if (channel != null) {
+                channel.disconnect();
+            }
         }
-    }
-
-
-    /**
-     * 关闭连接
-     */
-    public static void close() {
-        session.disconnect();
-    }
-
-    public static void main(String[] args) {
-        connect("root", "root", "1.1.1.1", 22);
-
-        execCmd("java -version");
-
-        close();
+        return null;
     }
 }
