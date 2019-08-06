@@ -1,5 +1,8 @@
 package 设计模式.策略模式;
 
+/**
+ * 测试类
+ */
 public class Test {
     public static void main(String[] args) {
         Action sleep = new SleepAction();
