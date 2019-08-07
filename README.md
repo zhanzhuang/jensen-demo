@@ -58,9 +58,9 @@
 + `git checkout -f`   #恢复工作区中所有被删除的文件(文件之前被提交到仓库中)
 + `git ls-files -d`   #列出工作区被删除的文件(文件之前被提交到仓库中)
 + 有时候，由于我们的误操作，产生了一些错误，我们发现后希望能够及时纠正这些因为误操作而产生的结果，将工作目录恢复到某个正常状态。
-+ 撤销修改，但还没有添加到暂存区：git checkout -- filename  修改的文件会被恢复到上一次提交的状态，修改内容会丢失。
-+ 版本回退：先通过git reflog找到某个版本的commit_id，然后用git reset --hard commit_id将工作目录的文件恢复到指定的版本。
-+ 恢复工作区中被删除的文件(文件之前被提交到仓库中)：git checkout -- filename 或 git checkout -f
+    + 撤销修改，但还没有添加到暂存区：git checkout -- filename  修改的文件会被恢复到上一次提交的状态，修改内容会丢失。
+    + 版本回退：先通过git reflog找到某个版本的commit_id，然后用git reset --hard commit_id将工作目录的文件恢复到指定的版本。
+    + 恢复工作区中被删除的文件(文件之前被提交到仓库中)：git checkout -- filename 或 git checkout -f
 ### 备份工作区
 + `git stash`   #将工作区文件保存在git内部栈中
 + `git stash list`    #列出git内部栈中保存的工作区文件列表
