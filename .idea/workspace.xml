@@ -3,21 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="24a71f90-7955-49db-a9ef-92188bb40105" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/java8遍历/DemoList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/java8遍历/DemoMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/算法/BubbleSort.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/算法/Recursive.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/算法/SelectSort.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleDoubleCheckLock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleHungry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleLazy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Action.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/PlayAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/SleepAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Test.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -178,13 +163,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="output" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-              <item name="excel" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -324,7 +302,7 @@
       <workItem from="1564989098941" duration="671000" />
       <workItem from="1565054737303" duration="4145000" />
       <workItem from="1565141316589" duration="2865000" />
-      <workItem from="1565226689076" duration="1688000" />
+      <workItem from="1565226689076" duration="2176000" />
     </task>
     <task id="LOCAL-00001" summary="增加注释">
       <created>1565073287564</created>
@@ -369,7 +347,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42798000" />
+    <option name="totallyTimeSpent" value="43286000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,7 +379,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4985694" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49642345" visible="true" weight="0.23975904" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49642345" visible="true" weight="0.5445783" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5035765" side_tool="true" weight="0.44216868" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32650602" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
