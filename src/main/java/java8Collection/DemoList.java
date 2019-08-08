@@ -1,4 +1,4 @@
-package java8遍历;
+package java8Collection;
 
 import org.junit.Before;
 import org.junit.Test;

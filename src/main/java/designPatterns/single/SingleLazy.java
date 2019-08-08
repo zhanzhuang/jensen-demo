@@ -1,4 +1,4 @@
-package 设计模式.单例模式;
+package designPatterns.single;
 
 /**
  * 饿汉式单例

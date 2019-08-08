@@ -1,7 +1,7 @@
-package 设计模式.策略模式;
+package designPatterns.strategy;
 
 /**
- * 测试类
+ * 策略模式测试类
  */
 public class Test {
     public static void main(String[] args) {

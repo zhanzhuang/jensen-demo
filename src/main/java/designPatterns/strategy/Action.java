@@ -1,4 +1,4 @@
-package 设计模式.策略模式;
+package designPatterns.strategy;
 
 /**
  * 抽象策略角色
