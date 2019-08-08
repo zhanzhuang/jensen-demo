@@ -1,6 +1,4 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Test {
     public static void main(String[] args) {
@@ -12,6 +10,6 @@ public class Test {
         String s3 = s2.substring(0, s2.length() - 7);
         System.out.println(s3);
 
-
+        System.out.println("test.xml");
     }
 }

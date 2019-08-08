@@ -3,22 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="24a71f90-7955-49db-a9ef-92188bb40105" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/java8遍历/DemoList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/java8Collection/DemoList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/java8遍历/DemoMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/java8Collection/DemoMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/算法/BubbleSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algorithm/BubbleSort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/算法/Recursive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algorithm/Recursive.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/算法/SelectSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algorithm/SelectSort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/单例模式/SingleDoubleCheckLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/single/SingleDoubleCheckLock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/单例模式/SingleHungry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/single/SingleHungry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/单例模式/SingleLazy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/single/SingleLazy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/策略模式/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/策略模式/PlayAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/PlayAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/策略模式/SleepAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/SleepAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/策略模式/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/设计模式/策略模式/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Constant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/java8遍历/DemoList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/java8遍历/DemoMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/算法/BubbleSort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/算法/Recursive.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/算法/SelectSort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleDoubleCheckLock.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleHungry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/单例模式/SingleLazy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Action.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/PlayAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/SleepAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/设计模式/策略模式/Test.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,6 +26,12 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -48,19 +53,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Test.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/algorithm/Recursive.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+            <state relative-caret-position="255">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -79,6 +75,9 @@
     <findStrings>
       <find>Date</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/main/java/java8遍历</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -121,10 +120,11 @@
         <option value="$PROJECT_DIR$/src/main/java/设计模式/策略模式/SleepAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/设计模式/策略模式/PlayAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/Constant.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Test.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/java/设计模式/策略模式/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/designPatterns/strategy/Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Test.java" />
       </list>
     </option>
   </component>
@@ -176,62 +176,14 @@
               <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="output" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="designPatterns" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="exportExcel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="java8Collection" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="parseXml" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jensen-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jensen-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ssh" type="462c0819:PsiDirectoryNode" />
+              <item name="output" type="462c0819:PsiDirectoryNode" />
+              <item name="excel" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -250,7 +202,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -372,7 +324,7 @@
       <workItem from="1564989098941" duration="671000" />
       <workItem from="1565054737303" duration="4145000" />
       <workItem from="1565141316589" duration="2865000" />
-      <workItem from="1565226689076" duration="550000" />
+      <workItem from="1565226689076" duration="1688000" />
     </task>
     <task id="LOCAL-00001" summary="增加注释">
       <created>1565073287564</created>
@@ -417,7 +369,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41660000" />
+    <option name="totallyTimeSpent" value="42798000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -431,13 +383,14 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49879518" visible="true" weight="0.26824033" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49879518" visible="true" weight="0.26824033" />
       <window_info id="Structure" order="1" sideWeight="0.50120485" side_tool="true" weight="0.26108727" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Problems" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.2686747" />
@@ -448,7 +401,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4985694" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49642345" weight="0.44216868" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49642345" visible="true" weight="0.23975904" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5035765" side_tool="true" weight="0.44216868" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32650602" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -571,13 +524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/input/xml/test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="36" selection-start-column="36" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/java8Collection/DemoList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-12">
@@ -667,7 +613,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Action.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/strategy/Action.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
@@ -682,26 +628,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Constant.java" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="323">
-            <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ssh/SSH_JSch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-50">
@@ -722,14 +648,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/PlayAction.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/strategy/PlayAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Student.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/strategy/Student.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
@@ -742,7 +668,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/SleepAction.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/strategy/SleepAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
@@ -753,6 +679,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1105">
+            <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/strategy/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/algorithm/Recursive.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -760,10 +703,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/designPatterns/策略模式/Test.java">
+    <entry file="file://$PROJECT_DIR$/src/input/xml/test.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+        <state>
+          <caret column="36" selection-start-column="36" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
