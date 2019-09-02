@@ -12,6 +12,7 @@ public class Test {
         System.out.println(s3);
 
         System.out.println("test.xml");
+        System.out.println("hello world");
         for (int i = 0; i < 2; i++) {
             System.out.println(i);
         }
