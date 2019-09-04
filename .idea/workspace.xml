@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24a71f90-7955-49db-a9ef-92188bb40105" name="Default Changelist" comment="" />
+    <list default="true" id="24a71f90-7955-49db-a9ef-92188bb40105" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +24,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ExcelGenerate">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="ExcelGenerate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="exportExcel.ExcelGenerate" />
       <module name="jensen-demo" />
@@ -51,8 +53,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ExcelGenerate" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.ExcelGenerate" />
       </list>
     </recent_temporary>
   </component>
