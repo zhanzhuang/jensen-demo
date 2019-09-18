@@ -1,5 +1,5 @@
 # git基本配置命令
-## 实用git生成ssh密钥：``
+## 实用git生成ssh密钥：
 + `ssh-keygen -t rsa -C "email@wxample.com"`
 ## 设置全局用户名和邮箱：
 + `git config --global user.name "yourname"`
