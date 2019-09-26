@@ -1,4 +1,4 @@
-package streamAndMethodReference.Demo02Stream;
+package streamAndMethodReference.demo02Stream;
 
 import java.util.*;
 import java.util.stream.Stream;

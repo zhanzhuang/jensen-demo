@@ -1,4 +1,4 @@
-package streamAndMethodReference.Demo01Stream;
+package streamAndMethodReference.demo01Stream;
 
 import java.util.ArrayList;
 import java.util.List;
