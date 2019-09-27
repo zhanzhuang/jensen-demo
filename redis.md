@@ -84,7 +84,7 @@
             + \#appendfsync always(每一次操作都会持久化)
             + appendfsync everysec(每隔一秒持久化一次)
             + \# appendfsync no(不进行持久化)
-### 05-Jeids
+### 05-Jedis
 + jedis是一款java操作redis数据库的工具
 + 使用步骤
     + 1.下载jedis的jar包
