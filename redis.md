@@ -11,79 +11,79 @@
         + redis-server.exe = redis服务器
 ### 02-数据结构与命令操作
 + 数据结构
-    + 字符串类型 string
-    + 哈希类型 hash : 
+    + `字符串类型 string`
+    + `哈希类型 hash` : 
         + map格式
-    + 列表类型 list : 
+    + `列表类型 list` : 
         + linkedlist格式，可以重复
         + 是简单的字符串列表，按照插入顺序排序。可以添加一个元素到列表的头部或者尾部
-    + 集合类型 set : 
+    + `集合类型 set` : 
         + 不允许重复元素
-    + 有序集合类型 sortedset : 
+    + `有序集合类型 sortedset` : 
         + 不允许重复，且元素有序
 + 字符串类型 string
     + 存储 : 
-        + set key value
+        + `set key value`
     + 获取 : 
-        + get key
+        + `get key`
     + 删除 : 
-        + del key
+        + `del key`
 + 哈希类型 hash
     + 存储 : 
-        + hset field key value
+        + `hset field key value`
     + 获取 : 
-        + hget field key(获取指定字段的值)
-        + hgetall field(获取所有)
+        + `hget field key(获取指定字段的值)`
+        + `hgetall field(获取所有)`
     + 删除 : 
-        + hdel field key
+        + `hdel field key`
     
 + 列表类型 list
     + 存储 :
-        + lpush key value(将元素添加到列表左边)
-        + rpush key value(将元素添加到列表右边)
+        + `lpush key value(将元素添加到列表左边)`
+        + `rpush key value(将元素添加到列表右边)`
     + 获取 :
-        + lrange key start end(范围获取)
-        + lrange key 0 -1(获取所有元素)
+        + `lrange key start end(范围获取)`
+        + `lrange key 0 -1(获取所有元素)`
     + 删除 :
-        + lpop key(删除列表左边的元素，并将元素返回)
-        + rpop key(删除列表右边的元素，并将元素返回)
+        + `lpop key(删除列表左边的元素，并将元素返回)`
+        + `rpop key(删除列表右边的元素，并将元素返回)`
 + 集合类型 set
     + 存储 :
-        + sadd key value
-        + smembers key(获取set集合中所有元素)
-        + srem key value(删除set集合中的某个元素)
+        + `sadd key value`
+        + `smembers key(获取set集合中所有元素)`
+        + `srem key value(删除set集合中的某个元素)`
 + 有序集合类型 sortedset
     + 存储 : 
-        + zadd key score value
+        + `zadd key score value`
     + 获取 :
-        + zrange key start end
+        + `zrange key start end`
     + 删除 : 
-        + zrem key value
+        + `zrem key value`
 ### 03-通用命令
 + 查询所有的键
-    + keys *
+    + `keys *`
 + 查询键的类型
-    + type key
+    + `type key`
 + 删除指定的key value
-    + del key
+    + `del key`
 ### 04-持久化
 + redis是一个内存数据库,当redis服务器重启或者电脑重启数据就会丢失,我们可以将redis内存中的数据持久化保存到硬盘中
 + 持久化机制
     + RDB
         + 默认使用这种方式，不需要配置
         + 在一定的间隔时间中，检测key的变化情况，然后持久化数据
-        + 1.编辑redis.windows.conf文件
+        + 1.编辑`redis.windows.conf`文件
             + save 900 1(after 15 min if at least 1 key changed)
             + save 300 10(after 5 min if at least 10 keys changed)
             + save 60 10000(after 1min if at least 10000 keys changed)
         + 2.重启redis服务器，并在redis文件夹下打开命令行：redis-server.exe redis.windows.conf
     + AOF
         + 日志记录的方式，可以记录每一条命令的操作。可以每一次命令操作后来持久化数据
-        + 1.编辑redis.windows.conf文件
-        + 2.appendonly no 改成 appendonly yes(开启AOF持久化)
-            + \#appendfsync always(每一次操作都会持久化)
-            + appendfsync everysec(每隔一秒持久化一次)
-            + \# appendfsync no(不进行持久化)
+        + 1.编辑`redis.windows.conf`文件
+        + 2.`appendonly no` 改成 `appendonly yes`(开启AOF持久化)
+            + `\#appendfsync always`(每一次操作都会持久化)
+            + `appendfsync everysec`(每隔一秒持久化一次)
+            + `\# appendfsync no`(不进行持久化)
 ### 05-Jedis
 + jedis是一款java操作redis数据库的工具
 + 使用步骤
