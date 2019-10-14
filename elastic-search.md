@@ -100,12 +100,13 @@
         }
         ```
 + 先创建索引库后设置mappings
-    + 创建索引库 PUT 请求
-        ```
-        http://127.0.0.1:9200/blog
-        ```
-    + 设置mappings POST请求
-        + 地址
+    + 创建索引库 
+        + 地址 PUT 
+            ```
+            http://127.0.0.1:9200/blog
+            ```
+    + 设置mappings
+        + 地址  POST
             ```
             http://127.0.0.1:9200/blog/hello/_mappings
             ```
