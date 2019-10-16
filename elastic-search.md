@@ -376,7 +376,7 @@
 + **IK分词器简介**
     + IKAnalyzer是一个开源，基于java开发的轻量级中文分词工具包
 + **下载(IK版本与ES的版本要一致)**
-    + **https://github.com/medcl/elasticsearch-analysis-ik/releases**下载zip包
+    + **https://github.com/medcl/elasticsearch-analysis-ik/releases** 下载zip包
     + 将zip解压到**elasticsearch-5.6.8\plugins**下
     + 重启ElasticSearch，即可加载IK分词器
 + **IK分词器测试**
