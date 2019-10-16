@@ -92,7 +92,7 @@
     + `git reset --hard HEAD^`    
 + **回退到指定版本**
     + `git reset --hard commit_id` 
-+ **恢复工作区被杀出的指定文件(文件之前被提交到仓库中)**
++ **恢复工作区被删除的指定文件(文件之前被提交到仓库中)**
     + `git checkout -- filename`     
 + **恢复工作区中所有被删除的文件(文件之前被提交到仓库中)**
     + `git checkout -f`   

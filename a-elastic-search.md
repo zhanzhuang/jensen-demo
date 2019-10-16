@@ -1,4 +1,13 @@
+# ElasticSearch 目录
++ **一 ElasticSearch简介**
++ **二 ElasticSearch安装与启动**
++ **三 ElasticSearch相关概念(术语)**
++ **四 增删改查**
++ **五 IK分词器和ElasticSearch集成使用**
++ **六 ElasticSearch集群**
++ **七 Java客户端管理ES**
 ## 一 ElasticSearch简介
++ 你在说你**🐎**呢
 ## 二 ElasticSearch安装与启动
 + **下载**
     + 地址: **https://www.elastic.co/cn/downloads/elasticsearch**
@@ -709,3 +718,240 @@
         }
         ```
     + 在head中点击数据浏览即可查看到内容
+# 七 Java客户端管理ES
+## 使用Java客户端创建索引库
+```
+<dependency>
+    <groupId>org.elasticsearch</groupId>
+    <artifactId>elasticsearch</artifactId>
+    <version>5.6.8</version>
+</dependency>
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>transport</artifactId>
+    <version>5.6.8</version>
+</dependency>
+```
+```java
+public class ElasticSearchTest {
+    @Test
+    public void createIndex() throws Exception {
+        // 1.创建一个Settings对象，相当于是一个配置信息。主要配置集群的名称。
+        Settings settings = Settings.builder()
+                .put("cluster.name", "my-elasticsearch")
+                .build();
+        // 2.创建一个客户端Client对象
+        TransportClient client = new PreBuiltTransportClient(settings);
+        // ip地址=InetAddress.getByName("127.0.0.1")      9201是http提供对外服务的端口号 这里要用tcp连接es服务器所以是9301
+        client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301));
+        client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9302));
+        client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9303));
+        // 3.使用client创建索引库
+        // admin()=管理员  indices()=对索引库进行管理  prepareCreate()=创建索引库   get()=执行
+        client.admin().indices().prepareCreate("index_hello").get();
+        // 4.管理client对象
+        client.close();
+
+    }
+}
+```
+### 使用Java客户端设置mapping
+```
+@Test
+public void setMappins() throws Exception {
+    // 1.创建一个Settings对象
+    Settings settings = Settings.builder()
+            .put("cluster.name", "my-elasticsearch")
+            .build();
+    // 2.创建一个客户端Client对象
+    TransportClient client = new PreBuiltTransportClient(settings)
+            // 一次性弄好Client对象
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301))
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9302))
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9303));
+    // 3.创建一个mappings信息
+    /**
+     * "mappings" : {
+     *              "article" : {
+     *                 "dynamic" : "false",
+     *                  "properties" : {
+     *                     "id" : { "type" : "string" },
+     *                      "content" : { "type" : "string" },
+     *                     "author" : { "type" : "string" }
+     *                   }
+     *              }
+     * }
+     */
+    XContentBuilder builder = new XContentFactory().jsonBuilder()
+            .startObject() // 相当于 {
+                .startObject("article")
+                    .startObject("properties")
+                        .startObject("id")
+                            .field("type","long")
+                            .field("store",true)
+                        .endObject()
+                        .startObject("title")
+                            .field("type","text")
+                            .field("store",true)
+                            .field("analyzer","ik_smart")
+                        .endObject()
+                        .startObject("content")
+                            .field("type","text")
+                            .field("store",true)
+                            .field("analyzer","ik_smart")
+                        .endObject()
+                    .endObject()
+                .endObject()
+            .endObject();
+    // 4.使用client把mapping信息设置到索引库中
+    client.admin().indices()
+            // 索引
+            .preparePutMapping("index_hello")
+            // type
+            .setType("article")
+            // mapping信息，可以是XXontentBuilder对象 也可以是json格式的字符串
+            .setSource(builder)
+            // 执行
+            .get();
+    // 5.关闭连接
+    client.close();
+}
+```
+### 使用Java客户端向索引库添加文档
++ **1.拼接JSON串的方式**
+    ```
+    private TransportClient client
+    
+    @Before
+    public void init() throws Exception{
+        Settings settings = Settings.builder()
+                .put("cluster.name", "my-elasticsearch")
+                .build
+        client = new PreBuiltTransportClient(settings)
+                // 一次性弄好Client对象
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301))
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9302))
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9303
+    
+    /**
+     * 添加文档
+     * @throws Exception
+     */
+    @Test
+    public void testAddDocument() throws Exception {
+        // clien
+        // 文档对象
+        XContentBuilder builder = XContentFactory.jsonBuilder()
+                .startObject()
+                    .field("id", 1L)
+                    .field("title", "北方入秋速度明显加快 多地降温幅度最多可达10度")
+                    .field("content", "阿联酋一架客机在纽约机场被隔离 10名乘客病倒")
+                .endObject();
+        // 把文档对象添加到索引库
+        client.prepareIndex()
+                .setIndex("index_hello")//索引名称
+                .setType("article")// type
+                .setId("1")// 文档id，如果不设置会自动生成
+                .setSource(builder)// 设置文档信息
+                .get();// 执行
+        // close
+        client.close();
+    }
+    ```
++ **2.创建实体类的方式**
+    ```
+    public class Article {
+        private Long id;
+        private String title;
+        private String content;
+        get and set ...
+    }
+    ```
+    ```
+    /**
+     * 添加文档(创建pojo的方式,较为方便)
+     * @throws Exception
+     */
+    @Test
+    public void testAddDocument2() throws Exception {
+        // 设置一个Article对象
+        Article article = new Article();
+        // 设置对象的属性
+        article.setId(3L);
+        article.setTitle("搜索工作其实很快乐");
+        article.setContent("我们希望我们的搜索解决方案要快，我们希望有一个零配置和一个完全免费的搜索模式，我们希望能够简单地使用JSON通过HTTP的索引数据，我们希望我们的搜索服务器始终可用，我们希望能够一台开始并扩展到数百，我们要实时搜索，我们要简单的多租户，我们希望建立一个云的解决方案。Elasticsearch旨在解决所有这些问题和更多的");
+        // 把article对象转换成json格式的字符串
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonDocument = objectMapper.writeValueAsString(article);
+        System.out.println(jsonDocument);
+        // 使用client把文档写入索引库
+        client.prepareIndex("index_hello","article","3")
+                .setSource(jsonDocument, XContentType.JSON)
+                .get();
+        // 关闭客户端
+        client.close();
+    }
+    ```
+### 使用Java客户端实现搜索
++ **根据id进行搜索**
+    ```
+    private void search(QueryBuilder queryBuilder) {
+        SearchResponse searchResponse = client.prepareSearch("index_hello")
+                .setTypes("article")
+                .setQuery(queryBuilder)
+                .get();
+        // 取查询结果
+        SearchHits searchHits = searchResponse.getHits();
+        // 取查询结果的总记录数
+        System.out.println("查询结果总记录数" + searchHits.getTotalHits());
+        // 查询结果列表
+        Iterator<SearchHit> iterator = searchHits.iterator();
+        while (iterator.hasNext()) {
+            SearchHit searchHit = iterator.next();
+            // 打印文档对象,JSON格式输出
+            System.out.println(searchHit.getSourceAsString());
+            // 取文档的属性
+            System.out.println("-----文档的属性");
+            Map<String, Object> document = searchHit.getSource();
+            System.out.println(document.get("id"));
+            System.out.println(document.get("title"));
+            System.out.println(document.get("content"));
+        }
+        // 关闭
+        client.close();
+    }
+
+    /**
+     * 根据ID进行查询
+     * @throws Exception
+     */
+    @Test
+    public void testSearchById() throws Exception {
+        QueryBuilder queryBuilder = QueryBuilders.idsQuery().addIds("1", "2");
+        search(queryBuilder);
+    }
+    ```
++ **根据term(关键词)进行搜索**
+    ```
+    /**
+     * 根据关键词查询
+     * @throws Exception
+     */
+    @Test
+    public void testSearchByTerm() throws Exception {
+        QueryBuilder queryBuilder = QueryBuilders.termQuery("title", "北方");
+        search(queryBuilder);
+    }
+    ```
++ **QueryString查询(带分析的查询)**
+    ```
+    /**
+     * 带分析的查询
+     */
+    @Test
+    public void testSearchByQueryString() {
+        QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("速度与激情")
+                .defaultField("title");// 不指定title会在所有域进行查询
+        search(queryBuilder);
+    }
+    ```
