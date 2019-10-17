@@ -203,7 +203,9 @@
 ### 1.DQL查询语句
 + 1.1排序查询
     + 1.1.1语法:`order by 子句`
-        + `order by 排序字段1 排序方式1, 排序字段2 排序方式2...`
+        ```sql
+        order by 排序字段1 排序方式1, 排序字段2 排序方式2...
+        ```
     + 1.1.2排序方式:
         + `ASC`
         + `DESC`
@@ -421,16 +423,11 @@
      dept_id int,
      foreign key (dept_id) references dept(id) -- 外键，关联部门表(部门表的主键)
     )
-    insert into emp(name,gender,salary,join_date,dept_id) values('孙悟空','男
-    ',7200,'2013-02-24',1);
-    insert into emp(name,gender,salary,join_date,dept_id) values('猪八戒','男
-    ',3600,'2010-12-02',2);
-    insert into emp(name,gender,salary,join_date,dept_id) values('唐僧','男'
-    ,9000,'2008-08-08',2);
-    insert into emp(name,gender,salary,join_date,dept_id) values('白骨精','女
-    ',5000,'2015-10-07',3);
-    insert into emp(name,gender,salary,join_date,dept_id) values('蜘蛛精','女
-    ',4500,'2011-03-14',1);
+    insert into emp(name,gender,salary,join_date,dept_id) values('孙悟空','男',7200,'2013-02-24',1);
+    insert into emp(name,gender,salary,join_date,dept_id) values('猪八戒','男',3600,'2010-12-02',2);
+    insert into emp(name,gender,salary,join_date,dept_id) values('唐僧','男',9000,'2008-08-08',2);
+    insert into emp(name,gender,salary,join_date,dept_id) values('白骨精','女',5000,'2015-10-07',3);
+    insert into emp(name,gender,salary,join_date,dept_id) values('蜘蛛精','女',4500,'2011-03-14',1);
     ```
 + 4.2多表查询分类
     + 4.2.1内连接查询
@@ -497,9 +494,13 @@
                 + 需要先开启事务,再提交
         + 修改事务的默认提交方式
             + 查看事务的默认提交方式
-                + `select @@autocommit; -- 1代表自动提交 0代表手动提交`
+                ```sql
+                select @@autocommit; -- 1代表自动提交 0代表手动提交
+                ```
             + 修改默认提交方式:
-                + `set @@autocommit = 0;`
+                ```sql
+                set @@autocommit = 0;
+                ```
 + 5.2事务的四大特征
     + 5.2.1原子性
         + 是不可分割的最小操作单位,要么同时成功要么同时失败
@@ -563,7 +564,7 @@
             9.使用新密码登录
             ```
     + 查询用户：
-        ```
+        ```sql
         --1.切换到mysql数据库
         user mysql;
         --2.查询user表
