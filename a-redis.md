@@ -95,7 +95,7 @@
 + jedis是一款java操作redis数据库的工具
 + 使用步骤
     + 1.下载jedis的jar包
-    ```
+    ```xml
     <dependency>
         <groupId>redis.clients</groupId>
         <artifactId>jedis</artifactId>
@@ -103,7 +103,7 @@
     </dependency>
     ```
     + 2.使用
-    ```
+    ```java
     // 1.获取连接
     Jedis jedis = new Jedis("localhost", 6379);
     // 2.操作
@@ -112,7 +112,7 @@
     jedis.close();
     ```
     + 代码
-    ```
+    ```java
     /**
      * string
      */
@@ -190,7 +190,7 @@
 ### 06-JedisPool
 + 使用
     + 简单的Jedis连接池
-    ```
+    ```java
     /**
      * Jedis连接池
      */
@@ -204,7 +204,7 @@
     }
     ```
     + 改良的Jedis连接池
-    ```
+    ```java
     /**
      * JedisPool工具类
      * 加载配置文件，配置连接池的参数

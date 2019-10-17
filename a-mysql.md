@@ -26,31 +26,49 @@
 ### 2.操作数据库:CRUD
 + 2.1C(create)
     + 2.1.1创建数据库
-        + `create database 数据库名称;`
+        ```sql
+        create database 数据库名称;
+        ```
     + 2.1.2创建数据库,判断不存在,再创建
-        + `create database if not exists 数据库名称;`
+        ```sql
+        create database if not exists 数据库名称;
+        ```
     + 2.1.3创建数据库,并指定字符集
-        + `create database 数据库名称 character set 字符集名;`
+        ```sql
+        create database 数据库名称 character set 字符集名;
+        ```
 + 2.2R(retrieve)
     + 2.2.1查询所有数据库的名称
-        + `show databases;`
+        ```sql
+        show databases;
+        ```
     + 2.2.2查询某个数据库的字符集：查询某个数据库的创建语句
-        + `show create database 数据库名称;`
+        ```sql
+        show create database 数据库名称;
+        ```
 + 2.3U(update)
     + 2.3.1修改数据库的字符集
-        + `alter database 数据库名称 character set 字符集名称;`
+        ```sql
+        alter database 数据库名称 character set 字符集名称;
+        ```
 + 2.4D(delete)
     + 2.4.1删除数据库
-        + `drop database 数据库名称;`
+        ```sql
+        drop database 数据库名称;
+        ```
     + 2.4.2判断数据库存在,存在再删除
-        + `drop database if exists 数据库名称;`
+        ```sql
+        drop database if exists 数据库名称;
+        ```
 + 2.5使用数据库
     + 2.5.1查询当前正在使用的数据库名称
-        + `select database();`
+        ```sql
+        select database();
+        ```
 ### 3.操作表:CRUD
 + 3.1C(create)
     + 3.1.1语法(注意最后一列不需要逗号)
-        ```
+        ```sql
         create table 表名(
             列名1 数据类型1,
             列名2 数据类型2,
@@ -71,7 +89,7 @@
             + name varchar(20):姓名最大20个字符
             + zhangsan 8个字符 张三 2个字符
     + 3.1.3创建表
-        ```
+        ```sql
         create table student(
             id int,
             name varchar(32),
@@ -83,52 +101,89 @@
         ```
 + 3.2R(retrieve)
     + 3.2.1查询某个数据库中的所有的表的名称
-        + `show tables;`
+        ```sql
+        show tables;
+        ```
     + 3.2.2查询表结构
-        + `desc 表名;`
+        ```sql
+        desc 表名;
+        ```
 + 3.3U(update)
     + 3.3.1改表名
-        + `alter table 表名 rename to 新表名;`
+        ```sql
+        alter table 表名 rename to 新表名;
+        ```
     + 3.3.2修改表的字符集
-        + `alter table 表名 character set 字符集名称;`
+        ```sql
+        alter table 表名 character set 字符集名称;
+        ```
     + 3.3.3添加一列
-        + `alter table 表名 add 列名 数据类型;`
+        ```sql
+        alter table 表名 add 列名 数据类型;
+        ```
     + 3.3.4修改列名称 类型
-        + `alter table 表名 change 列名 新列名 新数据类型;`
-        + `alter table 表名 modify 列名 新数据类型;`
+        ```sql
+        alter table 表名 change 列名 新列名 新数据类型;
+        ```
+        ```sql
+        alter table 表名 modify 列名 新数据类型;
+        ```
     + 5.删除列
-        + `alter table 表名 drop 列名;`
+        ```sql
+        alter table 表名 drop 列名;
+        ```
 + 3.4D(delete)
-    + `drop table 表名;`
-    + `drop table 表名 if exists 表名;`
+    ```sql
+    drop table 表名;
+    ```
+    ```sql
+    drop table 表名 if exists 表名;
+    ```
 + 3.5DML 增删改表中的数据
     + 3.5.1添加数据
-        + `insert into 表名(列名1,列名2,...列名n) values(值1,值2,...值n);`
+        ```sql
+        insert into 表名(列名1,列名2,...列名n) values(值1,值2,...值n);
+        ```
         + 1.列名要和值一一对应
         + 2.如果表名后不定义列名,则默认给所有列添加值
             + insert into 表名 values(值1,值2,...值n);
         + 3.除了数字类型,其他类型需要使用引号(单双都可以)引起来
         
     + 3.5.2删除数据
-        + `delete from 表名 [where 条件]`
+        ```sql
+        delete from 表名 [where 条件]
+        ```
         + 1.如果不加条件，则删除表中所有记录
     + 3.5.3修改数据
-        + `update 表名 set 列名1=值1, 列名2=值2,... [where 条件];`
+        ```sql
+        update 表名 set 列名1=值1, 列名2=值2,... [where 条件];
+        ```
         + 1.如果不加条件，则会将表中所有记录全部修改
 + 3.6DQL 查询表中的记录
     + 3.6.1语法
-        + `SELECT * FROM 表名;`
-        + `SELECT 字段列表 FROM 表名列表 where 条件列条 group by 分组字段 having 分组之后的条件 order by 排序 limit 分页限定`
+        ```sql
+        SELECT * FROM 表名;
+        ```
+        ```sql
+        SELECT 字段列表 FROM 表名列表 where 条件列条 group by 分组字段 having 分组之后的条件 order by 排序 limit 分页限定
+        ```
     + 3.6.2基础查询
         + 多个字段的查询
-            + `SELECT 字段名1,字段名2,...FROM 表名;`
+            ```sql
+            SELECT 字段名1,字段名2,...FROM 表名;
+            ```
         + 去掉重复
             + `DISTINCT`(结果集完全一样才能去掉)
         + 计算列
-            + 一般可以使用四则运算计算一些列的值。(一般只会进行数值型的计算)
-                + `SELECT name,math,english,math+english FROM student;`(如果其中有null结果就为null!)
+            + 一般可以使用四则运算计算一些列的值。(一般只会进行数值型的计算)(如果其中有null结果就为null!)
+                ```sql
+                SELECT name,math,english,math+english FROM student;
+                ```
+                
             + `IFNULL(表达式1,表达式2)`
-                + `SELECT name,math,english,math + IFNULL(english,0) AS total FROM student`
+                ```sql
+                SELECT name,math,english,math + IFNULL(english,0) AS total FROM student
+                ```
         + 别名
             + `as`
     + 3.6.3条件查询
@@ -170,13 +225,13 @@
         + 2.`where` 和 `having` 的区别
             + `where`在分组之前进行限定，不满足条件不会参与分组。`having`在分组之后进行限定，不满足条件不会被查询出来
             + `where`后面不可以跟聚合函数,`having`可以进行聚合函数的判断
-        ```
+        ```sql
         SELECT sex,AVG(math),COUNT(id) 人数 FROM student WHERE math > 70 GROUP BY sex HAVING 人数 > 2;        
         ```
 + 1.4分页查询
     + 1.4.1语法:`limit 开始的索引 每一页查询的条数`
     + 1.4.2公式:`开始的索引 = (当前的页码 -1) * 每页显示的条数`
-        ```
+        ```sql
         SELECT * FROM student LIMIT 0,3; -- 第一页
         SELECT * FROM student LIMIT 3,3; -- 第二页
         SELECT * FROM student LIMIT 6,3; -- 第三页
@@ -192,77 +247,77 @@
             + 2.一张表只能有一个字段为主键
             + 3.主键就是表中记录的唯一标识
         + 1).在创建表时添加主键约束
-            ```
+            ```sql
             create table stu(
                 id int primary key, -- 给id添加主键约束
                 name varchar(20)
             );
             ```
         + 2).创建表之后添加主键
-            ```
+            ```sql
             ALTER TABLE stu MODIFY id INT PRIMARY KEY;
             ```
         + 3).删除主键
-            ```
+            ```sql
             ALTER TABLE stu DROP PRIMARY KEY; -- yes
             ```
         + 4).自动增长
             + 1)).如果某一列时数值类型的，使用**auto_increment**可以完成值的自动增长。也可以手动委派这个值
             + 2)).在创建表时，添加主键约束并自动增长
-                ```
+                ```sql
                 create table stu(
                     id int primary key auto_increment, 
                     name varchar(20)
                 );
                 ```
             + 3)).删除自动增长
-                ```
+                ```sql
                 ALTER TABLE stu MODIFY id INT;
                 ```
             + 4)).添加自动增长
-                ```
+                ```sql
                 ALTER TABLE stu MODIFY id INT auto_increment;
                 ```
                 
     + 2.2.2非空约束:`not null`(某一列的值不能为NULL)
         + 1).创建表时添加约束
-            ```
+            ```sql
             CREATE TABLE stu(
             	id INT,
             	name VARCHAR(20) NOT NULL -- name非空
             );
             ```
         + 2).创建表后添加非空约束
-            ```
+            ```sql
             ALTER TABLE stu MODIFY name VARCHAR(20) NOT NULL;
             ```
         + 3).删除name的非空约束
-            ```
+            ```sql
             ALTER TABLE stu MODIFY name VARCHAR(20)
             ```
     + 2.2.3唯一约束:`unique`(某一列的值不能重复)
         + 注意
             唯一约束可以有NULL，只能有一个
         + 1).创建表时添加唯一约束
-            ```
+            ```sql
             CREATE TABLE stu(
             	id INT,
             	phone_number VARCHAR(20) UNIQUE -- 手机号
             );
             ```
         + 2).创建表后添加唯一约束
-            ```
+            ```sql
             ALTER TABLE stu MODIFY phone_number VARCHAR(20) UNIQUE;
             ```
         + 3).删除唯一约束
-            ```
+            ```sql
             ALTER TABLE stu MODIFY phone_number VARCHAR(20); -- 这是错的
             ALTER TABLE stu DROP INDEX phone_number; -- 删除
             ```
     + 2.2.4外键约束:`foreign key`
         + 1).在创建表时添加外键
             + 语法
-                ```
+                ```sql
                 create table 表名(
                     ...
                     外键列
@@ -270,19 +325,23 @@
                 );
                 ```
         + 2).创建表后添加外键
-            ```
+            ```sql
             ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id);
             ```
         + 3).删除外键
-            ```
+            ```sql
             ALTER TABLE employee DROP FOREIGN KEY emp_depid_fk
             ```
     + 2.2.5级联操作
         + 1).添加外键的时候设置级联
             + 当修改department表中id的时候,对应的employee表关联的id会同步更新
-                + ```ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id) ON UPDATE CASCADE;```
+                ```sql
+                ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id) ON UPDATE CASCADE;
+                ```
             + 当删除department表中id的时候,对应的employee表关联的id会同步删除
-                + ```ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id) ON DELETE CASCADE;```
+                ```sql
+                ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id) ON DELETE CASCADE;
+                ```
 ### 3.数据库的设计
 + 3.1多表之间的关系
     + 3.1.1分类
@@ -345,7 +404,7 @@
 
 ### 4.多表查询
 + 4.1准备sql
-    ```
+    ```sql
     # 创建部门表
     create table dept(
      id int primary key auto_increment,
@@ -377,10 +436,14 @@
     + 4.2.1内连接查询
         + 隐式内连接
             + 使用`WHERE`清除无用数据
-            + `select t1.name,t1.gender,t2.name from emp t1,dept t2 where t1.dept_id = t2.id`
+                ```sql
+                select t1.name,t1.gender,t2.name from emp t1,dept t2 where t1.dept_id = t2.id
+                ```
         + 显示内连接
             + 使用`INNER JOIN`
-            + `select * from emp inner join dept on emp.dept_id = dept.id`
+                ```sql
+                select * from emp inner join dept on emp.dept_id = dept.id
+                ```
         + 注意
             + 查询的是交集部分
             + 从哪些表中查询数据
@@ -388,23 +451,33 @@
             + 查询哪些字段
     + 4.2.2外连接查询
         + 左外连接
-            + select 字段 from 表1 left join 表2 on 条件
+            ```sql
+            select 字段 from 表1 left join 表2 on 条件
+            ```
             + 查询的是左表的所有数据以及其交集部分
         + 右外连接
             + 与左同理
     + 4.2.3子查询
         + 概念:查询中嵌套查询,称嵌套查询为子查询
-        + `select * from emp where emp.salary = (select max(salary) from emp)`
+        ```sql
+        select * from emp where emp.salary = (select max(salary) from emp)
+        ```
         + 子查询的不同情况
             + 子查询结果是单行单列
                 + 子查询可以作为条件,使用运算符去判断 基本运算符 = < <=...
-                + `select * from emp where emp.salary < (select avg(salary) from emp)`
+                    ```sql
+                    select * from emp where emp.salary < (select avg(salary) from emp)
+                    ```
             + 子查询结果是多行单列
                 + 子查询可以作为条件,使用运算符去判断 IN
-                + `select * from emp where dept_id in (select id from dept where name = '财务部' or name = '市场部')`
+                    ```sql
+                    select * from emp where dept_id in (select id from dept where name = '财务部' or name = '市场部')
+                    ```
             + 子查询结果是多行多列
                 + 子查询可以作为虚拟表,来进行关联
-                + `select * from dept t1,(select * from emp where emp.join_date > '2011-11-11') t2 where t1.id = t2.dept_id`
+                    ```sql
+                    select * from dept t1,(select * from emp where emp.join_date > '2011-11-11') t2 where t1.id = t2.dept_id
+                    ```
     
 ### 5.事务
 + 5.1事务的基本介绍
@@ -453,18 +526,30 @@
             + 解决所有问题
         + 注意：隔离级别从小到大安全性越来越高,但是效率越来越低
         + 查询隔离级别:
-            + `select @@transaction_isolation;`
+            ```sql
+            select @@transaction_isolation;
+            ```
         + 设置隔离级别:
-            + `set global transaction isolation level serializable`
+            ```sql
+            set global transaction isolation level serializable
+            ```
 ### 6.管理用户
 + 6.1管理用户
     + 添加用户：
-        + `create user'用户名'@'主机名' IDENTIFIED BY '密码';`
+        ```sql
+        create user'用户名'@'主机名' IDENTIFIED BY '密码';
+        ```
     + 删除用户：
-        + `drop user '用户名'@'主机名';`
+        ```sql
+        drop user '用户名'@'主机名';
+        ```
     + 修改用户密码：
-        + `update user set password = password('新密码') where user = '用户名'`
-        + `set paassword for '用户名'@'主机名' = password('新密码')`
+        ```sql
+        update user set password = password('新密码') where user = '用户名'
+        ```
+        ```sql
+        set paassword for '用户名'@'主机名' = password('新密码')
+        ```
         + mysql中忘记root用户密码
             ```
             1.cmd -> net stop mysql (管理员身份停止mysql服务)
@@ -487,10 +572,18 @@
         ```
 + 6.2权限管理
     + 查询权限
-        + `show grants for '用户名'@'主机名';`
+        ```sql
+        show grants for '用户名'@'主机名';
+        ```
     + 授予权限
-        + `grant select,...,update on 数据库名.表名 to 用户名'@'主机名';'`
-        + `grant all on *.* to 用户名'@'主机名';'`
+        ```sql
+        grant select,...,update on 数据库名.表名 to 用户名'@'主机名';'
+        ```
+        ```sql
+        grant all on *.* to 用户名'@'主机名';'
+        ```
     + 撤销权限
-        + `revoke 权限列表 on 数据库名.表名 from '用户名'@'主机名';`
+        ```sql
+        revoke 权限列表 on 数据库名.表名 from '用户名'@'主机名';
+        ```
         + `同样可以使用通配符撤销权限`

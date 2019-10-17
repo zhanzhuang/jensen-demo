@@ -75,7 +75,7 @@
         http://127.0.0.1:9200/blog1
         ```
     + json内容
-        ```
+        ```json
         {
         	"mappings":{
         		"article":{
@@ -102,7 +102,7 @@
         }
         ```
     + 响应
-        ```
+        ```json
         {
             "acknowledged": true,
             "shards_acknowledged": true,
@@ -121,7 +121,7 @@
             http://127.0.0.1:9200/blog/hello/_mappings
             ```
         + 内容
-            ```
+            ```json
             {
             	"hello":{
             		"properties":{
@@ -147,7 +147,7 @@
             }
             ```
         + 响应
-            ```
+            ```json
             {
                 "acknowledged": true
             }
@@ -166,7 +166,7 @@
         }
         ```
     + 响应
-        ```
+        ```json
         {
             "_index": "blog",
             "_type": "hello",
@@ -189,7 +189,7 @@
         http://127.0.0.1/blog2
         ```
     + 响应
-        ```
+        ```json
         {
             "acknowledged": true
         }
@@ -201,7 +201,7 @@
         http://127.0.0.1:9200/blog/hello/1
         ```
     + 响应
-        ```
+        ```json
         {
             "found": true,
             "_index": "blog",
@@ -223,7 +223,7 @@
         http://127.0.0.1:9200/blog/hello/1
         ```
     + 响应
-        ```
+        ```json
         {
             "_index": "blog",
             "_type": "hello",
@@ -245,7 +245,7 @@
         http://127.0.0.1:9200/blog/hello/1
         ```
     + 响应
-        ```
+        ```json
         {
         	"_index": "blog",
         	"_type": "hello",
@@ -266,7 +266,7 @@
         http://127.0.0.1:9200/blog/hello/_search
         ```
     + 请求体
-        ```
+        ```json
         {
         	"query":{
         		"term":{
@@ -276,7 +276,7 @@
         }
         ```
     + 响应
-        ```
+        ```json
         {
         	"took": 5,
         	"timed_out": false,
@@ -323,7 +323,7 @@
         http://127.0.0.1:9200/blog/hello/_search
         ```
     + 请求体
-        ```
+        ```json
         {
         	"query":{
         		"query_string":{
@@ -334,7 +334,7 @@
         }
         ```
     + 响应
-        ```
+        ```json
         {
         	"took": 15,
         	"timed_out": false,
@@ -396,7 +396,7 @@
         http://127.0.0.1:9200/_analyze?analyzer=ik_smart&pretty=true&text=我是程序员
         ```
         响应
-        ```
+        ```json
         {
           "tokens": [
             {
@@ -428,7 +428,7 @@
         http://127.0.0.1:9200/_analyze?analyzer=ik_max_word&pretty=true&text=我是程序员
         ```
         响应
-        ```
+        ```json
         {
           "tokens": [
             {
@@ -476,7 +476,7 @@
             http://127.0.0.1:9200/blog/
             ```
         + 请求体(hello就是type)
-            ``` 
+            ``` json
             {
             	"mappings":{
             		"hello":{
@@ -501,7 +501,7 @@
             }
             ```
         + 响应
-            ```
+            ```json
             {
                 "acknowledged": true,
                 "shards_acknowledged": true,
@@ -514,7 +514,7 @@
             http://127.0.0.1:9200/blog/hello/6
             ```
         + 请求体
-            ```
+            ```json
             {
             	"id":"6",
             	"title":"节点。 一个节点可以通过配置集群名称来加入",
@@ -522,7 +522,7 @@
             }
             ```
         + 响应
-            ```
+            ```json
             {
                 "_index": "blog",
                 "_type": "hello",
@@ -543,7 +543,7 @@
             http://127.0.0.1:9200/blog/hello/_search
             ```
         + 请求体
-            ```
+            ```json
             {
             	"query":{
             		"query_string":{
@@ -554,7 +554,7 @@
             }
             ```
         + 响应
-            ```
+            ```json
             {
             	"took": 21,
             	"timed_out": false,
@@ -680,7 +680,7 @@
         http://127.0.0.1:9201/blog
         ```   
     + 请求体
-        ```
+        ```json
         {
             "mappings":{
             	"hello":{
@@ -720,7 +720,7 @@
     + 在head中点击数据浏览即可查看到内容
 # 七 Java客户端管理ES
 ## 使用Java客户端创建索引库
-```
+```xml
 <dependency>
     <groupId>org.elasticsearch</groupId>
     <artifactId>elasticsearch</artifactId>
@@ -756,7 +756,7 @@ public class ElasticSearchTest {
 }
 ```
 ### 使用Java客户端设置mapping
-```
+```java
 @Test
 public void setMappins() throws Exception {
     // 1.创建一个Settings对象
@@ -819,7 +819,7 @@ public void setMappins() throws Exception {
 ```
 ### 使用Java客户端向索引库添加文档
 + **1.拼接JSON串的方式**
-    ```
+    ```java
     private TransportClient client
     
     @Before
@@ -859,7 +859,7 @@ public void setMappins() throws Exception {
     }
     ```
 + **2.创建实体类的方式**
-    ```
+    ```java
     public class Article {
         private Long id;
         private String title;
@@ -867,7 +867,7 @@ public void setMappins() throws Exception {
         get and set ...
     }
     ```
-    ```
+    ```java
     /**
      * 添加文档(创建pojo的方式,较为方便)
      * @throws Exception
@@ -894,7 +894,7 @@ public void setMappins() throws Exception {
     ```
 ### 使用Java客户端实现搜索
 + **根据id进行搜索**
-    ```
+    ```java
     private void search(QueryBuilder queryBuilder) {
         SearchResponse searchResponse = client.prepareSearch("index_hello")
                 .setTypes("article")
@@ -932,7 +932,7 @@ public void setMappins() throws Exception {
     }
     ```
 + **根据term(关键词)进行搜索**
-    ```
+    ```java
     /**
      * 根据关键词查询
      * @throws Exception
@@ -944,7 +944,7 @@ public void setMappins() throws Exception {
     }
     ```
 + **QueryString查询(带分析的查询)**
-    ```
+    ```java
     /**
      * 带分析的查询
      */
