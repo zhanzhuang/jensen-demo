@@ -6,6 +6,7 @@
 + **五 IK分词器和ElasticSearch集成使用**
 + **六 ElasticSearch集群**
 + **七 Java客户端管理ES**
++ **八 Spring Data ElasticSearch使用**
 ## 一 ElasticSearch简介
 + 你在说你**🐎**呢
 ## 二 ElasticSearch安装与启动
@@ -719,7 +720,7 @@
         ```
     + 在head中点击数据浏览即可查看到内容
 # 七 Java客户端管理ES
-## 使用Java客户端创建索引库
+### 使用Java客户端创建索引库
 ```xml
 <dependency>
     <groupId>org.elasticsearch</groupId>
@@ -941,7 +942,7 @@ public void setMappins() throws Exception {
     public void testSearchByTerm() throws Exception {
         QueryBuilder queryBuilder = QueryBuilders.termQuery("title", "北方");
         search(queryBuilder);
-    }
+    }4
     ```
 + **QueryString查询(带分析的查询)**
     ```java
@@ -955,3 +956,76 @@ public void setMappins() throws Exception {
         search(queryBuilder);
     }
     ```
++ **分页查询**
+    ```java
+    SearchResponse searchResponse = client.prepareSearch("index_hello")
+                     .setTypes("article")
+                     .setQuery(queryBuilder)
+                     .setFrom(0) // 开始索引
+                     .setSize(5) // 设置大小
+                     .get();
+    ```
+    + 之后调用任意查询方法即可
++ **查询结果高亮显示**
+    ```java
+    private void search(QueryBuilder queryBuilder,String highlightField) {
+            HighlightBuilder highlightBuilder = new HighlightBuilder();
+            highlightBuilder.field(highlightField); // 高亮显示的字段
+            highlightBuilder.preTags("<em>");
+            highlightBuilder.postTags("</em>");
+            SearchResponse searchResponse = client.prepareSearch("index_hello")
+                    .setTypes("article")
+                    .setQuery(queryBuilder)
+                    .setFrom(0) // 开始索引
+                    .setSize(5) // 设置大小
+                    .highlighter(highlightBuilder) // 设置高亮信息
+                    .get();
+            // 取查询结果
+            SearchHits searchHits = searchResponse.getHits();
+            // 取查询结果的总记录数
+            System.out.println("查询结果总记录数" + searchHits.getTotalHits());
+            // 查询结果列表
+            Iterator<SearchHit> iterator = searchHits.iterator();
+            while (iterator.hasNext()) {
+                SearchHit searchHit = iterator.next();
+                // 打印文档对象,JSON格式输出
+                System.out.println(searchHit.getSourceAsString());
+                // 取文档的属性
+                System.out.println("-----文档的属性");
+                Map<String, Object> document = searchHit.getSource();
+                System.out.println(document.get("id"));
+                System.out.println(document.get("title"));
+                System.out.println(document.get("content"));
+                System.out.println("***********高亮结果");
+                Map<String, HighlightField> highlightFields = searchHit.getHighlightFields();
+                System.out.println(highlightFields);
+                // 取title高亮显示的结果
+                HighlightField field = highlightFields.get(highlightField);
+                Text[] fragments = field.getFragments();
+                if (fragments != null) {
+                    String title = fragments[0].toString();
+                    System.out.println(title);
+                }
+            }
+            // 关闭
+            client.close();
+    }
+    ```
+    ```java
+        @Test
+        public void testSearchByQueryString() {
+            QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("快乐")
+                    .defaultField("title");// 不指定title会在所有域进行查询
+            search(queryBuilder,"title");
+        }
+    ```
+
+# 八 Spring Data ElasticSearch使用
+### 什么是 Spring Data ElasticSearch
+Spring Data ElasticSearch 基于 spring data API简化 elasticsearch操作,将原始操作elasticsearch的客户端
+API进行封装。Spring Data为Elasticsearch项目提供集成搜索引擎。Spring Data Elasticsearch pojo的关键功能区域
+为中心的模型与Elasticsearch交互文档和轻松地编写一个存储库数据访问层。
++ 官方网站**https://spring.io/projects/spring-data-elasticsearch**
+
+
+        

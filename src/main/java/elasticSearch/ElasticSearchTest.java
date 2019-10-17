@@ -178,5 +178,27 @@ public class ElasticSearchTest {
         client.close();
     }
 
+    // 循环添加数据
+    @Test
+    public void testAddDocument3() throws Exception {
+        for (int i = 4; i < 100; i++) {
+            // 设置一个Article对象
+            Article article = new Article();
+            // 设置对象的属性
+            article.setId((long) i);
+            article.setTitle("搜索工作其实很快乐" + i);
+            article.setContent("我们希望我们的搜索解决方案要快，我们希望有一个零配置和一个完全免费的搜索模式，我们希望能够简单地使用JSON通过HTTP的索引数据，我们希望我们的搜索服务器始终可用，我们希望能够一台开始并扩展到数百，我们要实时搜索，我们要简单的多租户，我们希望建立一个云的解决方案。Elasticsearch旨在解决所有这些问题和更多的" + i);
+            // 把article对象转换成json格式的字符串
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonDocument = objectMapper.writeValueAsString(article);
+            System.out.println(jsonDocument);
+            // 使用client把文档写入索引库
+            client.prepareIndex("index_hello","article",i + "")
+                    .setSource(jsonDocument, XContentType.JSON)
+                    .get();
+        }
+        // 关闭客户端
+        client.close();
+    }
 
 }
