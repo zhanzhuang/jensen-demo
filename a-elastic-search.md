@@ -662,6 +662,8 @@
         cluster.name: my‐elasticsearch
         #节点名称，必须不一样
         node.name: node‐1(node-2/node-3)
+        #主节点
+        node.master: true
         #必须为本机的ip地址
         network.host: 127.0.0.1
         #服务端口号，在同一机器下必须不一样
@@ -1026,6 +1028,214 @@ Spring Data ElasticSearch 基于 spring data API简化 elasticsearch操作,将�
 API进行封装。Spring Data为Elasticsearch项目提供集成搜索引擎。Spring Data Elasticsearch pojo的关键功能区域
 为中心的模型与Elasticsearch交互文档和轻松地编写一个存储库数据访问层。
 + 官方网站**https://spring.io/projects/spring-data-elasticsearch**
-
-
++ **工程搭建**
+    + pom.xml
+        ```xml
+        <!-- spring-data-elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+            <version>3.0.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.elasticsearch.plugin</groupId>
+                    <artifactId>transport-netty4-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.0.4.RELEASE</version>
+        </dependency>
+        ```
+    + Resource下创建一个spring的配置文件**applicationContext.xml**
+        ```xml
+        <?xml version="1.0" encoding="UTF-8"?>
+        <beans xmlns="http://www.springframework.org/schema/beans"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:context="http://www.springframework.org/schema/context"
+               xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+               xsi:schemaLocation="
+        		http://www.springframework.org/schema/beans
+        		http://www.springframework.org/schema/beans/spring-beans.xsd
+        		http://www.springframework.org/schema/context
+        		http://www.springframework.org/schema/context/spring-context.xsd
+        		http://www.springframework.org/schema/data/elasticsearch
+        		http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd
+        		">
+            <!--es客户端对象的配置-->
+            <elasticsearch:transport-client id="esClient" cluster-name="my-elasticsearch"
+                                            cluster-nodes="127.0.0.1:9301,127.0.0.1:9302,127.0.0.1:9303"/>
+            <!--包扫描器的配置,扫描dao的接口-->
+            <elasticsearch:repositories base-package="elasticSearch.springdata.repositories"/>
+            
+            <!--配置elasticsearchTemplate对象-->
+            <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+                <constructor-arg name="client" ref="esClient"/>
+            </bean>
+        </beans>
+        ```
++ **工程配置**
+    + 创建一个**Article.java**(elasticSearch.springdata.entity.Article.java)
+        ```java
+        package elasticSearch.springdata.entity;
+        
+        import org.springframework.data.annotation.Id;
+        import org.springframework.data.elasticsearch.annotations.Document;
+        import org.springframework.data.elasticsearch.annotations.Field;
+        import org.springframework.data.elasticsearch.annotations.FieldType;
+        
+        @Document(indexName = "dses_blog", type = "article")
+        public class Article {
+            @Id
+            @Field(type = FieldType.Long, store = true)
+            private long id;
+            @Field(type = FieldType.text, store = true, analyzer = "ik_smart")
+            private String title;
+            @Field(type = FieldType.text, store = true, analyzer = "ik_smart")
+            private String content;
+            // get and set...
+        }
+        ```
+    + 创建一个**ArticleRepository.java**(elasticSearch.spring.data.repositories.ArticleRepository.java
+        ```java
+        package elasticSearch.springdata.repositories;
+        
+        import elasticSearch.springdata.entity.Article;
+        import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+        
+        public interface ArticleRepository extends ElasticsearchRepository<Article, Long> {
+        
+        }
+        ```
++ **创建索引**
+    + 创建一个**elasticSearch.springdata.test.SpringDataElasticSearchTest.java**
+        ```java
+        @RunWith(SpringJUnit4ClassRunner.class)
+        @ContextConfiguration("classpath:applicationContext.xml")
+        public class SpringDataElasticSearchTest {
+            @Autowired
+            private ArticleRepository articleRepository;
+        
+            @Autowired
+            private ElasticsearchTemplate template;
+        
+            @Test
+            public void createIndex() {
+                // 创建索引，并配置映射关系
+                template.createIndex(Article.class);
+                // 只有索引库没有配置映射的时候执行(单独配置映射)
+        //        template.putMapping(Article.class);
+            }
+        }
+        ```
+        + 在head插件上可以看到**dsec_blog**创建成功
++ **添加文档**
+    ```java
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration("classpath:applicationContext.xml")
+    public class SpringDataElasticSearchTest {
+        @Autowired
+        private ArticleRepository articleRepository;
+    
+        @Autowired
+        private ElasticsearchTemplate template;
+    
+        @Test
+        public void addDocument() {
+            Article article = new Article();
+            article.setId(1);
+            article.setTitle("斋藤飞鸟");
+            article.setContent("斋藤飞鸟是日缅混血儿，1998年8月10日出生于日本东京都 [9]  ，因为两个哥哥的名字里都带有“鸟”字，父亲给她取名为“飞鸟”；她在私立学校上小学时看到舞蹈社以AKB48的曲目为伴奏表演，此后产生了对成为偶像（歌手）的向往 [10]  ；斋藤飞鸟小学时的社团是铜管乐队，初中则参加了吹奏乐部，不过获选为乃木坂46成员后便退出了社团");
+            articleRepository.save(article);
+        }
+    }
+    ```       
++ **删除文档**
+    ```java
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration("classpath:applicationContext.xml")
+    public class SpringDataElasticSearchTest {
+        @Autowired
+        private ArticleRepository articleRepository;
+        @Autowired
+        private ElasticsearchTemplate template;
+        @Test
+        public void delDocumentById() {
+            articleRepository.deleteById(2L);
+    //        articleRepository.deleteAll();
+        }
+    }
+    ```   
++ **更新就是添加**
++ **简单查询**
+    + Article.java加上toString()方法
+        ```java
+        @Test
+        public void findAll() {
+            Iterable<Article> articles = articleRepository.findAll();
+            articles.forEach(System.out::println);
+        }
+        @Test
+        public void testFindById() {
+            Optional<Article> optional = articleRepository.findById(1L);
+            Article article = optional.get();
+            System.out.println(article);
+        }
+        ```
++ **自定义查询方法**
+    + ArticleRepository.java
+        ```java
+        public interface ArticleRepository extends ElasticsearchRepository<Article, Long> {
+            // 按照spring-data-elasticsearch 命名规则定义方法，无需实现，会自动实现
+            List<Article> findByTitle(String title);
+            // OR查询
+            List<Article> findByTitleOrContent(String title, String content);
+            List<Article> findByTitleOrContent(String title, String content, Pageable pageable);
+        }
+        ```
+    ```java
+        /**
+        * 对内容进行分词再查询(每个词之间都是and关系)
+        */
+        @Test
+        public void testFindByTitle() {
+            List<Article> list = articleRepository.findByTitle("飞鸟");
+            list.forEach(System.out::println);
+        }
+        /**
+        * 对内容进行分词再查询(每个词之间都是and关系)
+        */
+        @Test
+        public void testFindByTitleOrContent() {
+            // 默认从0开始每页显示10条数据
+            List<Article> list = articleRepository.findByTitleOrContent("14", "content中没有的内容");
+            list.forEach(System.out::println);
+        }
+        /**
+        * 对内容进行分词再查询(每个词之间都是and关系)
+        */
+        @Test
+        public void testFindByTitleOrContentPage() {
+            Pageable pageable = PageRequest.of(0, 3);
+            List<Article> list = articleRepository.findByTitleOrContent("飞鸟", "content中没有的内容", pageable);
+            list.forEach(System.out::println);
+        }
+    ```
++ **使用NativeSearchQuery查询**
+    ```java
+    /**
+    * queryString查询
+    */
+    @Test
+    public void testNativeSearchQuery() {
+        NativeSearchQuery query = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.queryStringQuery("飞鸟是什么").defaultField("title"))
+                .withPageable(PageRequest.of(0, 3))
+                .build();
+        List<Article> articleList = template.queryForList(query, Article.class);
+        articleList.forEach(System.out::println);
+    }
+    ```
         
