@@ -1,11 +1,20 @@
-# Spring
+# Spring目录
++ **一 程序的耦合以及解耦**
++ **二 IOC概念和spring中的IOC**
+    + **IOC概念**
+    + **spring中基于XML的IOC环境搭建**
+    + **ApplicationContext的三个实现类**
+    + **ApplicationContext和BeanFactory的区别**
+    + **spring中bean细节之三种创建bean对象的方式**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
++ **一 ElasticSearch简介**
 
-## Spring概述
-### 什么是spring
-### spring两大核心
-### spring的发展历程和优势
-### spring体系结构
-## 程序的耦合以及解耦
+## 一 程序的耦合以及解耦
 ```java
 package spring.jdbc;
 
@@ -45,9 +54,7 @@ public class JdbcDemo1 {
     }
 }
 ```
-### 曾经案例中问题
-### 工厂模式解耦
-## IOC概念和spring中的IOC
+## 二 IOC概念和spring中的IOC
 ### IOC概念
 **控制反转(inversion of control)把创建对象的权力交给框架,是框架的主要特征**
 **降低计算机程序之间的耦合(降低程序之间的依赖关系)**
@@ -59,6 +66,14 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
 ```
 ### spring中基于XML的IOC环境搭建
 **读取配置文件,创建对象并放入map中是spring管理的,降低了耦合**
++ **依赖**
+    ```xml
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.0.2.RELEASE</version>
+    </dependency>
+    ```
 + **bean.xml**
     ```xml
     <?xml version="1.0" encoding="UTF-8" ?>
@@ -66,22 +81,14 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
         <!--把对象的创建交给spring管理-->
         <bean id="accountService" class="spring.service.impl.AccountServiceImpl"></bean>
-    
         <bean id="accountDao" class="spring.dao.impl.IAccountDaoImpl"></bean>
-    
     </beans>
     ```
 + **代码**  
     ```java
     public class Client {
-        /**
-         * 获取spring的IOC核心容器，并根据id获取对象
-         *
-         * @param args
-         */
         public static void main(String[] args) {
             // 1.获取核心容器对象
             ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
@@ -94,15 +101,11 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     }
     ```
     ```java
-    package spring.service;
-    
     public interface IAccountService {
         void saveAccount();
     }
     ```
     ```java
-    package spring.service.impl;
-    
     public class AccountServiceImpl implements IAccountService {
         private IAccountDao accountDao = new IAccountDaoImpl();
     
@@ -113,15 +116,11 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     }
     ```
     ```java
-    package spring.dao;
-    
     public interface IAccountDao {
         void saveAccount();
     }
     ```
     ```java
-    package spring.dao.impl;
-    
     public class IAccountDaoImpl implements IAccountDao {
         @Override
         public void saveAccount() {
@@ -129,14 +128,14 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
         }
     }
     ```
-#### ApplicationContext的三个实现类
+### ApplicationContext的三个实现类
 + **ClassPathXmlApplicationContext**
     + 它可以加载类路径下的配置文件,要求配置文件在类路径下
 + **FileSystemXmlApplicationContext**
     + 它可以加载磁盘任意路径下的配置文件(必须有访问权限)
 + **AnnotationConfigApplicationContext**
     + 它是用于读取注解创建的容器的
-#### ApplicationContext和BeanFactory的区别
+### ApplicationContext和BeanFactory的区别
 **ApplicationContext**(单例对象适用)
 + 它在构造核心容器时,创建对象采取的策略是采用立即加载的方式。也就是说，只要读取完配置文件马上就创建配置文件中的对象
     ```java
@@ -162,4 +161,6 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
        System.out.println(as);
     }
     ```
+### spring中bean细节之三种创建bean对象的方式
+
 ## 依赖注入(Dependency Injection)
