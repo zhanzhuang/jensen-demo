@@ -74,6 +74,7 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     
     </beans>
     ```
++ **代码**  
     ```java
     public class Client {
         /**
@@ -141,6 +142,7 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     ```java
     public static void main(String[] args) {
        // 1.获取核心容器对象
+       // 读取完配置文件创建对象
        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
        // 根据id获取bean对象
        IAccountService as = (IAccountService) ac.getBean("accountService");
@@ -155,6 +157,7 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     public static void main(String[] args) {
        Resource resource = new ClassPathResource("bean.xml");
        BeanFactory factory = new XmlBeanFactory(resource);
+       // getBean时创建对象
        IAccountService as = (IAccountService) factory.getBean("accountService");
        System.out.println(as);
     }
