@@ -5,81 +5,51 @@
 ### spring两大核心
 ### spring的发展历程和优势
 ### spring体系结构
-
 ## 程序的耦合以及解耦
-###曾经案例中问题
-### 工厂模式解耦
+**程序中的耦合**
 ```java
+package spring.jdbc;
+
+import java.sql.*;
+
 /**
- * 一个创建Bean的工厂(创建service和dao对象)
- * Bean：在计算机语言中，由可重用组件的含义
- * JavaBean > 实体类
- * 1.需要一个配置文件来配置我们的service和dao对象
- * 配置内容：唯一标识(全限定类名) key = value
- * 2.读取配置文件中配置的内容，反射创建对象
- * <p>
- * 我们的配置文件可以是xml也可以是properties
+ * 程序的耦合
+ * 耦合:
+ *      程序之间的依赖关系,包括类之间的依赖关系/方法之间的依赖关系
+ * 解耦:
+ *      降低程序之间的依赖关系
+ * 实际开发:
+ *      应该做到编译器不依赖，程序运行时才依赖
+ * 解耦思路：
+ *      1.使用反射创建对象，避免使用new关键字
+ *      2.通过读取配置文件来获取要创建的对象的全限定类名
  */
-public class BeanFactory {
-    // 定义一个Properties对象
-    private static Properties props;
-    // 定义一个Map,用于存放我们要创建的对象。我们把它称之为容器
-    private static Map<String,Object> beans;
-
-    static {
-        try {
-            props = new Properties();
-            InputStream in = BeanFactory.class.getClassLoader().getResourceAsStream("bean.properties");
-            props.load(in);
-            // 实例化容器
-            beans = new HashMap<>();
-            // 取出配置文件中所有的key
-            Enumeration keys = props.keys();
-            while (keys.hasMoreElements()) {
-                String key = keys.nextElement().toString();
-                String beanPath = props.getProperty(key);
-                Object value = Class.forName(beanPath).newInstance();
-                beans.put(key, value);
-            }
-        } catch (Exception e) {
-            throw new ExceptionInInitializerError("init properties failed");
+public class JdbcDemo1 {
+    public static void main(String[] args) throws Exception {
+        // 1.注册驱动
+        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); // 编译期依赖了
+//        Class.forName("com.mysql.jdbc.Driver"); // 编译器没有依赖，只是字符串
+        // 2.获取连接
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel?serverTimezone=UTC", "root", "123456");
+        // 3.获取操作数据库的预处理对象
+        PreparedStatement pstm = conn.prepareStatement("select * from account");
+        // 4.执行SQL 得到结果集
+        ResultSet rs = pstm.executeQuery();
+        // 5.遍历结果集
+        while (rs.next()) {
+            System.out.println(rs.getString( "NAME"));
         }
+        // 6.释放资源
+        rs.close();
+        pstm.close();
+        conn.close();
     }
-
-    /**
-     * 根据Bean的名称获取bean对象(单例)
-     * @param beanName
-     * @return
-     */
-    public static Object getBean(String beanName) {
-        return beans.get(beanName);
-    }
-
-    /**
-     * 根据Bean的名称获取bean对象(每次创建一个新的实例)
-     *
-     * @param beanName
-     * @return
-     */
-/*    public static Object getBean(String beanName) {
-        Object bean = null;
-        try {
-            String beanPath = props.getProperty(beanName);
-            bean = Class.forName(beanPath).newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bean;
-    }*/
 }
 ```
-resource/bean.properties
-```properties
-accountService=spring.service.impl.AccountServiceImpl
-accountDao=spring.dao.AccountDaoImpl
-```
+### 曾经案例中问题
+### 工厂模式解耦
 ## IOC概念和spring中的IOC
-###IOC概念
+### IOC概念
 **控制反转(inversion of control)把创建对象的权力交给框架,是框架的主要特征**
 **降低计算机程序之间的耦合(降低程序之间的依赖关系)**
 ```java
