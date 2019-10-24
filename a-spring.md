@@ -162,5 +162,140 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
     }
     ```
 ### spring中bean细节之三种创建bean对象的方式
+#### 1.使用默认构造函数创建
+**在spring的配置文件中使用bean标签，配上id和class属性之后，且没有其他属性和标签**
+**采用的是默认构造器创建bean对象，如果类中没有默认构造器，创建对象会报异常**
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    public AccountServiceImpl(String name) {
+        System.out.println("accountServiceImpl initialized with param");
+    }
+//    public AccountServiceImpl() {
+//        System.out.println("accountServiceImpl initialized");
+//    }
+    public void saveAccount() {
+        System.out.println("saveAccount executed ");
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"></bean>
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
+#### 2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+
+    public AccountServiceImpl() {
+        System.out.println("accountServiceImpl initialized");
+    }
+    
+    public void saveAccount() {
+        System.out.println("saveAccount executed ");
+    }
+}
+```
+```java
+/**
+ * 模拟一个工厂类(该类可能是存在于jar包中的,我们无法通过修改源码的方式提供默认构造器)
+ */
+public class InstanceFactory {
+    public IAccountService getAccountService() {
+        return new AccountServiceImpl();
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--第二种方式:使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)-->
+    <bean id="instanceFactory" class="com.itheima.factory.InstanceFactory"></bean>
+    <bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"></bean>
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
+#### 3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+
+    public AccountServiceImpl() {
+        System.out.println("accountServiceImpl initialized");
+    }
+    
+    public void saveAccount() {
+        System.out.println("saveAccount executed ");
+    }
+}
+```
+```java
+/**
+ * 模拟一个工厂类(该类可能是存在于jar包中的,我们无法通过修改源码的方式提供默认构造器)
+ */
+public class StaticFactory {
+    public static IAccountService getAccountService() {
+        return new AccountServiceImpl();
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService" class="com.itheima.factory.StaticFactory" factory-method="getAccountService"></bean>
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
 ## 依赖注入(Dependency Injection)
