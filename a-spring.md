@@ -298,4 +298,190 @@ public class Client {
     }
 }
 ```
+### spring中bean细节之作用范围
+**singleton:单例(常用),是默认值**
+**prototype:多例(常用)**
+**request:作用于web应用的请求范围**
+**session:作用于web应用的会话范围**
+**global-session:作用于集群会话范围,如果不是集群环境,它就是session**
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+
+    public AccountServiceImpl() {
+        System.out.println("accountServiceImpl initialized");
+    }
+    
+    public void saveAccount() {
+        System.out.println("saveAccount executed ");
+    }
+}
+```
+```java
+/**
+ * 模拟一个工厂类(该类可能是存在于jar包中的,我们无法通过修改源码的方式提供默认构造器)
+ */
+public class StaticFactory {
+    public static IAccountService getAccountService() {
+        return new AccountServiceImpl();
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService" class="com.itheima.factory.StaticFactory" factory-method="getAccountService" scope="prototype"></bean>
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as1 = (IAccountService) ac.getBean("accountService");
+        IAccountService as2 = (IAccountService) ac.getBean("accountService");
+//        as.saveAccount();
+        System.out.println(as1 == as2); // this is false,because scope is prototype
+    }
+}
+```
+### spring中bean细节之生命周期
++ **单例对象**
+    + 出生：容器创建时对象出生
+    + 活着：容器还在对象就在
+    + 死亡：容器销毁对象死亡
+    + 总结：单例对象生命周期和容器象通
++ **多例对象**
+    + 出生：使用对象时spring自动创建
+    + 活着：对象在使用
+    + 死亡：当对象长时间不用且没有被其他对象引用，由java的垃圾回收器回收      
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    public AccountServiceImpl() {
+        System.out.println("accountServiceImpl initialized");
+    }
+    public void saveAccount() {
+        System.out.println("saveAccount executed");
+    }
+    public void init() {
+        System.out.println("init method");
+    }
+    public void destory() {
+        System.out.println("destory method");
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl" scope="prototype"
+            init-method="init" destroy-method="destory"></bean></beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+        // main方法结束后当前应用占用的内存全部释放,容器内存也释放,所以没有执destory方法
+        // 手动关闭容器方法
+        ac.close();        
+    }
+}
+```
+
 ## 依赖注入(Dependency Injection)
++ **IOC作用**
+    + **降低程序之间的耦合(依赖关系)**
++ **依赖注入的数据类型**
+    + 1.基本类型和String
+    + 2.其他bean类型(在配置文件中或者注解配置过的bean)    
+    + 3.复杂类型/集合类型
++ **注入方式**
+    + 1.构造器注入
+    + 2.set方法注入
+    + 3.注解注入
+### 构造器注入
++ **在bean标签内部的constructor-arg**
++ **标签中的属性**
+    + type:用于指定要注入的数据类型，该数据类型也是构造器中某个或某些参数的类型
+    + index:用于指定要注入的数据给构造器中指定索引位置的参数复制。索引的位置是从0开始
+    + name:用于指定给构造器中指定名称的参数赋值(常用)
+    + value:用于提供基本类型和string类型的数据
+    + ref:用于指定其他的bean类型数据。它指的就是在spring的IOC核心容器中出现过的bean对象
++ **优势**
+    + 获取bean对象时，诸如数据时必须的操作，否则对象无法创建
++ **弊端**
+    + 改变了bean对象的实例化方式，使我们在创建对象时，如果用不到这些数据，也必须提供
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+```    
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    // 如果是经常变化的数据并不适用这种注入
+    private String name;
+    private Integer age;
+    private Date birthday;
+
+    public AccountServiceImpl(String name, Integer age, Date birthday) {
+        this.name = name;
+        this.age = age;
+        this.birthday = birthday;
+    }
+
+    public void saveAccount() {
+        System.out.println("saveAccount executed..." + name + age + birthday);
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl">
+        <constructor-arg name="name" value="jack"/>
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="birthday" ref="now"/>
+    </bean>
+
+    <bean id="now" class="java.util.Date"></bean>
+
+</beans>
+```
+```JAVA
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
