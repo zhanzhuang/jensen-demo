@@ -299,11 +299,11 @@ public class Client {
 }
 ```
 ### spring中bean细节之作用范围
-**singleton:单例(常用),是默认值**
-**prototype:多例(常用)**
-**request:作用于web应用的请求范围**
-**session:作用于web应用的会话范围**
-**global-session:作用于集群会话范围,如果不是集群环境,它就是session**
++ **singleton:单例(常用),是默认值**
++ **prototype:多例(常用)**
++ **request:作用于web应用的请求范围**
++ **session:作用于web应用的会话范围**
++ **global-session:作用于集群会话范围,如果不是集群环境,它就是session**
 ```java
 public interface IAccountService {
     void saveAccount();
