@@ -485,3 +485,71 @@ public class Client {
     }
 }
 ```
+### SET方法注入
++ **在bean标签内部的property**
++ **标签中的属性**
+    + name:用于指定给构造器中指定名称的参数赋值(常用)
+    + value:用于提供基本类型和string类型的数据
+    + ref:用于指定其他的bean类型数据。它指的就是在spring的IOC核心容器中出现过的bean对象
++ **优势**
+    + 创建对象时没有明确的限制，可以直接使用默认构造函数
++ **弊端**
+    + 如果有某个成员必须有值，则获取对象时set方法没有执行
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+```    
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl2 implements IAccountService {
+    private String name;
+    private Integer age;
+    private Date birthday;
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+    public void saveAccount() {
+        System.out.println("saveAccount executed..." + name + age + birthday);
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountService2" class="com.itheima.service.impl.AccountServiceImpl2">
+        <property name="name" value="Test"></property>
+        <property name="age" value="21"></property>
+        <property name="birthday" ref="now"></property>
+    </bean>
+
+    <bean id="now" class="java.util.Date"></bean>
+
+</beans>
+```
+```JAVA
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService2");
+        as.saveAccount();
+    }
+}
+```
+### SET方法注入集合数据
