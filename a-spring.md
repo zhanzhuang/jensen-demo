@@ -1,11 +1,19 @@
 # Spring目录
-+ **一 程序的耦合以及解耦**
++ **一 程序的耦合以及解耦**(#1)
 + **二 IOC概念和spring中的IOC**
     + **IOC概念**
     + **spring中基于XML的IOC环境搭建**
     + **ApplicationContext的三个实现类**
     + **ApplicationContext和BeanFactory的区别**
     + **spring中bean细节之三种创建bean对象的方式**
+        + **1.使用默认构造函数创建**
+        + **2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)**
+        + **3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)**
+    + **spring中bean细节之作用范围**
+    + **spring中bean细节之生命周期**
+    + **依赖注入**
+        + **构造器注入**
+        + **SET方法注入**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -14,7 +22,7 @@
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 
-## 一 程序的耦合以及解耦
+## <a id = "1">一 程序的耦合以及解耦</a>
 ```java
 package spring.jdbc;
 
