@@ -15,7 +15,7 @@
         + **构造器注入**
         + **SET方法注入**
         + **SET方法注入集合数据**
-        
+        experimental
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
