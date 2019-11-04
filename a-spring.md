@@ -11,9 +11,11 @@
         + **3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)**
     + **spring中bean细节之作用范围**
     + **spring中bean细节之生命周期**
-    + **依赖注入**
+    + **依赖注入(Dependency Injection)**
         + **构造器注入**
         + **SET方法注入**
+        + **SET方法注入集合数据**
+        
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -21,8 +23,6 @@
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
-+ [1.语法示例](#1)
-+ <h2 id="1">1.语法示例</h2>
 ## 一 程序的耦合以及解耦
 ```java
 package spring.jdbc;
