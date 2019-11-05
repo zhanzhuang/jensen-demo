@@ -1,22 +1,27 @@
 # Spring目录
 + **一 程序的耦合以及解耦**
-+ **二 IOC概念和spring中的IOC**
     + **IOC概念**
-    + **spring中基于XML的IOC环境搭建**
+    + **Spring中基于XML的IOC环境搭建**
     + **ApplicationContext的三个实现类**
     + **ApplicationContext和BeanFactory的区别**
-    + **spring中bean细节之三种创建bean对象的方式**
+    + **Spring中bean细节之三种创建bean对象的方式**
         + **1.使用默认构造函数创建**
         + **2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)**
         + **3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)**
-    + **spring中bean细节之作用范围**
-    + **spring中bean细节之生命周期**
+    + **Spring中bean细节之作用范围**
+    + **Spring中bean细节之生命周期**
     + **依赖注入(Dependency Injection)**
         + **构造器注入**
         + **SET方法注入**
         + **SET方法注入集合数据**
-        experimental did merge
-+ **一 ElasticSearch简介**
++ **三 Spring基于注解的IOC以及IOC的案例**
+    + **Spring中IOC的常用注解**
+        + **Component**
+        + **由Component衍生出来的注解 @Controller @Service @Repository**
+    + **案例使用xml方法和注解方式实现单表的CRUD操作**
+    + **改造基于注解的IOC案例 使用纯注解的方式实现**
+    + **Spring和Junit整合**
+    
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -562,3 +567,161 @@ public class Client {
 }
 ```
 ### SET方法注入集合数据
++ **集合类型的数据有两种**
+    + List类型
+        + array list set
+    + Map类型
+        + map props
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl3 implements IAccountService {
+    private String[] myStrs;
+    private List<String> myList;
+    private Set<String> mySet;
+    private Map<String,String> myMap;
+    private Properties myProps;
+
+    public void setMyStrs(String[] myStrs) {
+        this.myStrs = myStrs;
+    }
+
+    public void setMyList(List<String> myList) {
+        this.myList = myList;
+    }
+
+    public void setMySet(Set<String> mySet) {
+        this.mySet = mySet;
+    }
+
+    public void setMyMap(Map<String, String> myMap) {
+        this.myMap = myMap;
+    }
+
+    public void setMyProps(Properties myProps) {
+        this.myProps = myProps;
+    }
+
+    public void saveAccount() {
+        System.out.println(Arrays.toString(myStrs));
+        System.out.println(myList);
+        System.out.println(mySet);
+        System.out.println(myMap);
+        System.out.println(myProps);
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="accountService3" class="com.itheima.service.impl.AccountServiceImpl3">
+        <property name="myStrs">
+            <array>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </array>
+        </property>
+        <property name="myList">
+            <list>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </list>
+        </property>
+        <property name="mySet">
+            <set>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </set>
+        </property>
+        <property name="myMap">
+            <map>
+                <entry key="testA" value="aaa"></entry>
+                <entry key="testB">
+                    <value>bbb</value>
+                </entry>
+            </map>
+        </property>
+        <property name="myProps">
+            <props>
+                <prop key="testC">ccc</prop>
+                <prop key="testD">ddd</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService3");
+        as.saveAccount();
+    }
+}
+```
+## 三 Spring基于注解的IOC以及IOC的案例
+### Spring中IOC的常用注解
+#### Component
++ **作用**
+    + **用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)**
+    + **属性**
+        + `value`:用于指定bean的id。当不写时,默认是当前类名且首字母小写
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountDaoImpl implements IAccountDao {
+
+    public AccountDaoImpl() {
+        System.out.println("AccountDaoImpl对象创建了");
+    }
+
+    public void saveAccount() {
+
+    }
+
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 告诉Spring在创建容器时要扫描的包，配置所需要的标签不是在beans约束中，而是一个名称
+    为context名称空间和约束中-->
+    <context:component-scan base-package="com.itheima"></context:component-scan>
+    
+</beans>
+```       
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountServiceImpl");
+        System.out.println(as);
+//        as.saveAccount();
+    }
+}
+``` 
+#### 由Component衍生出来的注解
++ **@Controller @Service @Repository**
++ **他们三个注解的作用和属性与Component是一模一样的**
++ **是Spring框架为我们明确三层结构而产生的注解**
++ 上面的例子将Component换成他们三个会得到一样的结果!!!
