@@ -671,27 +671,25 @@ public class Client {
 ```
 ## 三 Spring基于注解的IOC以及IOC的案例
 ### Spring中IOC的常用注解
-#### Component
+#### @Component
 + **作用**
     + **用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)**
-    + **属性**
-        + `value`:用于指定bean的id。当不写时,默认是当前类名且首字母小写
++ **属性**
+    + `value`:用于指定bean的id。当不写时,默认是当前类名且首字母小写
 ```java
 public interface IAccountService {
     void saveAccount();
 }
 ```
 ```java
+@Component
 public class AccountDaoImpl implements IAccountDao {
-
     public AccountDaoImpl() {
         System.out.println("AccountDaoImpl对象创建了");
     }
-
     public void saveAccount() {
 
     }
-
 }
 ```
 ```xml
@@ -720,8 +718,81 @@ public class Client {
     }
 }
 ``` 
-#### 由Component衍生出来的注解
+#### 由@Component衍生出来的注解
 + **@Controller @Service @Repository**
 + **他们三个注解的作用和属性与Component是一模一样的**
 + **是Spring框架为我们明确三层结构而产生的注解**
 + 上面的例子将Component换成他们三个会得到一样的结果!!!
+#### @Autowired
++ **作用**
+    + **自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功**
++ **出现位置**
+    + **可以是变量上,也可以是方法上**
++ **细节**
+    + **在使用注解注入时,set方法就不是必须的了**
++ **下面的例子是有两个同一类型的bean对象**
+    + **IOC容器中有两个IAccountDao类型的对象,分别是accountDao1/accountDao2**    
+    + **IAccountDao accountDao2则表示使用accountDao2这个名字去匹配IOC容器中的bean**
+```XML
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 告诉Spring在创建容器时要扫描的包，配置所需要的标签不是在beans约束中，而是一个名称
+    为context名称空间和约束中-->
+    <context:component-scan base-package="com.itheima"></context:component-scan>
+
+</beans>
+```    
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+@Component
+public class AccountServiceImpl implements IAccountService {
+    @Autowired
+    private IAccountDao accountDao2; // 此处根据accountDao2这个对象名进行匹配
+
+    public void saveAccount() {
+        accountDao2.saveAccount();
+    }
+}
+```
+```java
+public interface IAccountDao {
+    void saveAccount();
+}
+```    
+```java
+@Repository("accountDao1")
+public class AccountDaoImpl1 implements IAccountDao {
+    public void saveAccount() {
+        System.out.println("dao保存了账户111");
+    }
+}
+```
+```java
+@Repository("accountDao2")
+public class AccountDaoImpl2 implements IAccountDao {
+    public void saveAccount() {
+        System.out.println("dao保存了账户222");
+    }
+}
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountServiceImpl");
+//        System.out.println(as);
+        as.saveAccount();
+    }
+}
+```
