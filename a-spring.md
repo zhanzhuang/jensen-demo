@@ -673,7 +673,7 @@ public class Client {
 ### Spring中IOC的常用注解
 #### @Component
 + **作用**
-    + **用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)**
+    + 用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)
 + **属性**
     + `value`:用于指定bean的id。当不写时,默认是当前类名且首字母小写
 ```java
@@ -725,14 +725,14 @@ public class Client {
 + 上面的例子将Component换成他们三个会得到一样的结果!!!
 #### @Autowired
 + **作用**
-    + **自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功**
+    + 自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功
 + **出现位置**
-    + **可以是变量上,也可以是方法上**
+    + 可以是变量上,也可以是方法上
 + **细节**
-    + **在使用注解注入时,set方法就不是必须的了**
+    + 在使用注解注入时,set方法就不是必须的了
 + **下面的例子是有两个同一类型的bean对象**
-    + **IOC容器中有两个IAccountDao类型的对象,分别是accountDao1/accountDao2**    
-    + **IAccountDao accountDao2则表示使用accountDao2这个名字去匹配IOC容器中的bean**
+    + IOC容器中有两个IAccountDao类型的对象,分别是accountDao1/accountDao2    
+    + IAccountDao accountDao2则表示使用accountDao2这个名字去匹配IOC容器中的bean
 ```XML
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
