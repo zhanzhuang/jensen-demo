@@ -724,7 +724,7 @@ public class Client {
     + 在使用注解注入时,set方法就不是必须的了
 + **下面的例子是有两个同一类型的bean对象**
     + IOC容器中有两个IAccountDao类型的对象,分别是accountDao1/accountDao2    
-    + IAccountDao accountDao2则表示使用accountDao2这个名字去匹配IOC容器中的bean
+    + IAccountDao accountDao2则表示使用accountDao2这个变量名去匹配IOC容器中的bean
 ```XML
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -787,3 +787,30 @@ public class Client {
     }
 }
 ```
+#### @Qualifier
++ **作用**
+    + 给类成员注入需要联合@Autowired使用.当@Autowired修饰的变量名无法匹配IOC容器中的多个bean类型时,通过此注解指定bean
+    + 给方法参数注入时可以
++ **属性**    
+    + `value`:用于指定注入bean的ID
+```java
+@Autowired // 1.IOC容器中IAccountDao类型有两个bean分别是 accountDao1 accountDao2
+@Qualifier("accountDao2") // 3.指定注入的bean是 accountDao2
+private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配的bean
+```
+#### @Resource
++ **作用**
+    + 直接按照bean的id注入,可以独立使用.相当于 @Autowired 与 @Qualifier 组合使用
++ **属性**
+    + `name`:d用于指定bean的ID
+```java
+//    @Autowired
+//    @Qualifier("accountDao2")
+@Resource(name = "accountDao2") // 2.name属性直接匹配到accountDao2代表的bean并注入
+private IAccountDao accountDao; // 1.IOC容器中有两个IAccountDao类型的bean,分别是accountDao1 accountDao2。使用@Autowired 与accountDao 无法匹配到具体的某个bean
+```
+#### @Value
++ **作用**
+    + 用于注入基本类型和String类型的数据
++ **属性**
+    + `value`:用于指定数据的值
