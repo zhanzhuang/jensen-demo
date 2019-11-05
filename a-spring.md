@@ -802,7 +802,7 @@ private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配
 + **作用**
     + 直接按照bean的id注入,可以独立使用.相当于 @Autowired 与 @Qualifier 组合使用
 + **属性**
-    + `name`:d用于指定bean的ID
+    + `name`:用于指定bean的ID
 ```java
 //    @Autowired
 //    @Qualifier("accountDao2")
