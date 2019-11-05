@@ -1,5 +1,6 @@
 # Spring目录
 + **一 程序的耦合以及解耦**
++ **二 IOC概念和spring中的IOC**
     + **IOC概念**
     + **Spring中基于XML的IOC环境搭建**
     + **ApplicationContext的三个实现类**
@@ -16,8 +17,9 @@
         + **SET方法注入集合数据**
 + **三 Spring基于注解的IOC以及IOC的案例**
     + **Spring中IOC的常用注解**
-        + **Component**
-        + **由Component衍生出来的注解 @Controller @Service @Repository**
+        + **@Component**
+        + **由@Component衍生出来的注解 @Controller @Service @Repository**
+        + **@Autowired**
     + **案例使用xml方法和注解方式实现单表的CRUD操作**
     + **改造基于注解的IOC案例 使用纯注解的方式实现**
     + **Spring和Junit整合**
@@ -30,10 +32,6 @@
 + **一 ElasticSearch简介**
 ## 一 程序的耦合以及解耦
 ```java
-package spring.jdbc;
-
-import java.sql.*;
-
 /**
  * 程序的耦合
  * 耦合:
@@ -80,68 +78,64 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
 ```
 ### spring中基于XML的IOC环境搭建
 **读取配置文件,创建对象并放入map中是spring管理的,降低了耦合**
-+ **依赖**
-    ```xml
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>5.0.2.RELEASE</version>
-    </dependency>
-    ```
-+ **bean.xml**
-    ```xml
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd">
-        <!--把对象的创建交给spring管理-->
-        <bean id="accountService" class="spring.service.impl.AccountServiceImpl"></bean>
-        <bean id="accountDao" class="spring.dao.impl.IAccountDaoImpl"></bean>
-    </beans>
-    ```
-+ **代码**  
-    ```java
-    public class Client {
-        public static void main(String[] args) {
-            // 1.获取核心容器对象
-            ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
-            // 根据id获取bean对象
-            IAccountService as = (IAccountService) ac.getBean("accountService");
-            IAccountDao adao = ac.getBean("accountDao", IAccountDao.class);
-            System.out.println(as);
-            System.out.println(adao);
-        }
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--把对象的创建交给spring管理-->
+    <bean id="accountService" class="spring.service.impl.AccountServiceImpl"></bean>
+    <bean id="accountDao" class="spring.dao.impl.IAccountDaoImpl"></bean>
+</beans>
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        // 1.获取核心容器对象
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        // 根据id获取bean对象
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        IAccountDao adao = ac.getBean("accountDao", IAccountDao.class);
+        System.out.println(as);
+        System.out.println(adao);
     }
-    ```
-    ```java
-    public interface IAccountService {
-        void saveAccount();
+}
+```
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    private IAccountDao accountDao = new IAccountDaoImpl();
+    @Override
+    public void saveAccount() {
+        accountDao.saveAccount();
     }
-    ```
-    ```java
-    public class AccountServiceImpl implements IAccountService {
-        private IAccountDao accountDao = new IAccountDaoImpl();
-    
-        @Override
-        public void saveAccount() {
-            accountDao.saveAccount();
-        }
+}
+```
+```java
+public interface IAccountDao {
+    void saveAccount();
+}
+```
+```java
+public class IAccountDaoImpl implements IAccountDao {
+    @Override
+    public void saveAccount() {
+        System.out.println("save...");
     }
-    ```
-    ```java
-    public interface IAccountDao {
-        void saveAccount();
-    }
-    ```
-    ```java
-    public class IAccountDaoImpl implements IAccountDao {
-        @Override
-        public void saveAccount() {
-            System.out.println("save...");
-        }
-    }
-    ```
+}
+```
 ### ApplicationContext的三个实现类
 + **ClassPathXmlApplicationContext**
     + 它可以加载类路径下的配置文件,要求配置文件在类路径下
@@ -150,31 +144,31 @@ private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
 + **AnnotationConfigApplicationContext**
     + 它是用于读取注解创建的容器的
 ### ApplicationContext和BeanFactory的区别
-**ApplicationContext**(单例对象适用)
-+ 它在构造核心容器时,创建对象采取的策略是采用立即加载的方式。也就是说，只要读取完配置文件马上就创建配置文件中的对象
-    ```java
-    public static void main(String[] args) {
-       // 1.获取核心容器对象
-       // 读取完配置文件创建对象
-       ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
-       // 根据id获取bean对象
-       IAccountService as = (IAccountService) ac.getBean("accountService");
-       IAccountDao adao = ac.getBean("accountDao", IAccountDao.class);
-       System.out.println(as);
-       System.out.println(adao);
-    }
-    ```
-**BeanFactory**(多例对象适用)
-+ 它在构造核心容器时,创建对象采取的策略是采用延迟加载的方式。什么时候根据id获取对象了,什么时候才真正的创建对象    
-    ```java
-    public static void main(String[] args) {
-       Resource resource = new ClassPathResource("bean.xml");
-       BeanFactory factory = new XmlBeanFactory(resource);
-       // getBean时创建对象
-       IAccountService as = (IAccountService) factory.getBean("accountService");
-       System.out.println(as);
-    }
-    ```
+#### ApplicationContext(单例对象适用)
+**它在构造核心容器时,创建对象采取的策略是采用立即加载的方式。也就是说，只要读取完配置文件马上就创建配置文件中的对象**
+```java
+public static void main(String[] args) {
+   // 1.获取核心容器对象
+   // 读取完配置文件创建对象
+   ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+   // 根据id获取bean对象
+   IAccountService as = (IAccountService) ac.getBean("accountService");
+   IAccountDao adao = ac.getBean("accountDao", IAccountDao.class);
+   System.out.println(as);
+   System.out.println(adao);
+}
+```
+#### BeanFactory(多例对象适用)
+**它在构造核心容器时,创建对象采取的策略是采用延迟加载的方式。什么时候根据id获取对象了,什么时候才真正的创建对象**    
+```java
+public static void main(String[] args) {
+   Resource resource = new ClassPathResource("bean.xml");
+   BeanFactory factory = new XmlBeanFactory(resource);
+   // getBean时创建对象
+   IAccountService as = (IAccountService) factory.getBean("accountService");
+   System.out.println(as);
+}
+```
 ### spring中bean细节之三种创建bean对象的方式
 #### 1.使用默认构造函数创建
 **在spring的配置文件中使用bean标签，配上id和class属性之后，且没有其他属性和标签**
@@ -361,7 +355,6 @@ public class Client {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as1 = (IAccountService) ac.getBean("accountService");
         IAccountService as2 = (IAccountService) ac.getBean("accountService");
-//        as.saveAccount();
         System.out.println(as1 == as2); // this is false,because scope is prototype
     }
 }
@@ -413,7 +406,7 @@ public class Client {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as = (IAccountService) ac.getBean("accountService");
         as.saveAccount();
-        // main方法结束后当前应用占用的内存全部释放,容器内存也释放,所以没有执destory方法
+        // main方法结束后当前应用占用的内存全部释放,容器内存也释放,所以没有执行destory方法
         // 手动关闭容器方法
         ac.close();        
     }
@@ -665,7 +658,7 @@ public class Client {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as = (IAccountService) ac.getBean("accountService3");
-        as.saveAccount();
+        as.saveAccount(); // 会打印五种类型的数据
     }
 }
 ```
@@ -713,8 +706,7 @@ public class Client {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as = (IAccountService) ac.getBean("accountServiceImpl");
-        System.out.println(as);
-//        as.saveAccount();
+        System.out.println(as); // 打印对象地址,证明对象已经被创建
     }
 }
 ``` 
@@ -791,8 +783,7 @@ public class Client {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as = (IAccountService) ac.getBean("accountServiceImpl");
-//        System.out.println(as);
-        as.saveAccount();
+        as.saveAccount(); // 输出dao保存了账户222
     }
 }
 ```
