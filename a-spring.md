@@ -17,9 +17,15 @@
         + **SET方法注入集合数据**
 + **三 Spring基于注解的IOC以及IOC的案例**
     + **Spring中IOC的常用注解**
-        + **@Component**
-        + **由@Component衍生出来的注解 @Controller @Service @Repository**
-        + **@Autowired**
+        + **用于创建对象的**
+            + **@Component**
+            + **由@Component衍生出来的注解 @Controller @Service @Repository**
+        + **用于注入数据的**
+            + **@Autowired @Qualifier @Resource @Value**
+        + **用于改变作用范围的**
+            + **@Scope**
+        + **和生命周期相关的(了解)**
+            + **@PostConstruct @PreDestroy**
     + **案例使用xml方法和注解方式实现单表的CRUD操作**
     + **改造基于注解的IOC案例 使用纯注解的方式实现**
     + **Spring和Junit整合**
@@ -47,7 +53,7 @@
 public class JdbcDemo1 {
     public static void main(String[] args) throws Exception {
         // 1.注册驱动
-        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); // 编译期依赖了
+        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); // 编译期依赖了(mysql8更新了驱动,pom中驱动版本必须为8以上)
 //        Class.forName("com.mysql.jdbc.Driver"); // 编译器没有依赖，只是字符串
         // 2.获取连接
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel?serverTimezone=UTC", "root", "123456");
@@ -663,8 +669,9 @@ public class Client {
 }
 ```
 ## 三 Spring基于注解的IOC以及IOC的案例
-### Spring中IOC的常用注解
-#### @Component
+### Spring中IOC的常用注解按照作用分类
+#### 用于创建对象的 @Component @Controller @Service @Repository
+##### @Component
 + **作用**
     + 用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)
 + **属性**
@@ -710,12 +717,13 @@ public class Client {
     }
 }
 ``` 
-#### 由@Component衍生出来的注解
-+ **@Controller @Service @Repository**
-+ **他们三个注解的作用和属性与Component是一模一样的**
-+ **是Spring框架为我们明确三层结构而产生的注解**
+##### 由@Component衍生出来的注解 @Controller @Service @Repository
++ @Controller @Service @Repository
++ 他们三个注解的作用和属性与Component是一模一样的
++ 是Spring框架为我们明确三层结构而产生的注解
 + 上面的例子将Component换成他们三个会得到一样的结果!!!
-#### @Autowired
+#### 用于注入数据的 @Autowired @Qualifier @Resource @Value
+##### @Autowired
 + **作用**
     + 自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功
 + **出现位置**
@@ -787,7 +795,7 @@ public class Client {
     }
 }
 ```
-#### @Qualifier
+##### @Qualifier
 + **作用**
     + 给类成员注入需要联合@Autowired使用.当@Autowired修饰的变量名无法匹配IOC容器中的多个bean类型时,通过此注解指定bean
     + 给方法参数注入时可以
@@ -798,7 +806,7 @@ public class Client {
 @Qualifier("accountDao2") // 3.指定注入的bean是 accountDao2
 private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配的bean
 ```
-#### @Resource
+##### @Resource
 + **作用**
     + 直接按照bean的id注入,可以独立使用.相当于 @Autowired 与 @Qualifier 组合使用
 + **属性**
@@ -809,8 +817,92 @@ private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配
 @Resource(name = "accountDao2") // 2.name属性直接匹配到accountDao2代表的bean并注入
 private IAccountDao accountDao; // 1.IOC容器中有两个IAccountDao类型的bean,分别是accountDao1 accountDao2。使用@Autowired 与accountDao 无法匹配到具体的某个bean
 ```
-#### @Value
+##### @Autowired @Qualifier @Resource 注意事项
++ **都只能注入其他bean类型的数据，而基本类型和String类型无法使用上述注解实现**
++ **集合类型的注入只能通过XML来实现**
+##### @Value
 + **作用**
     + 用于注入基本类型和String类型的数据
 + **属性**
     + `value`:用于指定数据的值
+#### 用于改变作用范围的
+##### @Scope
++ **作用**
+    + 用于指定bean的作用范围
++ **属性**
+    + `value`:用指定范围的取值。常用取值:singleton(单例),prototype(多例)
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 告诉Spring在创建容器时要扫描的包，配置所需要的标签不是在beans约束中，而是一个名称
+    为context名称空间和约束中-->
+    <context:component-scan base-package="com.itheima"></context:component-scan>
+</beans>
+```    
+```java
+public interface IAccountService {
+    void saveAccount();
+}
+```
+```java
+@Component
+@Scope("prototype") // 默认是singleton
+public class AccountServiceImpl implements IAccountService {
+    public void saveAccount() {
+        System.out.println("保存账户1");
+    }
+}
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as1 = (IAccountService) ac.getBean("accountServiceImpl");
+        IAccountService as2 = (IAccountService) ac.getBean("accountServiceImpl");
+        System.out.println(as1 == as2); // false
+    }
+}
+```
+#### 和生命周期相关的(了解)
+##### @PostConstruct
++ **作用**
+    + 用于指定初始化方法
+##### @PreDestroy
++ **作用**
+    + 用于指定销毁方法
+```java
+@Component
+public class AccountServiceImpl implements IAccountService {
+    public void saveAccount() {
+        System.out.println("保存账户1");
+    }
+    @PostConstruct
+    public void myInit() {
+        System.out.println("myInit");
+    }
+    @PreDestroy
+    public void myDestroy() {
+        System.out.println("myDestroy");
+    }
+}
+```    
+```java
+public class Client {
+    public static void main(String[] args) {
+//        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        // 不能子类对象指向父类实例,要用自己的对象调用close()方法
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+
+        IAccountService as = (IAccountService) ac.getBean("accountServiceImpl");
+        as.saveAccount();
+        ac.close();
+    }
+}
+```
