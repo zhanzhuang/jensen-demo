@@ -16,7 +16,7 @@
         + **SET方法注入**
         + **SET方法注入集合数据**
 + **三 Spring基于注解的IOC以及IOC的案例**
-    + **Spring中IOC的常用注解**
+    + **Spring中IOC的常用注解按照作用分类**
         + **用于创建对象的**
             + **@Component**
             + **由@Component衍生出来的注解 @Controller @Service @Repository**
@@ -26,9 +26,11 @@
             + **@Scope**
         + **和生命周期相关的(了解)**
             + **@PostConstruct @PreDestroy**
-    + **案例使用xml方法和注解方式实现单表的CRUD操作**
-    + **改造基于注解的IOC案例 使用纯注解的方式实现**
-    + **Spring和Junit整合**
+    + **使用xml方法和注解方式实现单表的CRUD操作案例**
+        + **基于XML方式的IOC案例**
+        + **基于注解的方式并整合Junit案例**
+            + **Spring中的新注解**
+                + **@Configuration @ComponentScan @Bean @Import @PropertySource**
     
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -154,7 +156,6 @@ public class IAccountDaoImpl implements IAccountDao {
 **它在构造核心容器时,创建对象采取的策略是采用立即加载的方式。也就是说，只要读取完配置文件马上就创建配置文件中的对象**
 ```java
 public static void main(String[] args) {
-   // 1.获取核心容器对象
    // 读取完配置文件创建对象
    ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
    // 根据id获取bean对象
@@ -170,7 +171,7 @@ public static void main(String[] args) {
 public static void main(String[] args) {
    Resource resource = new ClassPathResource("bean.xml");
    BeanFactory factory = new XmlBeanFactory(resource);
-   // getBean时创建对象
+   // 根据id获取bean对象时创建对象
    IAccountService as = (IAccountService) factory.getBean("accountService");
    System.out.println(as);
 }
@@ -906,3 +907,503 @@ public class Client {
     }
 }
 ```
+### 使用xml方法和注解方式实现单表的CRUD操作案例
+#### 基于XML方式的IOC案例
+```sql
+create table account(
+	id int primary key auto_increment,
+	name varchar(40),
+	money float
+)character set utf8 collate utf8_general_ci;
+
+insert into account(name,money) values('aaa',1000);
+insert into account(name,money) values('bbb',1000);
+insert into account(name,money) values('ccc',1000);
+```
+```java
+public class Account {
+    private Integer id;
+    private String name;
+    private Float money;
+    // get and set ...
+    // toString ...
+}
+```
+```java
+public interface IAccountService {
+    List<Account> findAllAccount();
+    Account findAccountById(Integer id);
+    void saveAccount(Account account);
+    void updateAccount(Account account);
+    void deleteAccount(Integer accountId);
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    private IAccountDao accountdao;
+    public void setAccountdao(IAccountDao accountdao) {
+        this.accountdao = accountdao;
+    }
+    public List<Account> findAllAccount() {
+        return accountdao.findAllAccount();
+    }
+    public Account findAccountById(Integer id) {
+        return accountdao.findAccountById(id);
+    }
+    public void saveAccount(Account account) {
+        accountdao.saveAccount(account);
+    }
+    public void updateAccount(Account account) {
+        accountdao.updateAccount(account);
+    }
+    public void deleteAccount(Integer accountId) {
+        accountdao.deleteAccount(accountId);
+    }
+}
+```
+```java
+public interface IAccountDao {
+    List<Account> findAllAccount();
+    Account findAccountById(Integer id);
+    void saveAccount(Account account);
+    void updateAccount(Account account);
+    void deleteAccount(Integer accountId);
+}
+```
+```java
+public class AccountDaoImpl implements IAccountDao {
+
+    private QueryRunner runner;
+
+    public void setRunner(QueryRunner runner) {
+        this.runner = runner;
+    }
+    public List<Account> findAllAccount() {
+        try {
+            return runner.query("select * from account", new BeanListHandler<Account>(Account.class));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public Account findAccountById(Integer id) {
+        try {
+            return runner.query("select * from account where id = ? ", new BeanHandler<Account>(Account.class), id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void saveAccount(Account account) {
+        try {
+            runner.update("insert into account(name,money) values(? , ?)", account.getName(), account.getMoney());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateAccount(Account account) {
+        try {
+            runner.update("update account set name = ?, money = ? where id = ?", account.getName(), account.getMoney(), account.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deleteAccount(Integer accountId) {
+        try {
+            runner.update("delete from account where id = ?", accountId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置service -->
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl">
+        <!-- 注入dao对象 -->
+        <property name="accountdao" ref="accountDao"/>
+    </bean>
+    <!-- 配置dao -->
+    <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl">
+        <!-- 注入QueryRunner -->
+        <property name="runner" ref="runner"/>
+    </bean>
+    <!--配置QueryRunner-->
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!-- 注入数据源 -->
+        <constructor-arg name="ds" ref="dataSource"/>
+    </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 连接数据库的必备信息 -->
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/travel?serverTimezone=UTC"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+</beans>
+```
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>commons-dbutils</groupId>
+    <artifactId>commons-dbutils</artifactId>
+    <version>1.4</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.17</version>
+</dependency>
+<dependency>
+    <groupId>c3p0</groupId>
+    <artifactId>c3p0</artifactId>
+    <version>0.9.1.2</version>
+</dependency>
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.10</version>
+</dependency>
+```
+```java
+/**
+ * 使用Junit单元测试,测试我们的配置
+ */
+public class AccountServiceTest {
+    @Test
+    public void testFindAll() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = ac.getBean("accountService", IAccountService.class);
+        List<Account> allAccount = as.findAllAccount();
+        for (Account account : allAccount) {
+            System.out.println(account);
+        }
+    }
+    @Test
+    public void testFindOne() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = ac.getBean("accountService", IAccountService.class);
+        Account a = as.findAccountById(1);
+        System.out.println(a);
+    }
+    @Test
+    public void testSave() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = ac.getBean("accountService", IAccountService.class);
+        Account account = new Account();
+        account.setName("jack");
+        account.setMoney(2000f);
+        as.saveAccount(account);
+    }
+    @Test
+    public void testUpdate() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = ac.getBean("accountService", IAccountService.class);
+        Account account = as.findAccountById(4);
+        account.setMoney(123f);
+        as.updateAccount(account);
+    }
+    @Test
+    public void testDelete() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = ac.getBean("accountService", IAccountService.class);
+        as.deleteAccount(4);
+    }
+}
+```
+#### 基于注解的方式并整合Junit案例
+##### Spring中的新注解
+###### @Configuration
++ **作用**
+    + 用于指定当前类是一个配置类
+###### @ComponentScan
++ **作用**
+    + 指定Spring在创建容器时需要扫描的包
+###### @Bean
++ **作用**        
+    + 把当前方法的返回值作为bean对象存入IOC容器中
++ **属性**
+    + `name`:用于指定bean的ID。当不写时,默认值是当前方法名
++ **细节**        
+    + 当我们使用注解配置方法时,如果方法有参数。Spring框架会去容器中查找有没有可用的bean对象
+    + 查找的方式和AutoWired注解的方式一样
+###### @Import
++ **作用**        
+    + 用于导入其他的配置类
++ **属性**    
+    + `value`:用于指定其他配置类的字节码
+    + 在SpringConiguration总配置中加上Import注解代表父配置类,将JdbcConfig.class作为参数传进去,就会扫描JdbcCOnfig.java
+###### @PropertySource
++ **作用**    
+    + 用于指定properties文件的位置
++ **属性**    
+    + `value`:指定文件的名称和路径
+    + 关键字：classpath->表示类路径下
+```sql
+create table account(
+	id int primary key auto_increment,
+	name varchar(40),
+	money float
+)character set utf8 collate utf8_general_ci;
+insert into account(name,money) values('aaa',1000);
+insert into account(name,money) values('bbb',1000);
+insert into account(name,money) values('ccc',1000);
+```   
+```xml
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+```
+jdbcConfig.properties
+```properties
+jdbc.driver=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/travel?serverTimezone=UTC
+jdbc.username=root
+jdbc.password=123456
+```
+```java
+public interface IAccountService {
+    List<Account> findAllAccount();
+    Account findAccountById(Integer id);
+    void saveAccount(Account account);
+    void updateAccount(Account account);
+    void deleteAccount(Integer accountId);
+}
+```
+```java
+@Service("accountService")
+public class AccountServiceImpl implements IAccountService {
+    @Autowired
+    private IAccountDao accountdao;
+    public List<Account> findAllAccount() {
+        return accountdao.findAllAccount();
+    }
+    public Account findAccountById(Integer id) {
+        return accountdao.findAccountById(id);
+    }
+    public void saveAccount(Account account) {
+        accountdao.saveAccount(account);
+    }
+    public void updateAccount(Account account) {
+        accountdao.updateAccount(account);
+    }
+    public void deleteAccount(Integer accountId) {
+        accountdao.deleteAccount(accountId);
+    }
+}
+```
+```java
+public interface IAccountDao {
+    List<Account> findAllAccount();
+    Account findAccountById(Integer id);
+    void saveAccount(Account account);
+    void updateAccount(Account account);
+    void deleteAccount(Integer accountId);
+}
+```
+```java
+@Repository("accountDao")
+public class AccountDaoImpl implements IAccountDao {
+    @Autowired
+    private QueryRunner runner;
+
+    public List<Account> findAllAccount() {
+        try {
+            return runner.query("select * from account", new BeanListHandler<Account>(Account.class));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Account findAccountById(Integer id) {
+        try {
+            return runner.query("select * from account where id = ? ", new BeanHandler<Account>(Account.class), id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveAccount(Account account) {
+        try {
+            runner.update("insert into account(name,money) values(? , ?)", account.getName(), account.getMoney());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateAccount(Account account) {
+        try {
+            runner.update("update account set name = ?, money = ? where id = ?", account.getName(), account.getMoney(), account.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteAccount(Integer accountId) {
+        try {
+            runner.update("delete from account where id = ?", accountId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+```java
+public class Account {
+    private Integer id;
+    private String name;
+    private Float money;
+    // get and set ...
+    // toString ...
+    
+```
+```java
+@ComponentScan("com.itheima")
+@Import(JdbcConfig.class)
+@PropertySource("classpath:jdbcConfig.properties")
+public class SpringConfiguration {
+
+}
+```
+```java
+/**
+ * 和Spring连接数据库相关的配置类
+ */
+public class JdbcConfig {
+    @Value("${jdbc.driver}")
+    private String driver;
+    @Value("${jdbc.url}")
+    private String url;
+    @Value("${jdbc.username}")
+    private String username;
+    @Value("${jdbc.password}")
+    private String password;
+
+    /**
+     * 创建一个QueryRunner对象
+     *
+     * @param dataSource
+     * @return
+     */
+    @Scope("prototype")
+    @Bean(name = "runner")
+    public QueryRunner createQueryRunner(@Qualifier("dataSource") DataSource source) {// 配置多数据源,使用@Qualifier指定数据源
+        return new QueryRunner(source);
+    }
+
+    /**
+     * 创建数据源对象
+     *
+     * @return
+     */
+    @Bean(name = "dataSource")
+    public DataSource createDataSource() {
+        try {
+            ComboPooledDataSource ds = new ComboPooledDataSource();
+            ds.setDriverClass(driver);
+            ds.setJdbcUrl(url);
+            ds.setUser(username);
+            ds.setPassword(password);
+            return ds;
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Bean(name = "dataSourceOther")
+    public DataSource createDataSourceOther() {
+        try {
+            ComboPooledDataSource ds = new ComboPooledDataSource();
+            ds.setDriverClass(driver);
+            ds.setJdbcUrl("另一个数据库的url");
+            ds.setUser(username);
+            ds.setPassword(password);
+            return ds;
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+**Spring整合Junit的配置**
++ 0.当我们使用Spring5.x版本的时候，要求Junit的jar必须是4.1.2及以上
++ 1.导入Spring整合Junit的jar
++ 2.使用Junit提供的@Runwith把原有的main方法替换了，替换成Spring提供的
++ 3.告知Spring的运行期，Spring和IOC创建是基于XML还是注解的，并且说明位置
+    + @ContextConfiguration
+    + locations:指定XML文件的位置，加上classpath关键字，表示在类路径下
+    + classes：指定注解类所在的位置
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringConfiguration.class)
+public class AccountTest {
+
+    @Autowired
+    private IAccountService as;
+
+    @Test
+    public void testFindAll() {
+        List<Account> allAccount = as.findAllAccount();
+        for (Account account : allAccount) {
+            System.out.println(account);
+        }
+    }
+    @Test
+    public void testFindOne() {
+        Account a = as.findAccountById(1);
+        System.out.println(a);
+    }
+    @Test
+    public void testSave() {
+        Account account = new Account();
+        account.setName("jack");
+        account.setMoney(2000f);
+        as.saveAccount(account);
+    }
+    @Test
+    public void testUpdate() {
+        Account account = as.findAccountById(4);
+        account.setMoney(123f);
+        as.updateAccount(account);
+    }
+    @Test
+    public void testDelete() {
+        as.deleteAccount(4);
+    }
+}
+```    
