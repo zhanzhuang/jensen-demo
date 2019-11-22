@@ -31,7 +31,8 @@
         + **基于注解的方式并整合Junit案例**
             + **Spring中的新注解**
                 + **@Configuration @ComponentScan @Bean @Import @PropertySource**
-    
++ **四 动态代理**   
+    + **简单的事务** 
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -1366,8 +1367,8 @@ public class JdbcConfig {
 + 2.使用Junit提供的@Runwith把原有的main方法替换了，替换成Spring提供的
 + 3.告知Spring的运行期，Spring和IOC创建是基于XML还是注解的，并且说明位置
     + @ContextConfiguration
-    + locations:指定XML文件的位置，加上classpath关键字，表示在类路径下
-    + classes：指定注解类所在的位置
+        + locations:指定XML文件的位置，加上classpath关键字，表示在类路径下
+        + classes：指定注解类所在的位置
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringConfiguration.class)
@@ -1407,3 +1408,97 @@ public class AccountTest {
     }
 }
 ```    
+## 四 动态代理
+### 特点
++ 字节码随用随创建,随用随加载
+### 作用
++ 不修改源码的基础上对方法增强
+### 分类
++ 基于接口的动态代理
++ 基于子类的动态代理(cglib动态代理)
+#### 基于接口的动态代理
+```java
+public interface IProducer {
+    public void saleProduct(float money);
+
+    public void afterService(float money);
+}
+```
+```java
+/**
+ * 生产者
+ */
+public class Producer implements IProducer {
+    /**
+     * 销售
+     * @param money
+     */
+    public void saleProduct(float money) {
+        System.out.println("销售产品,拿到钱" + money);
+    }
+    /**
+     * 售后
+     * @param money
+     */
+    public void afterService(float money) {
+        System.out.println("提供售后服务,拿到钱" + money);
+    }
+}
+```
+
+```java
+/**
+ * 模拟一个消费者
+ */
+public class Client {
+    public static void main(String[] args) {
+        final Producer producer = new Producer();
+        /**
+         * 动态代理：
+         * 特点：字节码随用随创建，随用随加载
+         * 作用：不修改源码的基础上对方法增强
+         * 分类：1.基于接口的动态代码
+         *      2.基于子类的动态代理
+         *  基于接口的动态代理：
+         *      涉及的类：Proxy
+         *      提供者：JDK官方
+         * 如何创建代理对象：
+         *      使用Proxy类中的newProxyInstance
+         * 创建代理对象的要求：
+         *      被代理类最少实现一个接口,如果没有则不能使用
+         * newProxyInstance方法的参数：
+         *      ClassLoader：类加载器
+         *          用于加载代理对象字节码的。和被代理对象使用相同的类加载器
+         *      Class[]：字节码数组
+         *          用于让代理对象和被代理对象有相同的方法
+         *      InvocationHandler：用于提供增强的代码
+         *          它是让我们写如何代理。我们一般都是写一个该接口的实现类。通常情况下都是匿名内部类。但不是必须的
+         *          此接口的实现类都是谁用谁写
+         */
+        IProducer proxyProducer = (IProducer) Proxy.newProxyInstance(producer.getClass().getClassLoader(),
+                producer.getClass().getInterfaces(),
+                new InvocationHandler() {
+                    // 作用：执行被代理对象的任何接口方法都会经过该方法
+                    // proxy：代理对象的引用
+                    // method：当前执行的方法
+                    // args：当前执行方法所需的参数
+                    // return：和被代理对象有相同的返回值
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        // 提供增强的代码
+                        Object returnValue = null;
+                        // 1.获取方法执行的参数
+                        Float money = (Float) args[0];
+                        // 2.判断当前方法是不是销售
+                        if ("saleProduct".equals(method.getName())) {
+                            returnValue = method.invoke(producer, money * 0.8f);
+                        }
+                        return returnValue;
+                    }
+                });
+
+        proxyProducer.saleProduct(10000f);
+        // 打印结果 8000.0
+    }
+}
+
+```
