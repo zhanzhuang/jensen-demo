@@ -6,7 +6,6 @@
     + **DCL**
 + **二 操作数据库:CRUD**
 + **三 操作表:CRUD**
-+ **MYSQL高级**
 + **四 DQL查询语句**
     + **排序查询**
     + **聚合函数**
@@ -33,7 +32,7 @@
     + **用户增删改**
     + **权限管理**
 
-### 一 SQL分类
+# 一 SQL分类
 + DDL(data definition language)数据定义语言
     + 用来定义数据库对象：数据库,表,列等
     + `create`,`drop`,`alter`等
@@ -46,7 +45,7 @@
 + DCL(data control language)数据控制语言(了解)
     + 用来定义数据库的访问权限和安全级别以及创建用户
     + `grant`,`revoke`等
-### 二 操作数据库:CRUD
+# 二 操作数据库:CRUD
 + C(create)
     + 创建数据库
         ```sql
@@ -88,7 +87,7 @@
         ```sql
         select database();
         ```
-### 三 操作表:CRUD
+# 三 操作表:CRUD
 + C(create)
     + 语法(注意最后一列不需要逗号)
         ```sql
@@ -222,8 +221,7 @@
             + `OR` 或 `||`
             + `not` 或 `!`
 
-## MYSQL高级
-### 四 DQL查询语句
+# 四 DQL查询语句
 + 排序查询
     + 语法:`order by 子句`
         ```sql
@@ -262,7 +260,7 @@
         SELECT * FROM student LIMIT 6,3; -- 第三页
         ```
     + **`LIMIT是MYSQL的方言`**
-### 五 约束
+# 五 约束
 + 约束概念
     + 对表中的数据进行限定,保证数据的正确性,有效性和完整性。
 + 约束分类
@@ -367,7 +365,7 @@
                 ```sql
                 ALTER TABLE employee ADD CONSTRAINT emp_deptid_fk FOREIGN KEY(dep_id) REFERENCES department(id) ON DELETE CASCADE;
                 ```
-### 六 数据库的设计
+# 六 数据库的设计
 + 多表之间的关系
     + 分类
         + 一对一(了解)
@@ -427,7 +425,7 @@
                 + 执行文件:source a.sql
     + 图形化工具
 
-### 七 多表查询
+# 七 多表查询
 + 准备sql
     ```sql
     # 创建部门表
@@ -499,7 +497,7 @@
                     select * from dept t1,(select * from emp where emp.join_date > '2011-11-11') t2 where t1.id = t2.dept_id
                     ```
     
-### 八 事务
+# 八 事务
 + 事务的基本介绍
     + 概念
         + 如果一个包含多个步骤的业务操作被事务管理,那么这些操作要么同时成功,要么同事失败。
@@ -557,7 +555,7 @@
             ```sql
             set global transaction isolation level serializable
             ```
-### 九 管理用户
+# 九 管理用户
 + 用户增删改
     + 添加用户：
         ```sql

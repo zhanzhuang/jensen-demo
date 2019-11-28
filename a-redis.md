@@ -8,7 +8,7 @@
 + **四 持久化**
 + **五 Jedis**
 + **六 JedisPool**
-### 一 下载安装
+# 一 下载安装
 + 官网:https://redis.io
 + 中文网:http://www.redis.net.cn/
 + 下载
@@ -19,7 +19,7 @@
         + redis.windows.conf = 配置文件
         + redis-cli.exe = redis的客户端
         + redis-server.exe = redis服务器
-### 二 数据结构与命令操作
+# 二 数据结构与命令操作
 + 数据结构
     + `字符串类型 string`
     + `哈希类型 hash` : 
@@ -69,14 +69,14 @@
         + `zrange key start end`
     + 删除 : 
         + `zrem key value`
-### 三 通用命令
+# 三 通用命令
 + 查询所有的键
     + `keys *`
 + 查询键的类型
     + `type key`
 + 删除指定的key value
     + `del key`
-### 四 持久化
+# 四 持久化
 + redis是一个内存数据库,当redis服务器重启或者电脑重启数据就会丢失,我们可以将redis内存中的数据持久化保存到硬盘中
 + 持久化机制
     + RDB
@@ -94,7 +94,7 @@
             + `\#appendfsync always`(每一次操作都会持久化)
             + `appendfsync everysec`(每隔一秒持久化一次)
             + `\# appendfsync no`(不进行持久化)
-### 五 Jedis
+# 五 Jedis
 + jedis是一款java操作redis数据库的工具
 + 使用步骤
     + 1.下载jedis的jar包
@@ -190,7 +190,7 @@
         System.out.println(mysortedset);
     }
     ```
-### 六 JedisPool
+# 六 JedisPool
 + 使用
     + 简单的Jedis连接池
     ```java
