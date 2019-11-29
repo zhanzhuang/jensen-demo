@@ -15,7 +15,8 @@
 + **十四 FORK远程项目**
 + **十五 小技巧**
     + .gitignore失效
-    + 从GitHub上面clone代码
+    + 修改Github上面已有的代码
+    + 本地已有项目上传到GitHub
 
 
 
