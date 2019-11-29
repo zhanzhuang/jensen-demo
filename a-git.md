@@ -197,11 +197,25 @@ commit_id可以是commit对象对应的ID，也可以是HEAD，分支名，tag�
     + `git rm -r --cached .`
     + `git add .`
     + `git commit -m "description" `
-### 从GitHub上面clone代码
-+ 检查本地用户下的.ssh目录下有无id_rsa.pub文件,有的话删掉
-+ 本地生成密钥(后面为github账户),一路回车即可
+### 修改Github上面已有的代码
++ 1.检查本地用户下的.ssh目录下有无id_rsa.pub文件,有的话删掉
++ 2.本地生成密钥(后面为github账户),一路回车即可
     + `ssh-keygen -t rsa -C 542813934@qq.com`
-+ 本地用户下的.ssh目录下已经生成id_rsa.pub文件,将里面的东西复制
++ 3.本地用户下的.ssh目录下已经生成id_rsa.pub文件,将里面的东西复制
     + 进入你的GitHub->settings->SSH keys->new ssh key。将key复制到里面
-+ git clone xxx
-### 本地代码推送到GitHub()
++ 4.git clone xxx
++ 5.git add .   git commit -m "z"   git push origin master
+### 本地已有项目上传到GitHub
++ 1.本地git与github通过ssh绑定则省略此步骤
+    + 本地生成密钥(后面为github账户),一路回车即可
+        + `ssh-keygen -t rsa -C 542813934@qq.com`
+    + 本地用户下的.ssh目录下已经生成id_rsa.pub文件,将里面的东西复制
+        + 进入你的GitHub->settings->SSH keys->new ssh key。将key复制到里面
++ 2.github上面建一个空仓库,不要创建README.md
+    + repositories -> new -> ......
++ 3.在想要上传的项目右击git bash
+    + git init
+    + git add .
+    + git commit -m "description"
+    + git remote add origin git@github.com:zhanzhuang/test.git" 最后一个参数为上面空仓库的地址
+    + git push origin master
