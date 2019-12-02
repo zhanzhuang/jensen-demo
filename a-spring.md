@@ -32,8 +32,13 @@
             + **Spring中的新注解**
                 + **@Configuration @ComponentScan @Bean @Import @PropertySource**
 + **四 动态代理**   
-    + **简单的事务** 
-+ **一 ElasticSearch简介**
+    + **基于接口的动态代理** 
+    + **基于子类的动态代理(cglib动态代理)** 
++ **五 AOP**
+    + **什么是AOP**
+    + **AOP的作用和优势**
+    + **AOP的相关术语**
+        + **Joinpoint Pointcut Advice Introduction Target Weaving Proxy Aspect**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -1454,11 +1459,6 @@ public class Client {
     public static void main(String[] args) {
         final Producer producer = new Producer();
         /**
-         * 动态代理：
-         * 特点：字节码随用随创建，随用随加载
-         * 作用：不修改源码的基础上对方法增强
-         * 分类：1.基于接口的动态代码
-         *      2.基于子类的动态代理
          *  基于接口的动态代理：
          *      涉及的类：Proxy
          *      提供者：JDK官方
@@ -1502,3 +1502,107 @@ public class Client {
 }
 
 ```
+#### 基于子类的动态代理(cglib动态代理)
+```xml
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>2.1_3</version>
+</dependency>
+```
+```java
+public class Producer {
+    // 销售
+    public void saleProduct(float money) {
+        System.out.println("销售产品，并拿到钱" + money);
+
+    }
+
+    // 售后
+    public void afterService(float money) {
+        System.out.println("提供售后服务，并拿到钱" + money);
+    }
+}
+```
+```java
+public class Client {
+    public static void main(String[] args) {
+        final Producer producer = new Producer();
+
+        /**
+         * 基于子类的动态代理
+         *      涉及的类：Enhancer
+         *      提供者：第三方cglib库
+         * 如何创建代理对象
+         *      使用Enhancer类中的create方法
+         * 创建代理对象的要求
+         *      被代理类不能是最终类
+         * newProxyInstance方法的参数
+         *      Class：字节码
+         *          指定被代理对象的字节码
+         *      Callback：用于提供增强的代码
+         *          它是让我们写如何代理。我们一般都是写一个该接口的实现类，通常境况下都是匿名内部类，但不是必须的。
+         *          此接口的实现类都是谁用谁写
+         *          我们没一般写的都是该接口的实现类,MethodInterceptor
+         */
+        Producer cglibProducer = (Producer) Enhancer.create(producer.getClass(), new MethodInterceptor() {
+            /**
+             * 只从被代理对象的任何方法都会经过该方法
+             *
+             * @param proxy
+             * @param method
+             * @param args        以上三个参数和基于接口的动态代理invoke方法的参数是一样的
+             * @param methodProxy
+             * @return
+             * @throws Throwable
+             */
+            @Override
+            public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+                // 增强的代码
+                Object returnValue = null;
+                Float money = (Float) args[0];
+                if ("saleProduct".equals(method.getName())) {
+                    returnValue = method.invoke(producer, money * 0.8f);
+                }
+                return returnValue;
+            }
+        });
+        cglibProducer.saleProduct(12000f);
+
+    }
+}
+```
+## 五 AOP
+### 什么是AOP
+AOP为Aspect Oriented programming的缩写,意为面向切面编程,通过预编译方法和运行期动态代理
+实现程序功能统一维护的一种技术。AOP是OOP的延续,是Spring框架中的重要内容是函数式变成的一种衍生范型。
+利用AOP可以对业务逻辑的各个部分进行隔离,熊二使得业务逻辑各部分之间的耦合度降低,提高了程序的
+可重用性,同时提高了开发的效率
+### AOP的作用和优势
++ 作用
+    + 在程序运行期间,不修改源码对已有方法进行增强
++ 优势
+    + 减少重复代码
+    + 提高开发效率 
+    + 维护方便
+### AOP的相关术语
++ Joinpoint(连接点)
+    + 所谓连接点是指那些被拦截到的点。在Spring中,这些点指的是方法,因为Spring只支持方法类型的连接点。
++ Pointcut(切入点)
+    + 所谓切入点是指我们要对哪些Joinpoint进行拦截的定义(被增强的方法)
++ Advice(通知/增强)
+    + 拦截到Joinpoint要做的事情就是通知。
+        + 通知的类型：前置通知，后置通知，异常通知，最终通知，环绕通知
+        + invoke方法里面的method.invoke(param, param);前面的是前置通知,后面的是后置通知,catch里面的是异常通知,finally里面的是最终通知,整个invoke方法在执行就是环绕通知
++ Introduction(引介)
+    + 引介是一种特殊的通知在不修改类代码的前提下,Introduction可以在运行期为类动态地添加一些方法或Field
++ Target(目标对象)
+    + 被代理对象
++ Weaving(织入)
+    + 把增强应用到目标对象来创建新的代理对象的过程
+    + 例：原有的Service无法实现事务的支持,使用动态代理创建代理对象,返回代理对象中加入了事务支持,加入事务支持的过程就叫织入
+    + Spring采用动态代理织入,而AspectJ采用编译期织入和类装载期织入
++ Proxy(代理)
+    + 新对象(代理对象)
++ Aspect(切面)
+    + 切入点和通知(引介)的结合
