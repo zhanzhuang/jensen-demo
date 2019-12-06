@@ -39,6 +39,12 @@
     + **AOP的作用和优势**
     + **AOP的相关术语**
         + **Joinpoint Pointcut Advice Introduction Target Weaving Proxy Aspect**
+    + **基于XML的AOP配置**
+    + **基于注解的AOP配置**
++ **六 Spring中的事务**
+    + **隔离级别**
+    + **传播行为**
+    
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
 + **一 ElasticSearch简介**
@@ -1606,3 +1612,274 @@ AOP为Aspect Oriented programming的缩写,意为面向切面编程,通过预编
     + 新对象(代理对象)
 + Aspect(切面)
     + 切入点和通知(引介)的结合
+### 基于XML的AOP配置
++ 前置通知
++ 后置通知
++ 异常通知
++ 最终通知
++ 环绕通知
+    + 它是Spring框架为我们提供的一种可以在代码中手动控制增强方法何时执行的方式
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.8.7</version>
+</dependency>
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"></bean>
+    <bean id="logger" class="com.itheima.utils.Logger"></bean>
+
+    <aop:config>
+            <!--配置切入点表达式,id属性唯一标识，expression属性用于指定表达式内容
+                此标签写在aop:aspect标签的内部只能当前切面使用
+                它还可以写在aop:aspect外面，此时就变成了所有切面可用
+            -->
+        <aop:pointcut id="pt1" expression="execution(* com.itheima.service.impl.*.*(..))"/>
+        <aop:aspect id="logAdvice" ref="logger">
+            <aop:before method="beforePrintLog" pointcut-ref="pt1"/>
+            <aop:after-returning method="afterReturningPrintLog" pointcut-ref="pt1"/>
+            <aop:after-throwing method="afterThrowingPrintLog" pointcut-ref="pt1"/>
+            <aop:after method="afterPrintLog" pointcut-ref="pt1"/>
+            <!--测试环绕通知时将上面四个注释掉-->
+            <aop:around method="aroundLog" pointcut-ref="pt1"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
+```
+```java
+public class Logger {
+    public void beforePrintLog() {
+        System.out.println("前置通知Logger类中的beforePrintLog方法开始记录日志了");
+    }
+    public void afterReturningPrintLog() {
+        System.out.println("后置通知Logger类中的afterReturningPrintLog方法开始记录日志了");
+    }
+    public void afterThrowingPrintLog() {
+        System.out.println("异常通知Logger类中的afterThrowingPrintLog方法开始记录日志了");
+    }
+    public void afterPrintLog() {
+        System.out.println("最终通知Logger类中的afterPrintLog方法开始记录日志了");
+    }
+    /**
+     * 环绕通知
+     * 问题：
+     *      当我们配置了环绕通知之后，切入点方法没有执行，而通知方法执行了
+     * 分析：
+     *      通过对比动态代理中的环绕通知代码，发现动态代理的环绕通知有明确的切入点方法调用，而我们的代码中没有
+     * 解决：
+     *      spring框架为我们提供了一个接口：ProceedingJoinPoint。该接口有一个方法proceed()，此方法就相当于明确调用切入点方法
+     *      该接口可以作为环绕通知的方法参数，在程序执行时，spring框架会为我们提供该接口的实现类供我们使用
+     * Spring中的环绕通知：
+     *      它是Spring框架为我们提供的一种可以在代码中手动控制增强方法何时执行的方式
+     */
+    public Object aroundLog(ProceedingJoinPoint pjp){
+        Object rtValue = null;
+        try {
+            // 得到方法执行的所需参数
+            Object[] args = pjp.getArgs();
+            System.out.println("前置环绕通知Logger类中的aroundLog方法开始记录日志了");
+            // 明确调用业务层方法(切入点方法
+            pjp.proceed(args);
+            System.out.println("后置环绕通知Logger类中的aroundLog方法开始记录日志了");
+            return rtValue;
+        } catch (Throwable throwable) {
+            System.out.println("异常环绕通知Logger类中的aroundLog方法开始记录日志了");
+            throwable.printStackTrace();
+        }finally {
+            System.out.println("最终环绕通知Logger类中的aroundLog方法开始记录日志了");
+        }
+        return rtValue;
+    }
+}
+```
+```java
+public interface IAccountService {
+    void saveAccount();
+
+    void updateAccount(int i);
+
+    int deleteAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    public void saveAccount() {
+//        int i = 1 / 0;
+        System.out.println("执行了保存");
+    }
+    public void updateAccount(int i) {
+        System.out.println("执行了更新" + i);
+    }
+    public int deleteAccount() {
+        System.out.println("执行了删除");
+        return 0;
+    }
+}
+```
+```java
+public class AOPTest {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
+### 基于注解的AOP配置
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.2.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.8.7</version>
+</dependency>
+```
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--配置spring创建容器时要扫描的包-->
+    <context:component-scan base-package="com.itheima"></context:component-scan>
+
+    <!--配置spring开启注解AOP的支持-->
+    <aop:aspectj-autoproxy/>
+</beans>
+```
+```java
+@Component("logger")
+@Aspect// 当前类是一个切面类
+public class Logger {
+    @Pointcut("execution(* com.itheima.service.impl.*.*(..))")
+    private void pt1(){}
+
+//    @Before("pt1()")
+    public void beforePrintLog() {
+        System.out.println("前置通知Logger类中的beforePrintLog方法开始记录日志了");
+    }
+//    @AfterReturning("pt1()")
+    public void afterReturningPrintLog() {
+        System.out.println("后置通知Logger类中的afterReturningPrintLog方法开始记录日志了");
+    }
+//    @AfterThrowing("pt1()")
+    public void afterThrowingPrintLog() {
+        System.out.println("异常通知Logger类中的afterThrowingPrintLog方法开始记录日志了");
+    }
+//    @After("pt1()")
+    public void afterPrintLog() {
+        System.out.println("最终通知Logger类中的afterPrintLog方法开始记录日志了");
+    }
+
+    /**
+     * 环绕通知
+     * 问题：
+     *      当我们配置了环绕通知之后，切入点方法没有执行，而通知方法执行了
+     * 分析：
+     *      通过对比动态代理中的环绕通知代码，发现动态代理的环绕通知有明确的切入点方法调用，而我们的代码中没有
+     * 解决：
+     *      spring框架为我们提供了一个接口：ProceedingJoinPoint。该接口有一个方法proceed()，此方法就相当于明确调用切入点方法
+     *      该接口可以作为环绕通知的方法参数，在程序执行时，spring框架会为我们提供该接口的实现类供我们使用
+     * Spring中的环绕通知：
+     *      它是Spring框架为我们提供的一种可以在代码中手动控制增强方法何时执行的方式
+     */
+    @Around("pt1()")
+    public Object aroundLog(ProceedingJoinPoint pjp){
+        Object rtValue = null;
+        try {
+            // 得到方法执行的所需参数
+            Object[] args = pjp.getArgs();
+            System.out.println("前置环绕通知Logger类中的aroundLog方法开始记录日志了");
+            // 明确调用业务层方法(切入点方法
+            pjp.proceed(args);
+            System.out.println("后置环绕通知Logger类中的aroundLog方法开始记录日志了");
+            return rtValue;
+        } catch (Throwable throwable) {
+            System.out.println("异常环绕通知Logger类中的aroundLog方法开始记录日志了");
+            throwable.printStackTrace();
+        }finally {
+            System.out.println("最终环绕通知Logger类中的aroundLog方法开始记录日志了");
+        }
+        return rtValue;
+    }
+}
+```
+```java
+public interface IAccountService {
+    void saveAccount();
+    void updateAccount(int i);
+    int deleteAccount();
+}
+```
+```java
+public class AccountServiceImpl implements IAccountService {
+    public void saveAccount() {
+//        int i = 1 / 0;
+        System.out.println("执行了保存");
+    }
+    public void updateAccount(int i) {
+        System.out.println("执行了更新" + i);
+    }
+    public int deleteAccount() {
+        System.out.println("执行了删除");
+        return 0;
+    }
+}
+```
+```java
+public class AOPTest {
+    public static void main(String[] args) {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        IAccountService as = (IAccountService) ac.getBean("accountService");
+        as.saveAccount();
+    }
+}
+```
+```
+前置环绕通知Logger类中的aroundLog方法开始记录日志了
+执行了保存
+后置环绕通知Logger类中的aroundLog方法开始记录日志了
+最终环绕通知Logger类中的aroundLog方法开始记录日志了
+
+Process finished with exit code 0
+```
+## 六 Spring中的事务
+### 隔离级别
+事务隔离级别反应事务提交并发访问时的处理态度
++ ISOLATION_DEFAULT(默认的级别,归属下列某一种)
++ ISOLATION_READ_UNCOMMITTED(只能读取提交数据,解决脏读问题,Oracle默认级别)
++ ISOLATION_REPEATABLE_READ(是否读取其他事务提交修改后的数据,解决不可重复读问题,Mysql默认级别)
++ ISOLATION_SERIALIZABLE(是否读取其他食物提交添加后的数据,解决幻影读问题)
+### 传播行为
++ REQUIRED(如果当前没有事务,就新建一个事务,如果已经存在一个事务中,加入到这个事务中,默认值)
++ SUPPORTS(支持当前事务,如果当前没有事务,就以非事务方式执行)
++ MANDATORY(使用当前的事务,如果当前没有事务,就抛出异常)
++ REQUERS_NEW(新建事务,如果当前在事务中,把当前事务挂起)
++ NOT_SUPPORTED(以非事务方式执行操作,如果当前存在事务,就把当前事务挂起)
++ NEVER(以非事务方式运行,如果当前存在事务,抛出异常)
++ NESTED(如果当前存在事务,则在嵌套事务内执行,如果当前没有事务,则执行REQUIRED类似的操作)
