@@ -1,13 +1,14 @@
 # SpringMVC目录
 + **SpringMVC工作流程**
 + **SpringMVC中的组件**
++ **SpringMVC简单使用**
 + **SpringMVC参数绑定**
     + **实体类型**
     + **集合类型和map类型**
 + **配置中文乱码**
 + **获取Servlet原生API**
 + **SpringMVC常用的注解**
-    + **@RequestMapping**
+    + **@RequestMapping @RequestParam @RequestBody @PathVariable @RequestHeader @CookieValue @ModelAttribute @SessionAttributes @ResponseBody**
 
 
 
@@ -47,6 +48,7 @@
     一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开
     发具体的页面。
     ```
+## SpringMVC简单使用  
 所需依赖
 ```xml
 <dependency>
@@ -304,4 +306,74 @@ public void test(@RequestHeader(value = "Accept")String header){
 ```
 ### @CookieValue
 + 作用
-    + 
+    + 获取指定cookie的值
+```java
+@RequestMapping("test")
+public void test(@CookieValue(value = "JSESSIONID")String cookieValue){
+    System.out.println(cookieValue);
+}
+```
+### @ModelAttribute
++ 作用
+    + 1.修饰在方法上,表示当前方法会在控制器的方法执行之前执行
+```java
+@RequestMapping(value = "test")
+public String test1() {
+    System.out.println("test1");
+}
+@ModelAttribute(){
+    System.out.println("test2");
+}
+
+// 访问test1方法控制台打印的结果为 test2 test1
+```
+### @SessionAttributes
++ 作用
+    + 用于多次执行控制器方法间的参数共享
++ 属性
+    + value：用于指定存入的属性名称
+    + type：用于指定存入的数据类型
+```java
+@Controller
+@RequestMapping(path="/user")
+// 把数据存入到session域对象中
+@SessionAttributes(value= {"username","password","age"},types={String.class,Integer.class})
+public class HelloController {
+    /**
+    * 向session中存入值
+    * @return
+    */
+    @RequestMapping(path="/save")
+    public String save(Model model) {
+        System.out.println("向session域中保存数据");
+        model.addAttribute("username", "root");
+        model.addAttribute("password", "123");
+        model.addAttribute("age", 20);
+        return "success";
+    }
+    /**
+    * 从session中获取值
+    * @return
+    */
+    @RequestMapping(path="/find")
+    public String find(ModelMap modelMap) {
+        String username = (String) modelMap.get("username");
+        String password = (String) modelMap.get("password");
+        Integer age = (Integer) modelMap.get("age");
+        System.out.println(username + " : "+password +" : "+age);
+        return "success";
+    }
+    /**
+    * 清除值
+    * @return
+    */
+    @RequestMapping(path="/delete")
+    public String delete(SessionStatus status) {
+        status.setComplete();
+        return "success";
+    }
+}
+```
+### @ResponseBody
++ 作用
+    + JavaBean对象转换成json字符串，直接响应
