@@ -1,4 +1,17 @@
 # SpringMVC目录
++ **SpringMVC工作流程**
++ **SpringMVC中的组件**
++ **SpringMVC参数绑定**
+    + **实体类型**
+    + **集合类型和map类型**
++ **配置中文乱码**
++ **获取Servlet原生API**
++ **SpringMVC常用的注解**
+    + **@RequestMapping**
+
+
+
+
 ## SpringMVC工作流程
 ![](images/spring_mvc_work_flow.jpg)
 ## SpringMVC中的组件
@@ -151,6 +164,88 @@ success
 </body>
 </html>
 ```
+## SpringMVC参数绑定
+### 实体类型
+```jsp
+<form action="param/saveAccount" method="post">
+    姓名：<input type="text" name="username"/><br/>
+    密码：<input type="text" name="password"/><br/>
+    金额：<input type="text" name="money"/><br/>
+    <input type="submit" value="提交"/>
+</form>
+```
+实体类型中还有实体
+```jsp
+<form action="param/saveAccount" method="post">
+    姓名：<input type="text" name="username"/><br/>
+    密码：<input type="text" name="password"/><br/>
+    金额：<input type="text" name="money"/><br/>
+    用户姓名：<input type="text" name="user.uname"/><br/>
+    用户年龄：<input type="text" name="user.age"/><br/>
+    <input type="submit" value="提交"/>
+</form>
+```
+### 集合类型和map类型
+```java
+public class Account implements Serializable {
+    private String username;
+    private String password;
+    private Double money;
+
+    private List<User> list;
+    private Map<String, User> map;
+    // get and set ...
+}
+```
+```jsp
+<form action="param/saveAccount" method="post">
+    姓名：<input type="text" name="username"/><br/>
+    密码：<input type="text" name="password"/><br/>
+    金额：<input type="text" name="money"/><br/>
+
+    用户姓名：<input type="text" name="list[0].uname"/><br/>
+    用户年龄：<input type="text" name="list[0].age"/><br/>
+
+    用户年龄：<input type="text" name="map['one'].uname"/><br/>
+    用户年龄：<input type="text" name="map['one'].age"/><br/>
+
+    <input type="submit" value="提交"/>
+</form>
+```
+## 配置中文乱码
+web.xml
+```xml
+<!--解决中文乱码过滤器-->
+<filter>
+    <filter-name>filter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>filter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+## 获取Servlet原生API
+```java
+@RequestMapping("/testServlet")
+public String testServlet(HttpServletRequest request, HttpServletResponse reponse) {
+    System.out.println(request);
+
+    System.out.println(response);
+
+    HttpSession session = request.getSession();
+    System.out.println(session);
+
+    ServletContext servletContext = session.getServletContext();
+    System.out.println(servletContext);
+    return "success";
+}
+```
+
 ## SpringMVC常用的注解
 ### @RequestMapping
 + 作用
@@ -161,3 +256,52 @@ success
     + params={"username"} 发送请求的时候必须带上username这个属性,不传不执行
     + params={"username=hehe"} 发送请求的时候必须带上username=hehe这个属性,不传不执行
     + headers={"Accept"} 发送请求的时候必须带上Accept这个请求头
+### @RequestParam
++ 作用
+    + 把请求中指定名称的参数给控制器中的形参赋值
++ 属性
+    + value 请求参数中的名称
+    + required 请求参数中是否必须提供此参数。默认值true
+```java
+@RequestMapping("test")
+public void test(@RequestParam("name")String name){
+    System.out.println(name);
+}    
+```    
+### @RequestBody
++ 作用
+    + 用于获取请求体内容。直接使用得到的是 key=value&key=value...结构的数据
++ 属性
+    + required：是否必须有请求体。默认值true
+```java
+@RequestMapping("test")
+public void test(@RequestBody String body){
+    // username=张三&age=20
+    System.out.println(body);
+}
+```    
+### @PathVariable
++ 作用
+    + 获取url中的占位符的值。
+```java
+// localhost:8080/testPathVariable/10
+  
+@RequestMapping("/test/{sid}")
+public void test(@PathVariable(name="sid") String id){
+    // 10
+    System.out.println(id);
+}
+```
+### @RequestHeader
++ 作用
+    + 获取请求头消息
+```java
+@RequestMapping("test")
+public void test(@RequestHeader(value = "Accept")String header){
+    // text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    System.out.println(header);
+}
+```
+### @CookieValue
++ 作用
+    + 
