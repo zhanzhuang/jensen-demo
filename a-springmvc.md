@@ -15,7 +15,7 @@
 
 
 ## SpringMVC工作流程
-![](images/spring_mvc_work_flow.jpg)
+![](https://github.com/zhanzhuang/jensen-demo/blob/master/images/spring_mvc_work_flow.jpg)
 ## SpringMVC中的组件
 + DispatcherServlet(前端控制器)
     ```
