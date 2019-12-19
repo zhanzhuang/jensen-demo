@@ -15,7 +15,7 @@
 
 
 ## SpringMVC工作流程
-![springmvc工作流程](images/spring_mvc_work_flow.jpg)
+![](images/spring_mvc_work_flow.jpg)
 ## SpringMVC中的组件
 + DispatcherServlet(前端控制器)
     ```
@@ -383,4 +383,4 @@ public class HelloController {
 + 2.method的属性必须是post
 + 3.提供一个文件选择域 `<input type="file"/>`
 + 原理
-![springmvc上传文件原理](images/spring-mvc_principles_of_uploading_files.jpg)
+![](images/spring-mvc_principles_of_uploading_files.jpg)
