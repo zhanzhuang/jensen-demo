@@ -9,12 +9,13 @@
 + **获取Servlet原生API**
 + **SpringMVC常用的注解**
     + **@RequestMapping @RequestParam @RequestBody @PathVariable @RequestHeader @CookieValue @ModelAttribute @SessionAttributes @ResponseBody**
++ **SpringMVC文件上传**
 
 
 
 
 ## SpringMVC工作流程
-![](images/spring_mvc_work_flow.jpg)
+![springmvc工作流程](images/spring_mvc_work_flow.jpg)
 ## SpringMVC中的组件
 + DispatcherServlet(前端控制器)
     ```
@@ -377,3 +378,9 @@ public class HelloController {
 ### @ResponseBody
 + 作用
     + JavaBean对象转换成json字符串，直接响应
+## SpringMVC文件上传
++ 1.form表单的enctype的取值必须是multipart/formdata(默认值是application/x-www-form-urlencoded)
++ 2.method的属性必须是post
++ 3.提供一个文件选择域 `<input type="file"/>`
++ 原理
+![springmvc上传文件原理](images/spring-mvc_principles_of_uploading_files.jpg)
