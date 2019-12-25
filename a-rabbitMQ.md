@@ -10,10 +10,10 @@
 + **简单的生产者**
 + **简单的消费者**
 + **RabbitMQ的六种工作模式**
-    + **Work queues**
-    + **publish/subscribe**
-    + **Routing**
-    + **topics**
+    + **Work queues(工作队列模式)**
+    + **publish/subscribe(发布订阅模式)**
+    + **Routing(路由模式)**
+    + **topics(通配符模式)**
     + **header**
     + **rpc**
 + **SpringBoot整合RabbitMQ**
@@ -235,7 +235,7 @@ public class Consumer01 {
 }
 ```
 ## RabbitMQ的六种工作模式
-### Work queues
+### Work queues(工作队列模式)
 ![](images/rabbitmq_work_queue.jpg)
 + work queues与入门程序相比，多了一个消费端，两个消费端共同消费同一个队列中的消息。
 + 应用场景
@@ -248,7 +248,7 @@ public class Consumer01 {
     + rabbitmq采用轮询的方式将消息平均发送给消费者
     + 消费者在处理完某条消息后才会收到下一条消息
 
-### publish/subscribe
+### publish/subscribe(发布订阅模式)
 ![](images/rabbitmq_publish_subscribe.jpg)
 + 每个消费者监听自己的队列
 + 生产者将消息发送给broker,由交换机将消息转发到绑定次交换机的队列,每个绑定交换机的队列都将接收到消息
@@ -351,7 +351,7 @@ public class Consumer02SubscribeEmail {
     }
 }
 ``` 
-### Routing
+### Routing(路由模式)
 ![](images/rabbitmq_routing.jpg)
 + 1.每个消费者监听自己的队列，并且设置routingkey
 + 2.生产者将消息发给交换机，由交换机根据routingkey来转发消息到指定的队列
@@ -510,7 +510,7 @@ public class Consumer03_routing_sms {
     }
 }
 ```
-### topics
+### topics(通配符模式)
 + 一个交换机可以绑定多个队列，每个队列可以设置一个或多个带通配符的routingkey
 + 生产者将消息发给交换机，交换机根据routingkey的值来匹配队列，匹配时采用通配符方式，匹配成功的将消息转发到指定的队列
 + 两种匹配机制
