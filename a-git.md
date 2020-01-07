@@ -17,6 +17,7 @@
     + .gitignore失效
     + 修改Github上面已有的代码
     + 本地已有项目上传到GitHub
+    + 本地已有项目上传到git私服
     + 远程仓库强制覆盖本地仓库
 
 
@@ -224,6 +225,16 @@ commit_id可以是commit对象对应的ID，也可以是HEAD，分支名，tag�
     + git commit -m "description"
     + git remote add origin git@github.com:zhanzhuang/test.git" 最后一个参数为上面空仓库的地址
     + git push origin master
+### 本地已有项目上传到git私服
++ 1.远程仓库生成项目
+    + git init --bare project.git
++ 2.本地项目提交
+    + git init
+    + git add .
+    + git commit -m "log"
+    + git remote add origin git@xxx.git
+    + git push origin master
+    
 ### 远程仓库强制覆盖本地仓库
 + 1.从另一个存储库下载对象和引用
     + git fetch --all

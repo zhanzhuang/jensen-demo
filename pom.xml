@@ -25,6 +25,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- 局域网连接windows相关依赖 -->
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
