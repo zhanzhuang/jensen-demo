@@ -20,7 +20,7 @@
 
 
 ## SpringMVC工作流程
-![](images/spring_mvc_work_flow.jpg)
+![](images/springMVC/spring_mvc_work_flow.jpg)
 ## SpringMVC中的组件
 + DispatcherServlet(前端控制器)
     ```
@@ -388,11 +388,11 @@ public class HelloController {
 + 2.method的属性必须是post
 + 3.提供一个文件选择域 `<input type="file"/>`
 + 原理
-![](images/spring-mvc_principles_of_uploading_files.jpg)
+![](images/springMVC/spring-mvc_principles_of_uploading_files.jpg)
 ### 使用postman上传文件
-![](images/spring_mvc_upload_file_postman1.jpg)
+![](images/springMVC/spring_mvc_upload_file_postman1.jpg)
 
-![](images/spring_mvc_upload_file_postman2.jpg)
+![](images/springMVC/spring_mvc_upload_file_postman2.jpg)
 ```java
 // Springboot导入的web依赖，无需springmvc的jar包以及springmvc.xml配置文件
 @RestController
@@ -424,7 +424,7 @@ public class ExcelController {
 ```
 + 1.模拟文件服务器
     + 创建一个新项目，修改http端口和jmx端口
-![](images/spring_mvc_fileserver.jpg)
+![](images/springMVC/spring_mvc_fileserver.jpg)
 + 2.文件上传的jsp页面
 ```jsp
 <h3>跨服务器的文件上传</h3>
@@ -456,9 +456,9 @@ public String fileupload3(MultipartFile upload) throws Exception {
 ```
 ## SpringMVC异常处理
 **不处理异常页面上会直接看到异常**
-![](images/spring_mvc_exception1.jpg)
+![](images/springMVC/spring_mvc_exception1.jpg)
 **使用异常处理器处理后跳转到指定页面**
-![](images/spring_mvc_exception2.jpg)
+![](images/springMVC/spring_mvc_exception2.jpg)
 代码
 ```xml
 <!-- 配置异常处理器 -->

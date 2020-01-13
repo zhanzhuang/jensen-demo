@@ -42,7 +42,7 @@ JMS是java提供的一套消息服务API标准，其目的是为所有的java应
 类似java的jdbc，只要遵循jms标准的应用程序之间都可以进行校信通信，它和AMQP有什么不同，jms是java语言专属的消息服务标准，他是在api层定义标准，并且只能用于java应用。
 而AMQP是在协议层定义的标准，是跨语言的。
 ## RabbitMQ工作原理
-![](images/rabbitmq_principle.jpg)
+![](images/rabbitmq/rabbitmq_principle.jpg)
 + 组成部分如下
     + Broker：消息队列服务进程，进程包括两个部分：Exchange和Queue
     + Exchange：消息队列交换机，按一定的规则将消息路由转发到某个队列，对消息进行过滤
@@ -236,7 +236,7 @@ public class Consumer01 {
 ```
 ## RabbitMQ的六种工作模式
 ### Work queues(工作队列模式)
-![](images/rabbitmq_work_queue.jpg)
+![](images/rabbitmq/rabbitmq_work_queue.jpg)
 + work queues与入门程序相比，多了一个消费端，两个消费端共同消费同一个队列中的消息。
 + 应用场景
     + 对于任务过重或者任务较多情况使用工作队列可以提高任务处理的速度
@@ -249,7 +249,7 @@ public class Consumer01 {
     + 消费者在处理完某条消息后才会收到下一条消息
 
 ### publish/subscribe(发布订阅模式)
-![](images/rabbitmq_publish_subscribe.jpg)
+![](images/rabbitmq/rabbitmq_publish_subscribe.jpg)
 + 每个消费者监听自己的队列
 + 生产者将消息发送给broker,由交换机将消息转发到绑定次交换机的队列,每个绑定交换机的队列都将接收到消息
 ```java
@@ -352,7 +352,7 @@ public class Consumer02SubscribeEmail {
 }
 ``` 
 ### Routing(路由模式)
-![](images/rabbitmq_routing.jpg)
+![](images/rabbitmq/rabbitmq_routing.jpg)
 + 1.每个消费者监听自己的队列，并且设置routingkey
 + 2.生产者将消息发给交换机，由交换机根据routingkey来转发消息到指定的队列
 + 3.routing模式和publish/subscribe的区别
@@ -684,7 +684,7 @@ public class Consumer04_topics_sms {
 ### header
 + header模式与routing不同的地方在于，header模式取消routingkey，使用header中的keyvalue(键值对)匹配队列
 ### rpc
-![](images/rabbitmq_rpc.jpg)
+![](images/rabbitmq/rabbitmq_rpc.jpg)
 + RPC即是客户端远程调用服务端的方法，使用MQ可以实现RPC的异步调用，基于Direct交换机实现，流程如下
     + 1.客户端既是生产者就是消费者，向RPC请求队列发送RPC调用消息，同时监听RPC相应队列
     + 2.服务端监听RPC请求队列的消息，收到消息后执行服务端的方法，得到方法返回的结果
