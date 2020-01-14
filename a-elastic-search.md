@@ -36,7 +36,7 @@
     + **[使用Java客户端设置mapping](#使用Java客户端设置mapping)**
     + **[使用Java客户端向索引库添加文档](#使用Java客户端向索引库添加文档)**
     + **[使用Java客户端实现搜索](#使用Java客户端实现搜索)**
-+ **[Spring Data ElasticSearch使用](#Spring Data ElasticSearch使用)**
++ **[SpringDataElasticSearch使用](#SpringDataElasticSearch使用)**
     + **[什么是SpringDataElasticSearch](#什么是SpringDataElasticSearch)**
     + **[SpringDataElasticSearch的增删改查](#SpringDataElasticSearch的增删改查)**
         + [创建索引](#创建索引)
@@ -1060,7 +1060,7 @@ public void setMappins() throws Exception {
         }
     ```
 
-## Spring Data ElasticSearch使用
+## SpringDataElasticSearch使用
 ### 什么是SpringDataElasticSearch
 Spring Data ElasticSearch 基于 spring data API简化 elasticsearch操作,将原始操作elasticsearch的客户端
 API进行封装。Spring Data为Elasticsearch项目提供集成搜索引擎。Spring Data Elasticsearch pojo的关键功能区域
