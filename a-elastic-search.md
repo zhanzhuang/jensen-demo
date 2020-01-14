@@ -15,7 +15,7 @@
     + **[接近实时NRT](#接近实时NRT)**
     + **[集群cluster](#集群cluster)**
     + **[节点node](#节点node)**
-    + **[分片和复制(备份)shards&replicas](#分片和复制(备份)shards&replicas)**
+    + **[分片和备份](#分片和备份)**
 + **[增删改查](#增删改查)**
     + **[增加](#增加)**
     + **[删除](#删除)**
@@ -24,7 +24,7 @@
 + **[IK分词器和ElasticSearch集成使用](#IK分词器和ElasticSearch集成使用)**
     + **[标准分词器存在的问题](#标准分词器存在的问题)**
     + **[IK分词器简介](#IK分词器简介)**
-    + **[下载(IK版本与ES的版本要一致)](#下载(IK版本与ES的版本要一致))**
+    + **[下载](#下载)**
     + **[IK分词器测试](#IK分词器测试)**
     + **[中文分词器的使用及测试](#中文分词器的使用及测试)**
 + **[ElasticSearch集群](#ElasticSearch集群)**
@@ -105,7 +105,7 @@
 如果你在你的网络中启动了若干个节点，并假定它们能够相互发现彼此，它们将会自动地形成并加入到一个叫做"elasticsearch"的集群中。
 在一个集群里，只要你想，可以拥有任意多个节点。而且，如果当前你的网络中没有运行任何elasticsearch节点，这时启动一个节点，会默认
 创建并加入到一个叫做"elasticsearch"的集群。    
-### 分片和复制(备份)shards&replicas
+### 分片和备份
 ## 增删改查
 ### 增加
 #### 创建索引库并设置mapping
@@ -423,7 +423,8 @@
     + 我们需要的分词效果是：我 是 程序 程序员
 ### IK分词器简介
 + IKAnalyzer是一个开源，基于java开发的轻量级中文分词工具包
-### 下载(IK版本与ES的版本要一致)
+### 下载
++ (IK版本与ES的版本要一致)
 + **https://github.com/medcl/elasticsearch-analysis-ik/releases** 下载zip包
 + 将zip解压到**elasticsearch-5.6.8\plugins**下
 + 重启ElasticSearch，即可加载IK分词器
