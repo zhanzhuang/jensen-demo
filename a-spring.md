@@ -1,56 +1,59 @@
 # Spring目录
-+ **一 程序的耦合以及解耦**
-+ **二 IOC概念和spring中的IOC**
-    + **IOC概念**
-    + **Spring中基于XML的IOC环境搭建**
-    + **ApplicationContext的三个实现类**
-    + **ApplicationContext和BeanFactory的区别**
-    + **Spring中bean细节之三种创建bean对象的方式**
-        + **1.使用默认构造函数创建**
-        + **2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)**
-        + **3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)**
-    + **Spring中bean细节之作用范围**
-    + **Spring中bean细节之生命周期**
-    + **依赖注入(Dependency Injection)**
-        + **构造器注入**
-        + **SET方法注入**
-        + **SET方法注入集合数据**
-+ **三 Spring基于注解的IOC以及IOC的案例**
-    + **Spring中IOC的常用注解按照作用分类**
-        + **用于创建对象的**
-            + **@Component**
-            + **由@Component衍生出来的注解 @Controller @Service @Repository**
-        + **用于注入数据的**
-            + **@Autowired @Qualifier @Resource @Value**
-        + **用于改变作用范围的**
-            + **@Scope**
-        + **和生命周期相关的(了解)**
-            + **@PostConstruct @PreDestroy**
-    + **使用xml方法和注解方式实现单表的CRUD操作案例**
-        + **基于XML方式的IOC案例**
-        + **基于注解的方式并整合Junit案例**
-            + **Spring中的新注解**
-                + **@Configuration @ComponentScan @Bean @Import @PropertySource**
-+ **四 动态代理**   
-    + **基于接口的动态代理** 
-    + **基于子类的动态代理(cglib动态代理)** 
-+ **五 AOP**
-    + **什么是AOP**
-    + **AOP的作用和优势**
-    + **AOP的相关术语**
++ **[程序的耦合以及解耦](#程序的耦合以及解耦)**
++ **[IOC概念和spring中的IOC](#IOC概念和spring中的IOC)**
+    + **[IOC概念](#IOC概念)**
+    + **[Spring中基于XML的IOC环境搭建](#Spring中基于XML的IOC环境搭建)**
+    + **[ApplicationContext的三个实现类](#ApplicationContext的三个实现类)**
+    + **[ApplicationContext和BeanFactory的区别](#ApplicationContext和BeanFactory的区别)**
+    + **[Spring中bean细节之三种创建bean对象的方式](#Spring中bean细节之三种创建bean对象的方式)**
+        + **[1.使用默认构造函数创建](#1.使用默认构造函数创建)**
+        + **[2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)](#2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象))**
+        + **[3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)](#3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器))**
+    + **[Spring中bean细节之作用范围](#Spring中bean细节之作用范围)**
+    + **[Spring中bean细节之生命周期](#Spring中bean细节之生命周期)**
+    + **[依赖注入(Dependency Injection)](#依赖注入(Dependency Injection))**
+        + **[构造器注入](#构造器注入)**
+        + **[SET方法注入](#SET方法注入)**
+        + **[SET方法注入集合数据](#SET方法注入集合数据)**
++ **[Spring基于注解的IOC以及IOC的案例](#Spring基于注解的IOC以及IOC的案例)**
+    + **[Spring中IOC的常用注解按照作用分类](#Spring中IOC的常用注解按照作用分类)**
+        + **[用于创建对象的](#用于创建对象的)**
+            + **[@Component](#@Component)**
+            + **[由@Component衍生出来的注解 @Controller @Service @Repository](#由@Component衍生出来的注解@Controller@Service@Repository)**
+        + **[用于注入数据的](#用于注入数据的)**
+            + **[@Autowired](#@Autowired)**
+            + **[@Qualifier](#@Qualifier)**
+            + **[@Resource](#@Resource)**
+            + **[@Value](#@Value)**
+        + **[用于改变作用范围的](#用于改变作用范围的)**
+            + **[@Scope](#@Scope)**
+        + **[和生命周期相关的(了解)](#和生命周期相关的(了解))**
+            + **[@PostConstruct](#@PostConstruct)**
+            + **[@PreDestroy](#@PreDestroy)**
+    + **[使用xml方法和注解方式实现单表的CRUD操作案例](#使用xml方法和注解方式实现单表的CRUD操作案例)**
+        + **[基于XML方式的IOC案例](#基于XML方式的IOC案例)**
+        + **[基于注解的方式并整合Junit案例](#基于注解的方式并整合Junit案例)**
+            + **[Spring中的新注解](#Spring中的新注解)**
+                + **[@Configuration](#@Configuration)**
+                + **[@ComponentScan](#@ComponentScan)**
+                + **[@Bean](#@Bean)**
+                + **[@Import](#@Import)**
+                + **[@PropertySource](#@PropertySource)**
++ **[动态代理](#动态代理)**   
+    + **[基于接口的动态代理](#基于接口的动态代理)** 
+    + **[基于子类的动态代理(cglib动态代理)](#基于子类的动态代理(cglib动态代理))** 
++ **[AOP](#AOP)**
+    + **[什么是AOP](#什么是AOP)**
+    + **[AOP的作用和优势](#AOP的作用和优势)**
+    + **[AOP的相关术语](#AOP的相关术语)**
         + **Joinpoint Pointcut Advice Introduction Target Weaving Proxy Aspect**
-    + **基于XML的AOP配置**
-    + **基于注解的AOP配置**
-+ **六 Spring中的事务**
-    + **隔离级别**
-    + **传播行为**
+    + **[基于XML的AOP配置](#基于XML的AOP配置)**
+    + **[基于注解的AOP配置](#基于注解的AOP配置)**
++ **[Spring中的事务](#Spring中的事务)**
+    + **[隔离级别](#隔离级别)**
+    + **[传播行为](#传播行为)**
     
-+ **一 ElasticSearch简介**
-+ **一 ElasticSearch简介**
-+ **一 ElasticSearch简介**
-+ **一 ElasticSearch简介**
-+ **一 ElasticSearch简介**
-## 一 程序的耦合以及解耦
+## 程序的耦合以及解耦
 ```java
 /**
  * 程序的耦合
@@ -86,7 +89,7 @@ public class JdbcDemo1 {
     }
 }
 ```
-## 二 IOC概念和spring中的IOC
+## IOC概念和spring中的IOC
 ### IOC概念
 **控制反转(inversion of control)把创建对象的权力交给框架,是框架的主要特征**
 **降低计算机程序之间的耦合(降低程序之间的依赖关系)**
@@ -96,7 +99,7 @@ private IAccountDao accountDao = new AccountDaoImpl();
 // 1.创建对象交给BeanFactory，由BeanFactory通过类的全限定类名控制 2.降低了耦合
 private IAccountDao accountDao = (IAccountDao)BeanFactory.getBean("accountDao");
 ```
-### spring中基于XML的IOC环境搭建
+### Spring中基于XML的IOC环境搭建
 **读取配置文件,创建对象并放入map中是spring管理的,降低了耦合**
 ```xml
 <dependency>
@@ -188,7 +191,7 @@ public static void main(String[] args) {
    System.out.println(as);
 }
 ```
-### spring中bean细节之三种创建bean对象的方式
+### Spring中bean细节之三种创建bean对象的方式
 #### 1.使用默认构造函数创建
 **在spring的配置文件中使用bean标签，配上id和class属性之后，且没有其他属性和标签**
 **采用的是默认构造器创建bean对象，如果类中没有默认构造器，创建对象会报异常**
@@ -325,7 +328,7 @@ public class Client {
     }
 }
 ```
-### spring中bean细节之作用范围
+### Spring中bean细节之作用范围
 + **singleton:单例(常用),是默认值**
 + **prototype:多例(常用)**
 + **request:作用于web应用的请求范围**
@@ -378,7 +381,7 @@ public class Client {
     }
 }
 ```
-### spring中bean细节之生命周期
+### Spring中bean细节之生命周期
 + **单例对象**
     + 出生：容器创建时对象出生
     + 活着：容器还在对象就在
@@ -681,9 +684,10 @@ public class Client {
     }
 }
 ```
-## 三 Spring基于注解的IOC以及IOC的案例
+## Spring基于注解的IOC以及IOC的案例
 ### Spring中IOC的常用注解按照作用分类
-#### 用于创建对象的 @Component @Controller @Service @Repository
+#### 用于创建对象的 
++ @Component @Controller @Service @Repository
 ##### @Component
 + **作用**
     + 用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)
@@ -730,12 +734,12 @@ public class Client {
     }
 }
 ``` 
-##### 由@Component衍生出来的注解 @Controller @Service @Repository
+##### 由@Component衍生出来的注解@Controller@Service@Repository
 + @Controller @Service @Repository
 + 他们三个注解的作用和属性与Component是一模一样的
 + 是Spring框架为我们明确三层结构而产生的注解
 + 上面的例子将Component换成他们三个会得到一样的结果!!!
-#### 用于注入数据的 @Autowired @Qualifier @Resource @Value
+#### 用于注入数据的 
 ##### @Autowired
 + **作用**
     + 自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功
@@ -1419,7 +1423,7 @@ public class AccountTest {
     }
 }
 ```    
-## 四 动态代理
+## 动态代理
 ### 特点
 + 字节码随用随创建,随用随加载
 ### 作用
@@ -1578,7 +1582,7 @@ public class Client {
     }
 }
 ```
-## 五 AOP
+## AOP
 ### 什么是AOP
 AOP为Aspect Oriented programming的缩写,意为面向切面编程,通过预编译方法和运行期动态代理
 实现程序功能统一维护的一种技术。AOP是OOP的延续,是Spring框架中的重要内容是函数式变成的一种衍生范型。
@@ -1868,7 +1872,7 @@ public class AOPTest {
 
 Process finished with exit code 0
 ```
-## 六 Spring中的事务
+## Spring中的事务
 ### 隔离级别
 事务隔离级别反应事务提交并发访问时的处理态度
 + ISOLATION_DEFAULT(默认的级别,归属下列某一种)

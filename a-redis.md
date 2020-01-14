@@ -1,36 +1,38 @@
 # Redis目录
-+ **一 下载安装**
-    + **下载**
-    + **安装**
-+ **二 数据结构与命令操作**
-    + **数据结构**
-+ **三 通用命令**
-+ **四 持久化**
-+ **五 Jedis**
-+ **六 JedisPool**
-# 一 下载安装
++ **[下载安装](#下载安装)**
+    + **[下载](#下载)**
+    + **[安装](#安装)**
++ **[数据结构与命令操作](#数据结构与命令操作)**
+    + **[数据结构](#数据结构)**
+    + **[操作数据](#操作数据)**
++ **[通用命令](#通用命令)**
++ **[持久化](#持久化)**
++ **[Jedis](#Jedis)**
++ **[JedisPool](#JedisPool)**
+# 下载安装
 + 官网:https://redis.io
 + 中文网:http://www.redis.net.cn/
-+ 下载
-    + 貌似redis官网不提供windows版本,在github上面下载
-    + https://github.com/microsoftarchive/redis/releases/
-+ 安装
-    + 解压后直接可以使用
-        + redis.windows.conf = 配置文件
-        + redis-cli.exe = redis的客户端
-        + redis-server.exe = redis服务器
-# 二 数据结构与命令操作
-+ 数据结构
-    + `字符串类型 string`
-    + `哈希类型 hash` : 
-        + map格式
-    + `列表类型 list` : 
-        + linkedlist格式，可以重复
-        + 是简单的字符串列表，按照插入顺序排序。可以添加一个元素到列表的头部或者尾部
-    + `集合类型 set` : 
-        + 不允许重复元素
-    + `有序集合类型 sortedset` : 
-        + 不允许重复，且元素有序
+## 下载
++ 貌似redis官网不提供windows版本,在github上面下载
++ https://github.com/microsoftarchive/redis/releases/
+## 安装
++ 解压后直接可以使用
+    + redis.windows.conf = 配置文件
+    + redis-cli.exe = redis的客户端
+    + redis-server.exe = redis服务器
+# 数据结构与命令操作
+## 数据结构
++ `字符串类型 string`
++ `哈希类型 hash` : 
+    + map格式
++ `列表类型 list` : 
+    + linkedlist格式，可以重复
+    + 是简单的字符串列表，按照插入顺序排序。可以添加一个元素到列表的头部或者尾部
++ `集合类型 set` : 
+    + 不允许重复元素
++ `有序集合类型 sortedset` : 
+    + 不允许重复，且元素有序
+## 操作数据 
 + 字符串类型 string
     + 存储 : 
         + `set key value`
@@ -69,14 +71,14 @@
         + `zrange key start end`
     + 删除 : 
         + `zrem key value`
-# 三 通用命令
+# 通用命令
 + 查询所有的键
     + `keys *`
 + 查询键的类型
     + `type key`
 + 删除指定的key value
     + `del key`
-# 四 持久化
+# 持久化
 + redis是一个内存数据库,当redis服务器重启或者电脑重启数据就会丢失,我们可以将redis内存中的数据持久化保存到硬盘中
 + 持久化机制
     + RDB
@@ -94,7 +96,7 @@
             + `\#appendfsync always`(每一次操作都会持久化)
             + `appendfsync everysec`(每隔一秒持久化一次)
             + `\# appendfsync no`(不进行持久化)
-# 五 Jedis
+# Jedis
 + jedis是一款java操作redis数据库的工具
 + 使用步骤
     + 1.下载jedis的jar包
@@ -190,7 +192,7 @@
         System.out.println(mysortedset);
     }
     ```
-# 六 JedisPool
+# JedisPool
 + 使用
     + 简单的Jedis连接池
     ```java
