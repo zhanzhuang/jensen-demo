@@ -39,7 +39,7 @@
 + **八 Spring Data ElasticSearch使用**
     + **什么是 Spring Data ElasticSearch**
     + **Spring Data ElasticSearch的增删改查**
-## 一 ElasticSearch简介
+## ElasticSearch简介
 + 你在说你**🐎**呢
 ## 二 ElasticSearch安装与启动
 + **下载**
