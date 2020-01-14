@@ -6,42 +6,43 @@
     + **[ApplicationContext的三个实现类](#ApplicationContext的三个实现类)**
     + **[ApplicationContext和BeanFactory的区别](#ApplicationContext和BeanFactory的区别)**
     + **[Spring中bean细节之三种创建bean对象的方式](#Spring中bean细节之三种创建bean对象的方式)**
-        + **[1.使用默认构造函数创建](#1.使用默认构造函数创建)**
-        + **[2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)](#2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象))**
-        + **[3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)](#3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器))**
+        + **[使用默认构造函数创建](#使用默认构造函数创建)**
+        + **[使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)](#使用普通工厂中的方法创建对象_使用某个类中的方法创建对象)**
+        + **[使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)](#使用工厂中的静态方法创建对象_使用某个类中的静态方法创建对象并存入spring容器)**
     + **[Spring中bean细节之作用范围](#Spring中bean细节之作用范围)**
     + **[Spring中bean细节之生命周期](#Spring中bean细节之生命周期)**
-    + **[依赖注入(Dependency Injection)](#依赖注入(Dependency Injection))**
+    + **[依赖注入Dependency_Injection](#依赖注入Dependency_Injection)**
         + **[构造器注入](#构造器注入)**
         + **[SET方法注入](#SET方法注入)**
         + **[SET方法注入集合数据](#SET方法注入集合数据)**
 + **[Spring基于注解的IOC以及IOC的案例](#Spring基于注解的IOC以及IOC的案例)**
     + **[Spring中IOC的常用注解按照作用分类](#Spring中IOC的常用注解按照作用分类)**
         + **[用于创建对象的](#用于创建对象的)**
-            + **[@Component](#@Component)**
-            + **[由@Component衍生出来的注解 @Controller @Service @Repository](#由@Component衍生出来的注解@Controller@Service@Repository)**
+            + **[Component](#Component)**
+            + **[由Component衍生出来的注解Controller_Service_Repository](#由Component衍生出来的注解Controller_Service_Repository)**
         + **[用于注入数据的](#用于注入数据的)**
-            + **[@Autowired](#@Autowired)**
-            + **[@Qualifier](#@Qualifier)**
-            + **[@Resource](#@Resource)**
-            + **[@Value](#@Value)**
+            + **[Autowired](#Autowired)**
+            + **[Qualifier](#Qualifier)**
+            + **[Resource](#Resource)**
+            + **[Autowired_Qualifier_Resource_注意事项](#Autowired_Qualifier_Resource_注意事项)**
+            + **[Value](#Value)**
         + **[用于改变作用范围的](#用于改变作用范围的)**
-            + **[@Scope](#@Scope)**
-        + **[和生命周期相关的(了解)](#和生命周期相关的(了解))**
-            + **[@PostConstruct](#@PostConstruct)**
-            + **[@PreDestroy](#@PreDestroy)**
+            + **[Scope](#Scope)**
+        + **[和生命周期相关的(了解)](#和生命周期相关的_了解)**
+            + **[PostConstruct](#PostConstruct)**
+            + **[PreDestroy](#PreDestroy)**
     + **[使用xml方法和注解方式实现单表的CRUD操作案例](#使用xml方法和注解方式实现单表的CRUD操作案例)**
         + **[基于XML方式的IOC案例](#基于XML方式的IOC案例)**
         + **[基于注解的方式并整合Junit案例](#基于注解的方式并整合Junit案例)**
             + **[Spring中的新注解](#Spring中的新注解)**
-                + **[@Configuration](#@Configuration)**
-                + **[@ComponentScan](#@ComponentScan)**
-                + **[@Bean](#@Bean)**
-                + **[@Import](#@Import)**
-                + **[@PropertySource](#@PropertySource)**
+                + **[Configuration](#Configuration)**
+                + **[ComponentScan](#ComponentScan)**
+                + **[Bean](#Bean)**
+                + **[Import](#Import)**
+                + **[PropertySource](#PropertySource)**
 + **[动态代理](#动态代理)**   
     + **[基于接口的动态代理](#基于接口的动态代理)** 
-    + **[基于子类的动态代理(cglib动态代理)](#基于子类的动态代理(cglib动态代理))** 
+    + **[基于子类的动态代理_cglib动态代理](#基于子类的动态代理_cglib动态代理)** 
 + **[AOP](#AOP)**
     + **[什么是AOP](#什么是AOP)**
     + **[AOP的作用和优势](#AOP的作用和优势)**
@@ -192,7 +193,7 @@ public static void main(String[] args) {
 }
 ```
 ### Spring中bean细节之三种创建bean对象的方式
-#### 1.使用默认构造函数创建
+#### 使用默认构造函数创建
 **在spring的配置文件中使用bean标签，配上id和class属性之后，且没有其他属性和标签**
 **采用的是默认构造器创建bean对象，如果类中没有默认构造器，创建对象会报异常**
 ```java
@@ -232,7 +233,7 @@ public class Client {
     }
 }
 ```
-#### 2.使用普通工厂中的方法创建对象(使用某个类中的方法创建对象)
+#### 使用普通工厂中的方法创建对象_使用某个类中的方法创建对象
 ```java
 public interface IAccountService {
     void saveAccount();
@@ -281,7 +282,7 @@ public class Client {
     }
 }
 ```
-#### 3.使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入spring容器)
+#### 使用工厂中的静态方法创建对象_使用某个类中的静态方法创建对象并存入spring容器
 ```java
 public interface IAccountService {
     void saveAccount();
@@ -435,7 +436,7 @@ public class Client {
 }
 ```
 
-## 依赖注入(Dependency Injection)
+## 依赖注入Dependency_Injection
 + **IOC作用**
     + **降低程序之间的耦合(依赖关系)**
 + **依赖注入的数据类型**
@@ -688,7 +689,7 @@ public class Client {
 ### Spring中IOC的常用注解按照作用分类
 #### 用于创建对象的 
 + @Component @Controller @Service @Repository
-##### @Component
+##### Component
 + **作用**
     + 用于创建对象,并存入Spring容器中(相当于在XML配置文件中编写一个bean标签)
 + **属性**
@@ -734,13 +735,13 @@ public class Client {
     }
 }
 ``` 
-##### 由@Component衍生出来的注解@Controller@Service@Repository
+##### 由Component衍生出来的注解Controller_Service_Repository
 + @Controller @Service @Repository
 + 他们三个注解的作用和属性与Component是一模一样的
 + 是Spring框架为我们明确三层结构而产生的注解
 + 上面的例子将Component换成他们三个会得到一样的结果!!!
 #### 用于注入数据的 
-##### @Autowired
+##### Autowired
 + **作用**
     + 自动按照类型注入。只要IOC容器中有唯一的一个bean对象和要注入的变量类型匹配,即可注入成功
 + **出现位置**
@@ -812,7 +813,7 @@ public class Client {
     }
 }
 ```
-##### @Qualifier
+##### Qualifier
 + **作用**
     + 给类成员注入需要联合@Autowired使用.当@Autowired修饰的变量名无法匹配IOC容器中的多个bean类型时,通过此注解指定bean
     + 给方法参数注入时可以
@@ -823,7 +824,7 @@ public class Client {
 @Qualifier("accountDao2") // 3.指定注入的bean是 accountDao2
 private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配的bean
 ```
-##### @Resource
+##### Resource
 + **作用**
     + 直接按照bean的id注入,可以独立使用.相当于 @Autowired 与 @Qualifier 组合使用
 + **属性**
@@ -834,16 +835,16 @@ private IAccountDao accountDao; // 2.accountDao在IOC容器中没有找到匹配
 @Resource(name = "accountDao2") // 2.name属性直接匹配到accountDao2代表的bean并注入
 private IAccountDao accountDao; // 1.IOC容器中有两个IAccountDao类型的bean,分别是accountDao1 accountDao2。使用@Autowired 与accountDao 无法匹配到具体的某个bean
 ```
-##### @Autowired @Qualifier @Resource 注意事项
+##### Autowired_Qualifier_Resource_注意事项
 + **都只能注入其他bean类型的数据，而基本类型和String类型无法使用上述注解实现**
 + **集合类型的注入只能通过XML来实现**
-##### @Value
+##### Value
 + **作用**
     + 用于注入基本类型和String类型的数据
 + **属性**
     + `value`:用于指定数据的值
 #### 用于改变作用范围的
-##### @Scope
+##### Scope
 + **作用**
     + 用于指定bean的作用范围
 + **属性**
@@ -887,11 +888,11 @@ public class Client {
     }
 }
 ```
-#### 和生命周期相关的(了解)
-##### @PostConstruct
+#### 和生命周期相关的_了解
+##### PostConstruct
 + **作用**
     + 用于指定初始化方法
-##### @PreDestroy
+##### PreDestroy
 + **作用**
     + 用于指定销毁方法
 ```java
@@ -1138,13 +1139,13 @@ public class AccountServiceTest {
 ```
 #### 基于注解的方式并整合Junit案例
 ##### Spring中的新注解
-###### @Configuration
+###### Configuration
 + **作用**
     + 用于指定当前类是一个配置类
-###### @ComponentScan
+###### ComponentScan
 + **作用**
     + 指定Spring在创建容器时需要扫描的包
-###### @Bean
+###### Bean
 + **作用**        
     + 把当前方法的返回值作为bean对象存入IOC容器中
 + **属性**
@@ -1152,13 +1153,13 @@ public class AccountServiceTest {
 + **细节**        
     + 当我们使用注解配置方法时,如果方法有参数。Spring框架会去容器中查找有没有可用的bean对象
     + 查找的方式和AutoWired注解的方式一样
-###### @Import
+###### Import
 + **作用**        
     + 用于导入其他的配置类
 + **属性**    
     + `value`:用于指定其他配置类的字节码
     + 在SpringConiguration总配置中加上Import注解代表父配置类,将JdbcConfig.class作为参数传进去,就会扫描JdbcCOnfig.java
-###### @PropertySource
+###### PropertySource
 + **作用**    
     + 用于指定properties文件的位置
 + **属性**    
@@ -1512,7 +1513,7 @@ public class Client {
 }
 
 ```
-#### 基于子类的动态代理(cglib动态代理)
+#### 基于子类的动态代理_cglib动态代理
 ```xml
 <dependency>
     <groupId>cglib</groupId>

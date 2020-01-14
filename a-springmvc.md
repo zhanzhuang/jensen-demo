@@ -8,15 +8,15 @@
 + **[配置中文乱码](#配置中文乱码)**
 + **[获取Servlet原生API](#获取Servlet原生API)**
 + **[SpringMVC常用的注解](#SpringMVC常用的注解)**
-    + **[@RequestMapping](#@RequestMapping)**
-    + **[@RequestParam](#@RequestParam)**
-    + **[@RequestBody](#@RequestBody)**
-    + **[@PathVariable](#@PathVariable)**
-    + **[@RequestHeader](#@RequestHeader)**
-    + **[@CookieValue](#@CookieValue)**
-    + **[@ModelAttribute](#@ModelAttribute)**
-    + **[@SessionAttributes](#@SessionAttributes)**
-    + **[@ResponseBody](#@ResponseBody)**
+    + **[RequestMapping](#RequestMapping)**
+    + **[RequestParam](#RequestParam)**
+    + **[RequestBody](#RequestBody)**
+    + **[PathVariable](#PathVariable)**
+    + **[RequestHeader](#RequestHeader)**
+    + **[CookieValue](#CookieValue)**
+    + **[ModelAttribute](#ModelAttribute)**
+    + **[SessionAttributes](#SessionAttributes)**
+    + **[ResponseBody](#ResponseBody)**
 + **[SpringMVC文件上传](#SpringMVC文件上传)**
     + **[使用postman上传文件](#使用postman上传文件)**
     + **[跨服务器上传文件](#跨服务器上传文件)**
@@ -263,7 +263,7 @@ public String testServlet(HttpServletRequest request, HttpServletResponse repons
 ```
 
 ## SpringMVC常用的注解
-### @RequestMapping
+### RequestMapping
 + 作用
     + 作用于建立请求URL和处理请求方法之间的联系
 + 参数
@@ -272,7 +272,7 @@ public String testServlet(HttpServletRequest request, HttpServletResponse repons
     + params={"username"} 发送请求的时候必须带上username这个属性,不传不执行
     + params={"username=hehe"} 发送请求的时候必须带上username=hehe这个属性,不传不执行
     + headers={"Accept"} 发送请求的时候必须带上Accept这个请求头
-### @RequestParam
+### RequestParam
 + 作用
     + 把请求中指定名称的参数给控制器中的形参赋值
 + 属性
@@ -284,7 +284,7 @@ public void test(@RequestParam("name")String name){
     System.out.println(name);
 }    
 ```    
-### @RequestBody
+### RequestBody
 + 作用
     + 用于获取请求体内容。直接使用得到的是 key=value&key=value...结构的数据
 + 属性
@@ -296,7 +296,7 @@ public void test(@RequestBody String body){
     System.out.println(body);
 }
 ```    
-### @PathVariable
+### PathVariable
 + 作用
     + 获取url中的占位符的值。
 ```java
@@ -308,7 +308,7 @@ public void test(@PathVariable(name="sid") String id){
     System.out.println(id);
 }
 ```
-### @RequestHeader
+### RequestHeader
 + 作用
     + 获取请求头消息
 ```java
@@ -318,7 +318,7 @@ public void test(@RequestHeader(value = "Accept")String header){
     System.out.println(header);
 }
 ```
-### @CookieValue
+### CookieValue
 + 作用
     + 获取指定cookie的值
 ```java
@@ -327,7 +327,7 @@ public void test(@CookieValue(value = "JSESSIONID")String cookieValue){
     System.out.println(cookieValue);
 }
 ```
-### @ModelAttribute
+### ModelAttribute
 + 作用
     + 1.修饰在方法上,表示当前方法会在控制器的方法执行之前执行
 ```java
@@ -341,7 +341,7 @@ public String test1() {
 
 // 访问test1方法控制台打印的结果为 test2 test1
 ```
-### @SessionAttributes
+### SessionAttributes
 + 作用
     + 用于多次执行控制器方法间的参数共享
 + 属性
@@ -388,7 +388,7 @@ public class HelloController {
     }
 }
 ```
-### @ResponseBody
+### ResponseBody
 + 作用
     + JavaBean对象转换成json字符串，直接响应
 ## SpringMVC文件上传

@@ -1,9 +1,9 @@
 # MYSQL基础目录
 + **[SQL分类](#SQL分类)**
-    + **[DDL(data definition language)数据定义语言](#DDL(data definition language)数据定义语言)**
-    + **[DML(data manipulation language)数据操作语言](#DML(data manipulation language)数据操作语言)**
-    + **[DQL(data query language)数据查询语言](#DQL(data query language)数据查询语言)**
-    + **[DCL(data control language)数据控制语言(了解)](#DCL(data control language)数据控制语言(了解))**
+    + **[DDL数据定义语言](#DDL数据定义语言)**
+    + **[DML数据操作语言](#DML数据操作语言)**
+    + **[DQL数据查询语言](#DQL数据查询语言)**
+    + **[DCL数据控制语言](#DCL数据控制语言)**
 + **[操作数据库](#操作数据库)**
     + **[数据库create](#数据库create)**
     + **[数据库retrieve](#数据库retrieve)**
@@ -47,16 +47,16 @@
     + **[权限管理](#权限管理)**
 
 ## SQL分类
-### DDL(data definition language)数据定义语言
+### DDL数据定义语言
 + 用来定义数据库对象：数据库,表,列等
 + `create`,`drop`,`alter`等
-### DML(data manipulation language)数据操作语言
+### DML数据操作语言
 + 用来对数据库中表的数据进行增删改
 + `insert`,`delete`,`update`等
-### DQL(data query language)数据查询语言
+### DQL数据查询语言
 + 用来查询数据库中表的记录(数据)
 + `select`,`where`等
-### DCL(data control language)数据控制语言(了解)
+### DCL数据控制语言
 + 用来定义数据库的访问权限和安全级别以及创建用户
 + `grant`,`revoke`等
 ## 操作数据库

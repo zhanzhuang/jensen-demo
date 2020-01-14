@@ -1,18 +1,18 @@
 # IDEA技巧
-+ **[IDEA mac 快捷键](#IDEA mac快捷键)**
++ **[IDEA_MAC_快捷键](#IDEA_MAC_快捷键)**
     + **[基本](#基本)**
     + **[查找](#查找)**
     + **[跳转](#跳转)**
     + **[替换](#替换)**
     + **[生成代码](#生成代码)**
     + **[DEBUG](#DEBUG)**
-+ **[IDEA windows快捷键](#IDEA windows快捷键)**
++ **[IDEA_WINDOWS_快捷键](#IDEA_WINDOWS_快捷键)**
 + **[设置](#设置)**
     + **[取消代码重复检查](#取消代码重复检查)**
     + **[Autowired提示报错](#Autowired提示报错)**
     
     
-## IDEA mac快捷键
+## IDEA_MAC_快捷键
 ### 基本
 + **启动main方法** 
     + `control + R`
@@ -87,7 +87,7 @@
     + `shift + F7`
 + **跳出方法** 
     + `shift + F8`
-## IDEA windows快捷键
+## IDEA_WINDOWS_快捷键
 
 ## 设置
 ### 取消代码重复检查

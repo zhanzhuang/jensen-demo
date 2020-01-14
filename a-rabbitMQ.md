@@ -4,18 +4,18 @@
     + **[市场上的其他消息队列](#市场上的其他消息队列)**
     + **[为什么使用RabbitMQ呢](#为什么使用RabbitMQ呢)**
     + **[什么是AMQP](#什么是AMQP)**
-    + **[什么是JMS(Java消息服务)](#什么是JMS(Java消息服务))**
+    + **[什么是JMS_Java消息服务](#什么是JMS_Java消息服务)**
 + **[RabbitMQ工作原理](#RabbitMQ工作原理)**
 + **[RabbitMQ下载安装启动](#RabbitMQ下载安装启动)**
 + **[简单的生产者](#简单的生产者)**
 + **[简单的消费者](#简单的消费者)**
 + **[RabbitMQ的六种工作模式](#RabbitMQ的六种工作模式)**
-    + **[Work queues工作队列模式](#Work queues工作队列模式)**
-    + **[publish/subscribe发布订阅模式](#发布订阅模式)**
+    + **[WorkQueues工作队列模式](#WorkQueues工作队列模式)**
+    + **[Publish_Subscribe发布订阅模式](#Publish_Subscribe发布订阅模式)**
     + **[Routing路由模式](#Routing路由模式)**
-    + **[topics通配符模式](#通配符模式)**
-    + **[header](#header)**
-    + **[rpc](#rpc)**
+    + **[Topics通配符模式](#Topics通配符模式)**
+    + **[Header](#Header)**
+    + **[Rpc](#Rpc)**
 + **[SpringBoot整合RabbitMQ](#SpringBoot整合RabbitMQ)**
 
 ## 什么是RabbitMQ
@@ -37,7 +37,7 @@ ActiveMQ RabbitMQ ZeroMQ Kafka MetaMQ RocketMQ Redis
 ### 什么是AMQP
 AMQP是一套公开的消息队列协议，最早在2003年被提出，旨在从协议层定义消息通信数据的标准格式，
 为的就是解决MQ市场上协议不统一的问题，RabbitMQ就是尊村AMQP标准协议开发的MQ服务
-### 什么是JMS(Java消息服务)
+### 什么是JMS_Java消息服务
 JMS是java提供的一套消息服务API标准，其目的是为所有的java应用程序提供统一的消息通信标准，
 类似java的jdbc，只要遵循jms标准的应用程序之间都可以进行校信通信，它和AMQP有什么不同，jms是java语言专属的消息服务标准，他是在api层定义标准，并且只能用于java应用。
 而AMQP是在协议层定义的标准，是跨语言的。
@@ -235,7 +235,7 @@ public class Consumer01 {
 }
 ```
 ## RabbitMQ的六种工作模式
-### Work queues工作队列模式
+### WorkQueues工作队列模式
 ![](images/rabbitmq/rabbitmq_work_queue.jpg)
 + work queues与入门程序相比，多了一个消费端，两个消费端共同消费同一个队列中的消息。
 + 应用场景
@@ -248,7 +248,7 @@ public class Consumer01 {
     + rabbitmq采用轮询的方式将消息平均发送给消费者
     + 消费者在处理完某条消息后才会收到下一条消息
 
-### 发布订阅模式
+### Publish_Subscribe发布订阅模式
 ![](images/rabbitmq/rabbitmq_publish_subscribe.jpg)
 + 每个消费者监听自己的队列
 + 生产者将消息发送给broker,由交换机将消息转发到绑定次交换机的队列,每个绑定交换机的队列都将接收到消息
@@ -510,7 +510,7 @@ public class Consumer03_routing_sms {
     }
 }
 ```
-### 通配符模式
+### Topics通配符模式
 + 一个交换机可以绑定多个队列，每个队列可以设置一个或多个带通配符的routingkey
 + 生产者将消息发给交换机，交换机根据routingkey的值来匹配队列，匹配时采用通配符方式，匹配成功的将消息转发到指定的队列
 + 两种匹配机制
@@ -681,9 +681,9 @@ public class Consumer04_topics_sms {
 }
 
 ```
-### header
+### Header
 + header模式与routing不同的地方在于，header模式取消routingkey，使用header中的keyvalue(键值对)匹配队列
-### rpc
+### Rpc
 ![](images/rabbitmq/rabbitmq_rpc.jpg)
 + RPC即是客户端远程调用服务端的方法，使用MQ可以实现RPC的异步调用，基于Direct交换机实现，流程如下
     + 1.客户端既是生产者就是消费者，向RPC请求队列发送RPC调用消息，同时监听RPC相应队列
