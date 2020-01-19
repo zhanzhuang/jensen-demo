@@ -7,6 +7,7 @@
     + **[什么是JMS_Java消息服务](#什么是JMS_Java消息服务)**
 + **[RabbitMQ工作原理](#RabbitMQ工作原理)**
 + **[RabbitMQ下载安装启动](#RabbitMQ下载安装启动)**
+    + **[windows版本下载安装启动](#windows版本下载安装启动)**
 + **[简单的生产者](#简单的生产者)**
 + **[简单的消费者](#简单的消费者)**
 + **[RabbitMQ的六种工作模式](#RabbitMQ的六种工作模式)**
@@ -61,6 +62,7 @@ JMS是java提供的一套消息服务API标准，其目的是为所有的java应
     + 4.当有消息到达Queue时Broker默认将消息推给消费者
     + 5.消费者收到消息
 ## RabbitMQ下载安装启动
+## windows版本下载安装启动
 ### 下载
 RabbitMQ由Erlang语言开发，Erlang语言用于并发以及分布式系统的开发，在电信领域应用广泛，OTP(OPen Telecom Platform)
 作为Erlang语言的一部分，包含和很多基于Erlang开发的中间件及工具库，安装RabbitMQ需要安装Erlang/OPT,并保持版本匹配
