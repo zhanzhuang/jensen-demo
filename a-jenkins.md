@@ -3,7 +3,7 @@
 + **[Jenkins](#Jenkins)**
     + **[什么是持续集成](#什么是持续集成)**
     + **[Jenkins简介](#Jenkins简介)**
-    + **[Jenkins安装与启动](#Jenkins安装与启动)**
+    + **[Jenkins在centOS下的安装与启动](#Jenkins在centOS下的安装与启动)**
     + **[Jenkins插件安装](#Jenkins插件安装)**
     + **[Jenkins全局工具配置](#Jenkins全局工具配置)**
         + **[JDK配置](#JDK配置)**
@@ -46,10 +46,10 @@
     + 文件指纹信息：Jenkins会保存哪次集成构建产生了哪些jars文件，哪一次集成构建使
       用了哪个版本的jars文件等构建记录
     + 支持第三方插件：使得 Jenkins 变得越来越强大
-### Jenkins安装与启动
+### Jenkins在centOS下的安装与启动
 + 基于centOS7.5
 + Jenkins是基于Java的，请先安装JDK
-+ 1.下载jenkins
++ 1.下载jenkins安装包
     + `wget https://pkg.jenkins.io/redhat/jenkins-2.214-1.1.noarch.rpm`
     + 或者将`jenkins-2.214-1.1.noarch.rpm`上传至服务器
 + 2.安装jenkins
