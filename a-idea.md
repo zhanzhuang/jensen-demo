@@ -94,3 +94,6 @@
 file->settings->editor->inspections->general->duplicated code fragment将右侧勾去掉
 ### Autowired提示报错
 file->settings->editor->inspections->spring->spring core->code->autowiring for bean class 将error设置成warning
+### idea新项目默认配置
++ file->other settings->preferences for new projects... maven
++ file->other settings->structure for new projects... jdk
