@@ -67,3 +67,5 @@ file->settings->editor->inspections->spring->spring core->code->autowiring for b
 ### idea新项目默认配置
 + file->other settings->preferences for new projects... maven
 + file->other settings->structure for new projects... jdk
+### 热部署
+
