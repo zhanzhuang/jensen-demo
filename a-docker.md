@@ -8,11 +8,12 @@
         + **[Docker服务器与客户端](#Docker服务器与客户端)**
         + **[Docker镜像与容器](#Docker镜像与容器)**
         + **[Registry注册中心](#Registry注册中心)**
-+ **[Docker安装与启动](#Docker安装与启动)**
++ **[centOS下安装_启动_卸载Docker](#centOS下安装_启动_卸载Docker)**
     + **[安装Docker](#安装Docker)**    
     + **[设置ustc的镜像](#设置ustc的镜像)**    
-    + **[Docker的启动与停止](#Docker的启动与停止)**
-+ **[常用命令](#常用命令)**
+    + **[启动与停止Docker](#启动与停止Docker)**
+    + **[卸载Docker](#卸载Docker)**
++ **[Docker常用命令](#Docker常用命令)**
     + **[镜像相关命令](#镜像相关命令)**
         + **[查看镜像](#查看镜像)**
         + **[搜索镜像](#搜索镜像)**
@@ -115,7 +116,7 @@ Docker可以帮助你构建和部署容器，你只需要把自己的应用程�
 Docker Hub。用户可以在Docker Hub注册账号，分享并保存自己的镜像（说明：在Docker Hub下载镜像巨慢，
 可以自己构建私有的Registry）。
 + https://hub.docker.com/
-## Docker安装与启动
+## centOS下安装_启动_卸载Docker
 ### 安装Docker
 + Docker官方建议在Ubuntu中安装，因为Docker是基于Ubuntu发布的，而且一般Docker出现的问题Ubuntu是最
 先更新或者打补丁的。在很多版本的CentOS中是不支持更新最新的一些补丁包的。
@@ -144,7 +145,7 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
     "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
     }
     ```
-### Docker的启动与停止
+### 启动与停止Docker
 + 启动docker
     + `systemctl start docker`
 + 停止docker
@@ -152,14 +153,28 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
 + 重启docker
     + `systemctl restart docker`
 + 查看docker状态
-    + `systemctl enable docker`
+    + `systemctl status docker`
 + 开机启动docker
     + `systemctl enable docker`
 + 查看docker概要信息
     + `docker info`
 + 查看docker帮助文档
     + `docker --help`
-## 常用命令
+### 卸载Docker
++ 首先查看docker
+    + `yum list installed | grep docker`
++ 执行卸载
+    + `yum -y remove XXX`
++ 检查卸载成功与否
+    + `yum list installed | grep docker`
++ 删除存储目录
+    ```
+    rm -rf /etc/docker
+    rm -rf /run/docker
+    rm -rf /var/lib/dockershim
+    rm -rf /var/lib/docker
+    ```
+## Docker常用命令
 ### 镜像相关命令
 #### 查看镜像
 + `docker images`

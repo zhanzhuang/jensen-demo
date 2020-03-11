@@ -7,6 +7,7 @@
     + **[什么是JMS_Java消息服务](#什么是JMS_Java消息服务)**
 + **[RabbitMQ工作原理](#RabbitMQ工作原理)**
 + **[RabbitMQ下载安装启动](#RabbitMQ下载安装启动)**
+    + **[windows版本下载安装启动](#windows版本下载安装启动)**
 + **[简单的生产者](#简单的生产者)**
 + **[简单的消费者](#简单的消费者)**
 + **[RabbitMQ的六种工作模式](#RabbitMQ的六种工作模式)**
@@ -61,14 +62,17 @@ JMS是java提供的一套消息服务API标准，其目的是为所有的java应
     + 4.当有消息到达Queue时Broker默认将消息推给消费者
     + 5.消费者收到消息
 ## RabbitMQ下载安装启动
-### 下载
+### windows版本下载安装启动
+#### 下载
 RabbitMQ由Erlang语言开发，Erlang语言用于并发以及分布式系统的开发，在电信领域应用广泛，OTP(OPen Telecom Platform)
 作为Erlang语言的一部分，包含和很多基于Erlang开发的中间件及工具库，安装RabbitMQ需要安装Erlang/OPT,并保持版本匹配
 + RabbitMQ下载地址
-    + https://www.rabbitmq.com/download.html
+    + https://www.rabbitmq.com/install-windows.html
+    ![](images/rabbitmq/download_rabbitmq_windows.jpg)
 + Erlang下载地址
     + http://erlang.org/download/
-### 安装
+    ![](images/rabbitmq/download_erlang_windows.jpg)
+#### 安装
 + erlang
     + 1.双击直接安装即可
     + 2.配置环境变量
@@ -78,12 +82,12 @@ RabbitMQ由Erlang语言开发，Erlang语言用于并发以及分布式系统的
     + 双击直接安装即可
     + RabbitMQ会自动启动服务
     + sbin目录下的脚本
-        + 安装服务：rabbitmq-service.bat instal
+        + 安装服务：rabbitmq-service.bat install
         + 启动服务：rabbitmq-service.bat start
         + 停止服务：rabbitmq-service.bat stop
     + 激活RabbitMQ浏览器管理插件
         + 管理员身份在sbin目录下运行：`rabbitmq-plugins.bat enable rabbitmq_management
-### 启动
+#### 启动
 + 双击 rabbitmq-server.bat
     + 如果提示ERROR: node with name "rabbit" already running on "lhg1"，将rabbitmq的服务关掉即可。
 + 浏览器输入http://localhost:15672/
@@ -91,7 +95,14 @@ RabbitMQ由Erlang语言开发，Erlang语言用于并发以及分布式系统的
 + 注意事项
     + 1.安装erlang和rabbitmq要用管理员身份
     + 2.当卸载重新安装时会出现rabbitmq服务注册失败，此时需要进入注册表清理erlang 搜索rabbitmq，ErlSrv，将对应的项全部删除
-    
+
+### centOS版本下载安装启动
+#### 下载
+
+#### 安装
+
+#### 启动
+
 ## 简单的生产者
 依赖
 ```xml
