@@ -68,4 +68,31 @@ file->settings->editor->inspections->spring->spring core->code->autowiring for b
 + file->other settings->preferences for new projects... maven
 + file->other settings->structure for new projects... jdk
 ### 热部署
-
++ 1.导入依赖
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <scope>rumtime</scope>
+    <optional>true</optional>
+</dependency>
+```
++ 2.添加插件
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <fork>true</fork>
+        <addResources>true</addResources>
+    </configuration>
+</plugin>
+```
++ 3.开启idea自动编译  
+![](images/idea/idea-auto-maked%20.jpg)
++ 4.开启运行时编译
+    + shift + ctrl + alt + /  ----> register
+![](images/idea/running-maked.jpg)
++ 5.修改启动类
+![](images/idea/update-classes-resources.jpg)
++ 6.重启IDEA
