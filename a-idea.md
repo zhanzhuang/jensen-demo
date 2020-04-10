@@ -1,12 +1,17 @@
 # IDEA技巧
-+ **[IDEA_MAC_快捷键](#IDEA_MAC_快捷键)**
++ **[mac快捷键](#mac快捷键)**
+    + **[mac基本](#mac基本)**
+    + **[mac查找](#mac查找)**
+    + **[mac跳转](#mac跳转)**
+    + **[mac替换](#mac替换)**
+    + **[mac生成代码](#mac生成代码)**
+    + **[macDEBUG](#macDEBUG)**
++ **[windows快捷键](#windows快捷键)**
     + **[windows基本](#windows基本)**
     + **[windows查找](#windows查找)**
     + **[windows跳转](#windows跳转)**
     + **[windows替换](#windows替换)**
     + **[windows生成代码](#windows生成代码)**
-    + **[windowsDEBUG](#windowsDEBUG)**
-+ **[IDEA_WINDOWS_快捷键](#IDEA_WINDOWS_快捷键)**
 + **[设置](#设置)**
     + **[取消代码重复检查](#取消代码重复检查)**
     + **[Autowired提示报错](#Autowired提示报错)**
@@ -14,10 +19,10 @@
     + **[热部署](#热部署)**
     
     
-## IDEA_MAC_快捷键
-### windows基本
+## mac快捷键
+### mac基本
 + **启动main方法**`control + R`
-+ **启动main方法 windowsDEBUG** `control + D`
++ **启动main方法 macDEBUG** `control + D`
 + **格式化代码**`cmd + option + L`
 + **自动导包**`control + option + O`
 + **上下换行**`option + shift + 上/下`
@@ -29,26 +34,26 @@
 + **连续选中代码块**`option + 上/下`
 + **作用域重命名**`shift + F6`
 + **删除代码**`cmd + x`
-### windows查找
-+ **当前窗口windows查找文本**`cmd + F`
-+ **windows查找文件**`cmd + O`
-+ **在全工程中windows查找关键字**`cmd + shift + F`
+### mac查找
++ **当前窗口mac查找文本**`cmd + F`
++ **mac查找文件**`cmd + O`
++ **在全工程中mac查找关键字**`cmd + shift + F`
 + **搜索任何**`shift连按两下`
-+ **windows查找最近打开的文件**`cmd + E`
++ **mac查找最近打开的文件**`cmd + E`
 + **当前方法被谁使用**`option + F7`
-### windows跳转
+### mac跳转
 
 
-### windows替换
-+ **当前窗口windows替换**`cmd + R`
-+ **工程中windows替换**`cmd + shift + R`
-### windows生成代码
+### mac替换
++ **当前窗口mac替换**`cmd + R`
++ **工程中mac替换**`cmd + shift + R`
+### mac生成代码
 + **复制一行**`cmd + D`
 + **生成构造器**`cmd + N`
 + **生成try catch**`选中代码块后cmd + option + T`
 + **重写父类方法**`control + O`
 + **实现接口中的方法**`control + I`
-### windowsDEBUG
+### macDEBUG
 + **查看断点信息**`cmd + shift + F8`
 + **计算表达式（可以更改变量值使其生效）** `option + F8`
 + **恢复程序运行，如果该断点下面代码还有断点则停在下一个断点上**`cmd + option + R`
@@ -57,8 +62,13 @@
 + **下一步(进入方法)，如果该方法体还有方法，不进入内嵌的方法**`F7`
 + **智能步入，断点所在行上有多个方法调用，会弹出进入哪个方法**`shift + F7`
 + **跳出方法**`shift + F8`
-## IDEA_WINDOWS_快捷键
-+ ****
+## windows快捷键
+### windows基本
+### windows查找
+### windows跳转
+### windows替换
+### windows生成代码
+
 ## 设置
 ### 取消代码重复检查
 file->settings->editor->inspections->general->duplicated code fragment将右侧勾去掉
