@@ -64,7 +64,11 @@
 + **跳出方法**`shift + F8`
 ## windows快捷键
 ### windows基本
++ **格式化代码** `ctrl + alt + L` (可以选中文件夹)
++ **优化导包** `ctrl + alt + O` (可以选中文件夹)
 ### windows查找
++ **全局搜索关键字** `ctrl + shift + F`
++ **全局搜索类** ``
 ### windows跳转
 ### windows替换
 ### windows生成代码
