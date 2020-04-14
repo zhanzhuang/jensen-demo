@@ -68,7 +68,7 @@
 + **优化导包** `ctrl + alt + O` (可以选中文件夹)
 ### windows查找
 + **全局搜索关键字** `ctrl + shift + F`
-+ **全局搜索类** ``
++ **全局搜索类**
 ### windows跳转
 ### windows替换
 ### windows生成代码
