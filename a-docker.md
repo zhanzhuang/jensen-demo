@@ -23,6 +23,7 @@
         + **[查看容器](#查看容器)**
         + **[创建与启动容器](#创建与启动容器)**
         + **[停止与启动容器](#停止与启动容器)**
+        + **[进入与退出容器](#进入与退出容器)**
         + **[文件拷贝](#文件拷贝)**
         + **[目录挂载](#目录挂载)**
         + **[查看容器IP地址](#查看容器IP地址)**
@@ -231,16 +232,19 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
 + (2)守护式方式创建容器
     + `docker run -di --name=容器名称 镜像名称:标签`
     + 举例:`docker run -di --name=mycentos2 centos:latest`
-    + 进入容器
-        + `docker exec -it 容器名称(或者容器ID) /bin/bash`
-    + 退出当前容器
-        + `exit`
-        + 退出由守护式方式创建的容器时，容器依然在运行
+
+
 #### 停止与启动容器
 + 启动容器
     + `docker start 容器名称(或者容器ID)`
 + 停止容器
     + `docker stop 容器名称(或者容器ID)`
+#### 进入与退出容器
++ 进入容器
+    + `docker exec -it 容器名称(或者容器ID) /bin/bash`
++ 退出当前容器
+    + `exit`
+    + 退出由守护式方式创建的容器时，容器依然在运行
 #### 文件拷贝
 + 如果我们需要将文件拷贝到容器内可以使用cp命令
     + `docker cp 需要拷贝的文件或者目录 容器名称:容器目录`
@@ -265,7 +269,7 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
 + (1)拉取mysql镜像
     + `docker pull mysql`
 + (2)创建容器
-    + `docker run -di --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql`
+    + `docker run -di --name=mysqldemo -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql`
     + -p 代表端口映射，格式为 宿主机端口:容器端口
     + -e 代表添加环境变量 MYSQL_ROOT_PASSWORD 是root用户的登录密码
 + (3)远程登录mysql
