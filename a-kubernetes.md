@@ -1,8 +1,9 @@
 # kubernetes目录
 + **[kubernetes介绍](#kubernetes介绍)**
     + **[kubernetes是什么](#kubernetes是什么)**
+    + **[kubernetes能做什么](#kubernetes能做什么)**
     + **[为什么要用kubernetes](#为什么要用kubernetes)**
-    
++ **[Kubernetes快速入门](#Kubernetes快速入门)**
 ## kubernetes介绍
 ### kubernetes是什么
 + Kubernetes(K8S)是Google在2014年发布的一个开源项目，用于自动化容器化应用程序的部署、扩展和管理。
@@ -26,9 +27,49 @@ Kubernetes 逐渐部署对应用程序或其配置的更改，同时监视应用
 部署和更新密钥和应用程序配置，不会重新编译您的镜像，不会在堆栈配置中暴露密钥(secrets)
 ###### 批处理
 除了服务之外，Kubernetes还可以管理您的批处理和 CI 工作负载，如果需要，替换出现故障的容器
+### kubernetes能做什么
+Kubernetes是一个全新的基于容器技术的芬不是架构领先方案。
+Kubernetes是一个开放的开发平台(无侵入性，现有系统很容器迁移到Kubernetes上)。
+Kubernetes是一个完备的芬不是系统支撑平台(完善的集群管理能力)。
+使用Kubernetes可以在物理或虚拟机上Kubernetes集群上运行容器化应用，Kubernetes能够提供一个以容器为中心的基础架构，满足在生产环境中
+运行应用的一些常见需求，如：
++ 多个进程协同工作
++ 存储系统挂载
++ Distributing secrets
++ 应用健康检测
++ 应用实例的复制
++ Pod自动伸缩/扩展
++ Naming and discovering
++ 负载均衡
++ 滚动更新
++ 资源监控
++ 日志访问
++ 调度应用程序
++ 提供认证和授权
 ### 为什么要用kubernetes
 使用Kubernetes最直接的感受就是我们可以轻装上阵的开发复杂的系统了；其次Kubernetes是在全面拥抱微服务
 架构（微服务的核心就是将一个巨大的单体应用拆分成很多小的互相连接的微服务，一个微服务后面可能是多个实
 例副本在支撑，副本数量可以随着系统负荷的变化而动态调整）；最后Kubernetes系统架构具备超强的横向扩展
 能力
-
+## Kubernetes快速入门
+### 环境准备
++ 关闭centos防火墙
+    + `systemctl disable firewalld`
+    + `systemctl stop firewalld`
++ 安装kubernetes软件和etcd
+    + 安装前要更新yum，如果已经安装了docker要卸载掉，因为安装kubernetes会安装docker
+    + `yum update`
+    + `yum install -y kubernetes etcd`
++ 设置docker的镜像
+    + ustc是老牌的linux镜像服务提供者了，还在遥远的ubuntu 5.04版本的时候就在用。ustc的docker镜像加速器速度 很快。ustc docker mirror的优势之一就是不需要注册，是真正的公共服务。
+    + https://lug.ustc.edu.cn/wiki/mirrors/help/docker
+    + `vi /etc/docker/daemon.json`
+    + ```json
+      {
+      "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+      }
+      ```
++ 设置etcd和docker开机自启
+    + `systemctl enabled etcd.service`
+    + `systemctl enabled docker.service`
+    
