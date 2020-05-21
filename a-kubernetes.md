@@ -4,6 +4,8 @@
     + **[kubernetes能做什么](#kubernetes能做什么)**
     + **[为什么要用kubernetes](#为什么要用kubernetes)**
 + **[Kubernetes快速入门](#Kubernetes快速入门)**
+    + **[环境准备](#环境准备)**
+    + **[配置](#配置)**
 ## kubernetes介绍
 ### kubernetes是什么
 + Kubernetes(K8S)是Google在2014年发布的一个开源项目，用于自动化容器化应用程序的部署、扩展和管理。
@@ -72,4 +74,15 @@ Kubernetes是一个完备的芬不是系统支撑平台(完善的集群管理能
 + 设置etcd和docker开机自启
     + `systemctl enabled etcd.service`
     + `systemctl enabled docker.service`
-    
++ 启动服务
+    + `systemctl start etcd`
+    + `systemctl start docker`
+    + ```text
+      如果docker启动失败，请参考(vi /etc/sysconfig/selinux 把selinux后面的改为disabled，重启
+      一波 机器，再重启docker就可以了)
+      ```
+    + `systemctl start kube-apiserver`
+    + `systemctl start kube-controller-manager`
+    + `systemctl start kube-scheduler`
+    + `systemctl start kube-proxy`
+### 配置

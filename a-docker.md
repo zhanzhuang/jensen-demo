@@ -300,7 +300,18 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
     + `docker pull rabbitmq:3.8-management`
 + (2)创建容器
     + `docker run -di --name rabbitmqdemo -p 15672:15672 -p 5672:5672 rabbitmq:3.8-management`
-+ (3) 15672端口访问，默认用户名密码都是guest
++ (3)15672端口访问，默认用户名密码都是guest
+### Jenkins部署
++ (1)拉取Jenkins镜像
+    + `docker pull  docker.io/jenkins/jenkins` # 非官方的jenkins，开源的，star很多
++ (2)创建挂载文件夹
+    + `mkdir /usr/local/jenkins` # 用于和容器内文件夹做磁盘挂载
++ (3)文件夹授权否则启动时会报没有权限
+    + `sudo chown -R 1000:1000 /usr/local/jenkins`
++ (4)创建容器
+    + `docker run -itd  -p 8888:8080 -p 50000:50000 --privileged=true -v /usr/local/jenkins:/var/jenkins docker.io/jenkins/jenkins`
++ (5)访问8888端口
+
 ## 迁移与备份
 ### 容器保存为镜像
 + 将容器存为镜像
