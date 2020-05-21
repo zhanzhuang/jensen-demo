@@ -71,9 +71,13 @@ Kubernetes是一个完备的芬不是系统支撑平台(完善的集群管理能
       "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
       }
       ```
-+ 设置etcd和docker开机自启
-    + `systemctl enabled etcd.service`
-    + `systemctl enabled docker.service`
++ 设置开机自启
+    + `systemctl enable etcd`
+    + `systemctl enable docker`
+    + `systemctl enable kube-apiserver`
+    + `systemctl enable kube-controller-manager`
+    + `systemctl enable kube-scheduler`
+    + `systemctl enable kube-proxy`
 + 启动服务
     + `systemctl start etcd`
     + `systemctl start docker`
