@@ -303,6 +303,7 @@ CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其�
     + `docker run -di --name rabbitmqdemo -p 15672:15672 -p 5672:5672 rabbitmq:3.8-management`
 + (3)15672端口访问，默认用户名密码都是guest
 ### Jenkins部署
+!!!!!!!!!在安装jenkins插件的时候安装失败!!!!!!!!!
 + (1)拉取Jenkins镜像
     + `docker pull  docker.io/jenkins/jenkins` # 非官方的jenkins，开源的，star很多
 + (2)创建挂载文件夹
