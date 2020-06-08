@@ -57,7 +57,7 @@
 + 虚拟化技术种类很多，例如：软件虚拟化、硬件虚拟化、内存虚拟化、网络虚拟化(vip)、桌面虚拟化、服务虚拟
 化、虚拟机等等。
 ### 什么是Docker
-![](images/docker/docker.jpg)
+![](https://github.com/zhanzhuang/jensen-demo/blob/master/images/docker/docker.jpg)
 + Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推
 出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。
 + Docker 自开源后受到广泛的关注和讨论，以至于 dotCloud 公司后来都改名为 Docker Inc。Redhat 已经在其
