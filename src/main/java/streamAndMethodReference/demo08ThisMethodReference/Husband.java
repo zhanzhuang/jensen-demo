@@ -13,6 +13,7 @@ public class Husband {
     public void marry(Richable r) {
         r.buy();
     }
+
     // 定义一个非常高兴的方法
     public void soHappy() {
         // 调用结婚的方法,方法的参数Richable是一个函数式接口，传递Lambda表达式

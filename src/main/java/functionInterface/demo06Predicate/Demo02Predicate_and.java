@@ -18,7 +18,7 @@ public class Demo02Predicate_and {
     public static void main(String[] args) {
         // 定义一个字符串
         String s = "abcdef";
-        boolean b = checkString(s,(String str) -> str.length() > 5, (String str) ->  str.contains("a"));
+        boolean b = checkString(s, (String str) -> str.length() > 5, (String str) -> str.contains("a"));
         System.out.println(b);
     }
 }

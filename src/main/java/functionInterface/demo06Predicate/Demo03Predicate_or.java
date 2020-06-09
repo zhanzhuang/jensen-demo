@@ -9,7 +9,7 @@ public class Demo03Predicate_or {
 
     public static void main(String[] args) {
         String s = "bc";
-        boolean b = checkString(s,(String str) -> str.length() > 5, (String str) ->  str.contains("a"));
+        boolean b = checkString(s, (String str) -> str.length() > 5, (String str) -> str.contains("a"));
         System.out.println(b);
     }
 }

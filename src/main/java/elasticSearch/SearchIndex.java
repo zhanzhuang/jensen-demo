@@ -24,10 +24,11 @@ public class SearchIndex {
 
     /**
      * 创建客户端
+     *
      * @throws Exception
      */
     @Before
-    public void init() throws Exception{
+    public void init() throws Exception {
         Settings settings = Settings.builder()
                 .put("cluster.name", "my-elasticsearch")
                 .build();
@@ -70,6 +71,7 @@ public class SearchIndex {
 
     /**
      * 根据ID进行查询
+     *
      * @throws Exception
      */
     @Test
@@ -80,6 +82,7 @@ public class SearchIndex {
 
     /**
      * 根据关键词查询
+     *
      * @throws Exception
      */
     @Test
@@ -95,11 +98,11 @@ public class SearchIndex {
     public void testSearchByQueryString() {
         QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("快乐")
                 .defaultField("title");// 不指定title会在所有域进行查询
-        search(queryBuilder,"title");
+        search(queryBuilder, "title");
     }
 
 
-    private void search(QueryBuilder queryBuilder,String highlightField) {
+    private void search(QueryBuilder queryBuilder, String highlightField) {
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         highlightBuilder.field(highlightField); // 高亮显示的字段
         highlightBuilder.preTags("<em>");

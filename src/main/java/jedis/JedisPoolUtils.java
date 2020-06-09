@@ -14,6 +14,7 @@ import java.util.Properties;
  */
 public class JedisPoolUtils {
     private static JedisPool jedisPool;
+
     // 当类加载的时候读取配置文件
     static {
         InputStream is = JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
@@ -29,6 +30,7 @@ public class JedisPoolUtils {
         jedisPool = new JedisPool(config, pro.getProperty("host"), Integer.parseInt(pro.getProperty("port")));
 
     }
+
     /**
      * 获取连接的方法
      */

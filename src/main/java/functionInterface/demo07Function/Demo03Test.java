@@ -5,7 +5,7 @@ import java.util.function.Function;
 /**
  * 练习：自定义函数模型拼接
  * 题目: 请使用Function进行函数模型的拼接，按照顺序需要执行的多个函数操作为：
- *          String str = "赵丽颖,20";
+ * String str = "赵丽颖,20";
  */
 public class Demo03Test {
 

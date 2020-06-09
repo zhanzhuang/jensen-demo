@@ -3,16 +3,18 @@ package streamAndMethodReference.demo07SuperMethodReference;
 /**
  * 定义子类
  */
-public class Man extends Human{
+public class Man extends Human {
     // 子类重写父类sayHello()方法
     @Override
     public void sayHello() {
         System.out.println("Hello 我是Man!");
     }
+
     // 定义一个方法参数传递Greetable接口
     public void method(Greetable g) {
         g.greet();
     }
+
     public void show() {
         // 调用method方法，方法的参数Greetable是一个函数式接口，所以可以传递Lambda
         /*method(() -> {

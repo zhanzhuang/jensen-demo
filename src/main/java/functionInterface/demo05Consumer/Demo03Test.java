@@ -18,10 +18,10 @@ public class Demo03Test {
 
     public static void main(String[] args) {
         String[] arr = {"迪丽热巴,女", "古力娜扎,女", "马儿扎哈,男"};
-        printInfo(arr,(message) -> {
+        printInfo(arr, (message) -> {
             String name = message.split(",")[0];
             System.out.print("姓名:" + name);
-        },(message) -> {
+        }, (message) -> {
             String age = message.split(",")[1];
             System.out.println("。年龄：" + age + "。");
         });

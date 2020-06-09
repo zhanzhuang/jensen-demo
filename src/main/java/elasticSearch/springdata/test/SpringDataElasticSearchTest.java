@@ -33,6 +33,7 @@ public class SpringDataElasticSearchTest {
         // 只有索引库没有配置映射的时候执行(单独配置映射)
 //        template.putMapping(Article.class);
     }
+
     @Test
     public void addDocument() {
         for (int i = 10; i <= 20; i++) {
@@ -44,6 +45,7 @@ public class SpringDataElasticSearchTest {
             articleRepository.save(article);
         }
     }
+
     @Test
     public void delDocumentById() {
         articleRepository.deleteById(2L);
@@ -55,6 +57,7 @@ public class SpringDataElasticSearchTest {
         Iterable<Article> articles = articleRepository.findAll();
         articles.forEach(System.out::println);
     }
+
     @Test
     public void testFindById() {
         Optional<Article> optional = articleRepository.findById(1L);
@@ -70,6 +73,7 @@ public class SpringDataElasticSearchTest {
         List<Article> list = articleRepository.findByTitle("飞鸟");
         list.forEach(System.out::println);
     }
+
     /**
      * 对内容进行分词再查询
      */
@@ -79,6 +83,7 @@ public class SpringDataElasticSearchTest {
         List<Article> list = articleRepository.findByTitleOrContent("14", "content中没有的内容");
         list.forEach(System.out::println);
     }
+
     /**
      * 对内容进行分词再查询
      */

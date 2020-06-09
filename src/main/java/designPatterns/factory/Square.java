@@ -1,4 +1,5 @@
 package designPatterns.factory;
+
 /**
  * 步骤二：创建接口的实现类
  */

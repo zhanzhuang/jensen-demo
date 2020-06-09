@@ -117,29 +117,12 @@ file->settings->editor->inspections->spring->spring core->code->autowiring for b
 ### 热部署
 + 1.导入依赖
 ```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-devtools</artifactId>
-    <scope>rumtime</scope>
-    <optional>true</optional>
-</dependency>
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+  </dependency>
 ```
-+ 2.添加插件
-```xml
-<plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-    <configuration>
-        <fork>true</fork>
-        <addResources>true</addResources>
-    </configuration>
-</plugin>
-```
-+ 3.开启idea自动编译  
-![](images/idea/idea-auto-maked%20.jpg)
-+ 4.开启运行时编译
-    + shift + ctrl + alt + /  ----> register
-![](images/idea/running-maked.jpg)
-+ 5.修改启动类
-![](images/idea/update-classes-resources.jpg)
-+ 6.重启IDEA
++ 2.修改了java类的地方，使用 Ctrl + Shift + F9 进行热更新
++ 3.静态页面/模板页面，使用 Ctrl + F9 进行热更新
++ 4.快捷键使用后不生效？前往File-Settings-Compiler-Build Project automatically选项开始idea自动编译    
++ 5.重启IDEA

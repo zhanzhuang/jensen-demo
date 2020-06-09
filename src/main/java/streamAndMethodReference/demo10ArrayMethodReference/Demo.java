@@ -15,8 +15,8 @@ public class Demo {
 
     public static void main(String[] args) {
         // 调用createArray方法，传递数组的长度和Lambda表达式
-        int[] arr1 = createArray(10,(len) -> {
-           return new int[len];
+        int[] arr1 = createArray(10, (len) -> {
+            return new int[len];
         });
         System.out.println(arr1.length);
         /**

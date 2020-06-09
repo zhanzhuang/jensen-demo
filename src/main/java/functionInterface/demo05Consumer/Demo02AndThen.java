@@ -26,10 +26,10 @@ public class Demo02AndThen {
 
     public static void main(String[] args) {
         // 调用method方法，传递一个字符串两个Lambda表达式
-        method("Hello",(t) -> {
+        method("Hello", (t) -> {
             // 消费方式：把字符串转换为大写输出
             System.out.println(t.toUpperCase());
-        },(t) -> {
+        }, (t) -> {
             System.out.println(t.toLowerCase());
         });
     }

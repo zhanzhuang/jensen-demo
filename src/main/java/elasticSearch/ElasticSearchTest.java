@@ -23,10 +23,11 @@ public class ElasticSearchTest {
 
     /**
      * 创建客户端
+     *
      * @throws Exception
      */
     @Before
-    public void init() throws Exception{
+    public void init() throws Exception {
         Settings settings = Settings.builder()
                 .put("cluster.name", "my-elasticsearch")
                 .build();
@@ -41,6 +42,7 @@ public class ElasticSearchTest {
 
     /**
      * 创建索引
+     *
      * @throws Exception
      */
     @Test
@@ -65,6 +67,7 @@ public class ElasticSearchTest {
 
     /**
      * 设置mapping
+     *
      * @throws Exception
      */
     @Test
@@ -94,24 +97,24 @@ public class ElasticSearchTest {
          */
         XContentBuilder builder = new XContentFactory().jsonBuilder()
                 .startObject() // 相当于 {
-                    .startObject("article")
-                        .startObject("properties")
-                            .startObject("id")
-                                .field("type","long")
-                                .field("store",true)
-                            .endObject()
-                            .startObject("title")
-                                .field("type","text")
-                                .field("store",true)
-                                .field("analyzer","ik_smart")
-                            .endObject()
-                            .startObject("content")
-                                .field("type","text")
-                                .field("store",true)
-                                .field("analyzer","ik_smart")
-                            .endObject()
-                        .endObject()
-                    .endObject()
+                .startObject("article")
+                .startObject("properties")
+                .startObject("id")
+                .field("type", "long")
+                .field("store", true)
+                .endObject()
+                .startObject("title")
+                .field("type", "text")
+                .field("store", true)
+                .field("analyzer", "ik_smart")
+                .endObject()
+                .startObject("content")
+                .field("type", "text")
+                .field("store", true)
+                .field("analyzer", "ik_smart")
+                .endObject()
+                .endObject()
+                .endObject()
                 .endObject();
         // 4.使用client把mapping信息设置到索引库中
         client.admin().indices()
@@ -130,6 +133,7 @@ public class ElasticSearchTest {
 
     /**
      * 添加文档
+     *
      * @throws Exception
      */
     @Test
@@ -139,9 +143,9 @@ public class ElasticSearchTest {
         // 文档对象
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
-                    .field("id", 2L)
-                    .field("title", "222北方入秋速度明显加快 多地降温幅度最多可达10度")
-                    .field("content", "222阿联酋一架客机在纽约机场被隔离 10名乘客病倒")
+                .field("id", 2L)
+                .field("title", "222北方入秋速度明显加快 多地降温幅度最多可达10度")
+                .field("content", "222阿联酋一架客机在纽约机场被隔离 10名乘客病倒")
                 .endObject();
         // 把文档对象添加到索引库
         client.prepareIndex()
@@ -156,6 +160,7 @@ public class ElasticSearchTest {
 
     /**
      * 添加文档(创建pojo的方式,较为方便)
+     *
      * @throws Exception
      */
     @Test
@@ -171,7 +176,7 @@ public class ElasticSearchTest {
         String jsonDocument = objectMapper.writeValueAsString(article);
         System.out.println(jsonDocument);
         // 使用client把文档写入索引库
-        client.prepareIndex("index_hello","article","3")
+        client.prepareIndex("index_hello", "article", "3")
                 .setSource(jsonDocument, XContentType.JSON)
                 .get();
         // 关闭客户端
@@ -193,7 +198,7 @@ public class ElasticSearchTest {
             String jsonDocument = objectMapper.writeValueAsString(article);
             System.out.println(jsonDocument);
             // 使用client把文档写入索引库
-            client.prepareIndex("index_hello","article",i + "")
+            client.prepareIndex("index_hello", "article", i + "")
                     .setSource(jsonDocument, XContentType.JSON)
                     .get();
         }

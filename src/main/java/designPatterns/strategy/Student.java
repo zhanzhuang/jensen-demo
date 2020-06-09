@@ -7,6 +7,7 @@ public class Student {
     public Student(Action action) {
         this.action = action;
     }
+
     // 学生的行为
     public void studentAction() {
         action.actionMethod();

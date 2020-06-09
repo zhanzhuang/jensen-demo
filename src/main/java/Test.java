@@ -9,6 +9,7 @@ public class Test {
         String url2 = concatUrl(url1, "123");
         System.out.println(url2);
     }
+
     public static String concatUrl(String url, String path) {
         String newUrl;
         if (url.endsWith("/") && path.startsWith("/")) {

@@ -6,11 +6,11 @@ package designPatterns.single;
 public class SingleHungry {
     private static SingleHungry singleHungry;
 
-    private SingleHungry(){
+    private SingleHungry() {
 
     }
 
-    public SingleHungry getSingleHungryInstance(){
+    public SingleHungry getSingleHungryInstance() {
         if (singleHungry == null) {
             return new SingleHungry();
         } else {

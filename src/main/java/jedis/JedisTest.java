@@ -58,6 +58,7 @@ public class JedisTest {
 
         jedis.close();
     }
+
     /**
      * list
      */
@@ -73,6 +74,7 @@ public class JedisTest {
 
         jedis.close();
     }
+
     /**
      * set
      */
@@ -85,6 +87,7 @@ public class JedisTest {
 
         jedis.close();
     }
+
     /**
      * sortedset
      */
@@ -97,6 +100,7 @@ public class JedisTest {
         Set<String> mysortedset = jedis.zrange("mysortedset", 0, -1);
         System.out.println(mysortedset);
     }
+
     /**
      * Jedis连接池
      */
