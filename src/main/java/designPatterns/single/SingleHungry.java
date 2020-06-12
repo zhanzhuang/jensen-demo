@@ -1,20 +1,12 @@
 package designPatterns.single;
 
 /**
- * 饿汉时单例，线程安全
+ * 饿汉式单例，线程安全
  */
 public class SingleHungry {
-    private static SingleHungry singleHungry;
+    private static final SingleHungry SINGLE_HUNGRY = new SingleHungry();
 
-    private SingleHungry() {
-
-    }
-
-    public SingleHungry getSingleHungryInstance() {
-        if (singleHungry == null) {
-            return new SingleHungry();
-        } else {
-            return singleHungry;
-        }
+    public static SingleHungry getSingleHungryInstance() {
+        return SINGLE_HUNGRY;
     }
 }
