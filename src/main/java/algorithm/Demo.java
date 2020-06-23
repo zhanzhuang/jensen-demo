@@ -8,9 +8,8 @@ import java.util.Arrays;
 public class Demo {
     public static void main(String[] args) {
         int[] arr = {6, 3, 8, -2, 9, -1};
-
         // bubble
-//        for (int i = 0; i < arr.length - 1; i++) {
+//        for (int i = 0; i < arr.length; i++) {
 //            for (int j = 0; j < arr.length - 1 - i; j++) {
 //                if (arr[j] > arr[j + 1]) {
 //                    int temp = arr[j];
@@ -20,7 +19,7 @@ public class Demo {
 //            }
 //        }
         // choose
-//        for (int i = 0; i < arr.length - 1; i++) {
+//        for (int i = 0; i < arr.length; i++) {
 //            int minIndex = i;
 //            for (int j = i + 1; j < arr.length; j++) {
 //                if (arr[j] < arr[minIndex]) {
@@ -33,15 +32,17 @@ public class Demo {
 //        }
 
         // insert
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (arr[i] < arr[j]) {
-                    int temp = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = temp;
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
                 }
             }
         }
-        Arrays.stream(arr).forEach(System.out::println);
+
+
+        Arrays.stream(arr).forEach(item -> System.out.print(item + " "));
     }
 }
