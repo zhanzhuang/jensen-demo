@@ -30,19 +30,18 @@ public class Demo {
 //            arr[i] = arr[minIndex];
 //            arr[minIndex] = temp;
 //        }
-
         // insert
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (arr[i] < arr[j]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+                if (arr[j] > arr[i]) {
+                    int temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
                 }
             }
         }
 
-
-        Arrays.stream(arr).forEach(item -> System.out.print(item + " "));
+        Arrays.stream(arr).forEach(item -> System.out.println(item + " "));
     }
+
 }
