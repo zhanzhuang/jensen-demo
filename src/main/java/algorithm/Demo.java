@@ -18,6 +18,7 @@ public class Demo {
 //                }
 //            }
 //        }
+
         // choose
 //        for (int i = 0; i < arr.length; i++) {
 //            int minIndex = i;
@@ -30,18 +31,19 @@ public class Demo {
 //            arr[i] = arr[minIndex];
 //            arr[minIndex] = temp;
 //        }
+
         // insert
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (arr[j] > arr[i]) {
-                    int temp = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = temp;
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
                 }
             }
         }
 
-        Arrays.stream(arr).forEach(item -> System.out.println(item + " "));
+        Arrays.stream(arr).forEach(item -> System.out.print(item + " "));
     }
 
 }

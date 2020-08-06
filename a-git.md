@@ -22,6 +22,7 @@
     + **[从远程拉取本地没有的分支](#从远程拉取本地没有的分支)**
     + **[远程新建分支后本地看不到最新分支](#远程新建分支后本地看不到最新分支)**
     + **[新建本地分支并推送到远程](#新建本地分支并推送到远程)**
+    + **[merge用法](#merge用法)**
 ## 设置全局用户名和邮箱：
 + `git config --global user.name "yourname"`
 + `git config --global user.email "email@example.com"`
@@ -267,3 +268,16 @@ commit_id可以是commit对象对应的ID，也可以是HEAD，分支名，tag�
     + git checkout dev
 + 2.推送到远程，如果远程没有会自动创建(本地分支：远程分支)
     + git push origin dev:dev
+### merge用法
++ **开发分支（dev）上的代码达到上线的标准后，要合并到 master 分支**
+    + git checkout dev
+    + git pull
+    + git checkout master
+    + git merge dev
+    + git push -u origin master
++ **当master代码改动了，需要更新开发分支（dev）上的代码**
+    + git checkout master 
+    + git pull 
+    + git checkout dev
+    + git merge master 
+    + git push -u origin dev
