@@ -281,3 +281,9 @@ commit_id可以是commit对象对应的ID，也可以是HEAD，分支名，tag�
     + git checkout dev
     + git merge master 
     + git push -u origin dev
+### commit了之后取消commit但是代码仍然保留
++ **如果进行了两次commit，想都撤回可以使用2**
+    + git reset --soft HEAD~2
++ **如果进行了两次commit，想撤回一个最近的一个commit可以使用1**
+    + git reset --soft HEAD~1
+    
