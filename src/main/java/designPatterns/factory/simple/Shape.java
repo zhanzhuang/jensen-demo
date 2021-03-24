@@ -1,4 +1,4 @@
-package designPatterns.factory;
+package designPatterns.factory.simple;
 
 /**
  * 步骤一：创建一个接口

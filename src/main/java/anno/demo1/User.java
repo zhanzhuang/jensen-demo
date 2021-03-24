@@ -1,4 +1,4 @@
-package anno;
+package anno.demo1;
 
 /**
  * @author Jensen Zhan

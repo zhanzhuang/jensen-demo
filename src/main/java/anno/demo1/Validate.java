@@ -1,4 +1,4 @@
-package anno;
+package anno.demo1;
 
 import java.lang.annotation.*;
 

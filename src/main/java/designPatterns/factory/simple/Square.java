@@ -1,7 +1,7 @@
-package designPatterns.factory;
+package designPatterns.factory.simple;
 
 /**
- * 步骤二：创建接口的实现类
+ * 步骤二：创建接口的实现类,正方形
  */
 public class Square implements Shape {
     @Override

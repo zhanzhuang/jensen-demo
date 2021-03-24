@@ -1,4 +1,4 @@
-package designPatterns.factory;
+package designPatterns.factory.simple;
 
 /**
  * 工厂模式测试类
