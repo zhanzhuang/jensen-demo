@@ -3,7 +3,7 @@ package algorithm;
 import java.util.Arrays;
 
 /**
- * @author Jensen Zhan
+ * 插入排序
  */
 public class SortInsert {
 

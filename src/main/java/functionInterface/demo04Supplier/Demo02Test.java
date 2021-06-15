@@ -18,7 +18,7 @@ public class Demo02Test {
         int maxValue = getMax(() -> {
             int max = arr[0];
             for (int i : arr) {
-                // 如果i大于mac，则替换max作为最大值
+                // 如果i大于max，则替换max作为最大值
                 if (i > max) {
                     max = i;
                 }

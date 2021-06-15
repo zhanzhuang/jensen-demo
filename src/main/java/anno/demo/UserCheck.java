@@ -1,4 +1,4 @@
-package anno.demo1;
+package anno.demo;
 
 import java.lang.reflect.Field;
 

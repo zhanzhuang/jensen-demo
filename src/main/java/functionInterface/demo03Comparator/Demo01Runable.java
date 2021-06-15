@@ -5,7 +5,7 @@ package functionInterface.demo03Comparator;
  * 假设有一个startThread方法使用该接口作为参数，那么就可以使用Lambda
  * 这种情况其实和Thread类的构造方法参数为Runnable没有本质区别
  */
-public class demo01Runable {
+public class Demo01Runable {
     // 定义一个方法startThread，方法的参数使用函数式接口Runnable
     public static void startThread(Runnable run) {
         // 开启多线程
