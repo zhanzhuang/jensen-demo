@@ -122,7 +122,7 @@ curl http://localhost:8080/actuator/metrics | python -mjson.tool
 + 由于我们的应用程序中有一个/actuator/Prometheus端点来供抓取数据,因此你现在可以配置Prometheus来监控你的Spring Boot应用。Prometheus有几种安装方法,本文使用Docker运行Prometheus
 + 安装docker步骤省略
 + 使用默认docker镜像仓库拉取Prometheus会出现问题,所以要将docker的默认镜像修改为阿里云镜像,具体方法请百度
-+ 需要创建一个`prometheus.yml`用来映射docker容器中的配置文件
++ 需要创建一个`prometheus.yml`用来映射docker容器中的配置文件,位置可以随意不做强制要求
 ```yaml
 # 全局配置,可被子job覆盖
 global:
