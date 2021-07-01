@@ -1,0 +1,34 @@
+# 全局配置,可被子job覆盖
+global:
+  # 多久收集一次数据
+  scrape_interval: 5s
+  # 多久评估一次规则
+  evaluation_interval: 1m
+
+
+# 收集数据配置列表
+scrape_configs:
+  # 轮询任务名称
+  - job_name: 'job-fsk-erp-trade'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    metrics_path: '/fsk-erp-trade/actuator/prometheus'
+    static_configs:
+      - targets: ['192.168.8.25:8086']
+  # 轮询任务名称
+  - job_name: 'job-fsk-ehr'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    metrics_path: '/fsk-ehr/actuator/prometheus'
+    static_configs:
+      - targets: ['192.168.8.25:8082']
+  # 轮询任务名称
+  - job_name: 'job-external'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    metrics_path: '/fsk-external/actuator/prometheus'
+    static_configs:
+      - targets: ['192.168.8.25:8083']
