@@ -143,7 +143,7 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       # 被监控的Spring Boot应用(只能写 ip:port)
-      - targets: ['192.168.6.210:8080']
+      - targets: ['ip:port']
           
   # 如果要监控两个应用,则多增加下面一列       
 #  - job_name: 'job-fsk-erp-trade'
@@ -164,10 +164,10 @@ scrape_configs:
 docker pull prom/prometheus
 ```
 
-使用如下命令启动docker, --name 指定容器的名字, --network 允许容器访问本地网络, -v 使本地prometheus.yml与容器的prometheus映射,
+使用如下命令启动docker, --name 指定容器的名字, -p 指定端口 -v 使本地prometheus.yml与容器的prometheus.yml映射,
 -d 会创建一个守护式容器在后台运行, prom/prometheus指定创建容器的镜像
 ```
-docker run --name prometheus_demo --network host -v /prometheus配置文件路径/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus
+docker run --name prometheus_demo -p 9090:9090 -v /prometheus配置文件路径/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus
 ```
 
 成功启动docker容器后,首先验证Prometheus是否能通过 `http://localhost:9090/targets` 收集数据,State为UP表示没有问题
