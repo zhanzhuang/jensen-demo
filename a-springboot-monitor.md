@@ -130,8 +130,6 @@ global:
   scrape_interval: 5s
   # 多久评估一次规则
   evaluation_interval: 1m
-  # 每次收集数据的超时时间
-  scrape_timeout: 10s
 
 # 收集数据配置列表
 scrape_configs:
